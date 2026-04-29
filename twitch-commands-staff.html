@@ -1,0 +1,640 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=320">
+<title>Dreadthulhu — Commandes Modo &amp; Owner</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700;900&family=IBM+Plex+Mono:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+html{-webkit-font-smoothing:antialiased;}
+:root {
+  --bg:#06040f; --surf1:#0c0817; --surf2:#120d22; --surf3:#1a1130;
+  --text:#f0eaff; --muted:#9080b8; --faint:#3d2e5a;
+  --violet:#7c3aed; --vhi:#a855f7; --vlo:#4c1d95;
+  --orange:#ff6b00; --orange-hi:#ff9642; --orange-lo:#c44d00;
+  --amber:#ffab2e; --red:#ff3366; --green:#22c55e;
+  --cyan:#06b6d4;
+  --gv:0 0 14px rgba(168,85,247,.45),0 0 40px rgba(124,58,237,.18);
+  --go:0 0 14px rgba(255,107,0,.5),0 0 40px rgba(255,107,0,.18);
+  --bv:rgba(168,85,247,.18); --bo:rgba(255,107,0,.18);
+  --font-title:'Cinzel',serif;
+  --font-mono:'IBM Plex Mono',monospace;
+}
+body {
+  width:320px; margin:0 auto;
+  background:var(--bg);
+  background-image:
+    radial-gradient(ellipse 90% 55% at 50% -5%,rgba(124,58,237,.1) 0%,transparent 65%),
+    radial-gradient(ellipse 50% 40% at 95% 90%,rgba(255,107,0,.06) 0%,transparent 55%),
+    radial-gradient(ellipse 40% 35% at 5% 80%,rgba(124,58,237,.06) 0%,transparent 55%);
+  color:var(--text); font-family:var(--font-mono); font-size:10px;
+}
+body::after {
+  content:''; position:fixed; inset:0; pointer-events:none; z-index:9999;
+  background:repeating-linear-gradient(0deg,transparent,transparent 3px,rgba(0,0,0,.04) 3px,rgba(0,0,0,.04) 4px);
+}
+.block {
+  width:320px; background:var(--surf1);
+  border:1px solid var(--bv); overflow:hidden; position:relative;
+}
+.block+.block { border-top:none; }
+.block::before,.block::after {
+  content:''; position:absolute; width:8px; height:8px;
+  border-color:var(--vhi); border-style:solid; opacity:.5;
+}
+.block::before { top:0;left:0;border-width:1px 0 0 1px; }
+.block::after  { bottom:0;right:0;border-width:0 1px 1px 0; }
+.div-sep {
+  width:320px; height:2px;
+  background:linear-gradient(90deg,transparent 0%,var(--orange-lo) 20%,var(--vhi) 50%,var(--orange-lo) 80%,transparent 100%);
+}
+.div-sep.red {
+  background:linear-gradient(90deg,transparent 0%,rgba(255,51,102,.4) 20%,rgba(255,51,102,.8) 50%,rgba(255,51,102,.4) 80%,transparent 100%);
+}
+.div-sep.cyan {
+  background:linear-gradient(90deg,transparent 0%,rgba(6,182,212,.4) 20%,rgba(6,182,212,.8) 50%,rgba(6,182,212,.4) 80%,transparent 100%);
+}
+.div-thin {
+  height:1px;
+  background:linear-gradient(90deg,transparent,var(--faint) 50%,transparent);
+  margin:10px 0;
+}
+.slabel {
+  font-family:var(--font-mono); font-size:8px; font-weight:500;
+  color:var(--orange-hi); letter-spacing:.22em; text-transform:uppercase;
+  display:flex; align-items:center; gap:8px;
+  padding:9px 16px; background:var(--surf2); border-bottom:1px solid var(--bv);
+}
+.slabel::before,.slabel::after { content:''; flex:1; height:1px; }
+.slabel::before { background:linear-gradient(to right,transparent,var(--orange-lo)); }
+.slabel::after  { background:linear-gradient(to left,transparent,var(--orange-lo)); }
+.slabel.cyan { color:var(--cyan); }
+.slabel.cyan::before { background:linear-gradient(to right,transparent,rgba(6,182,212,.4)); }
+.slabel.cyan::after  { background:linear-gradient(to left,transparent,rgba(6,182,212,.4)); }
+.slabel.red { color:var(--red); }
+.slabel.red::before { background:linear-gradient(to right,transparent,rgba(255,51,102,.4)); }
+.slabel.red::after  { background:linear-gradient(to left,transparent,rgba(255,51,102,.4)); }
+.pad { padding:16px; }
+
+/* ═══ HERO ═══ */
+#s-hero {
+  background:var(--surf1);
+  background-image:
+    radial-gradient(ellipse 80% 60% at 50% 0%,rgba(124,58,237,.18) 0%,transparent 70%),
+    radial-gradient(ellipse 40% 40% at 0% 100%,rgba(255,107,0,.08) 0%,transparent 60%);
+  padding:20px 16px 16px;
+}
+.file-tag {
+  font-family:var(--font-mono); font-size:7.5px; font-weight:500;
+  color:var(--orange-hi); letter-spacing:.2em; text-transform:uppercase;
+  text-align:center; margin-bottom:16px; opacity:.8;
+}
+.hero-name {
+  font-family:var(--font-title); font-size:20px; font-weight:900;
+  line-height:1.1; letter-spacing:.05em; text-align:center;
+  text-transform:uppercase;
+  background:linear-gradient(135deg,var(--cyan) 0%,var(--vhi) 50%,var(--red) 100%);
+  -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text;
+  margin-bottom:4px;
+  filter:drop-shadow(0 0 12px rgba(168,85,247,.4));
+}
+.hero-sub {
+  font-family:var(--font-mono); font-size:8px; font-weight:300;
+  color:var(--muted); letter-spacing:.12em; text-align:center; line-height:1.8; margin-bottom:14px;
+}
+.hero-live {
+  display:flex; align-items:center; justify-content:center; gap:6px;
+  padding:5px 0; border-top:1px solid var(--bv);
+  font-family:var(--font-mono); font-size:8px; font-weight:600;
+  color:var(--orange-hi); letter-spacing:.2em; text-transform:uppercase;
+}
+.dot-o { width:7px; height:7px; background:var(--orange-hi); border-radius:50%; box-shadow:0 0 8px var(--orange-hi); animation:blink 1.4s ease-in-out infinite; }
+@keyframes blink { 0%,100%{opacity:1;transform:scale(1);} 50%{opacity:.3;transform:scale(.65);} }
+
+/* ═══ ACCESS BANNERS ═══ */
+.access-duo {
+  display:grid; grid-template-columns:1fr 1fr; gap:8px;
+  margin:14px 16px 0; padding-bottom:16px;
+}
+.access-card {
+  padding:9px 10px; border-radius:6px; text-align:center;
+}
+.access-card.modo {
+  background:rgba(6,182,212,.08); border:1px solid rgba(6,182,212,.3);
+}
+.access-card.owner {
+  background:rgba(255,51,102,.08); border:1px solid rgba(255,51,102,.3);
+}
+.access-card .ac-icon { font-size:18px; margin-bottom:4px; }
+.access-card .ac-title {
+  font-family:var(--font-title); font-size:9px; font-weight:700;
+  letter-spacing:.12em; text-transform:uppercase; margin-bottom:3px;
+}
+.access-card.modo .ac-title { color:var(--cyan); filter:drop-shadow(0 0 6px rgba(6,182,212,.4)); }
+.access-card.owner .ac-title { color:var(--red); filter:drop-shadow(0 0 6px rgba(255,51,102,.4)); }
+.access-card .ac-sub {
+  font-family:var(--font-mono); font-size:7px; font-weight:300;
+  color:var(--muted); letter-spacing:.06em; line-height:1.5;
+}
+
+/* ═══ WARN BAR ═══ */
+.warn-bar {
+  display:flex; align-items:flex-start; gap:8px; padding:8px 10px;
+  background:rgba(255,107,0,.08); border-left:3px solid var(--orange);
+  margin-bottom:14px;
+  font-family:var(--font-mono); font-size:8px; font-weight:500;
+  color:var(--orange-hi); letter-spacing:.1em; line-height:1.6; text-transform:uppercase;
+}
+.warn-bar.cyan { background:rgba(6,182,212,.07); border-color:var(--cyan); color:var(--cyan); }
+.warn-bar.red  { background:rgba(255,51,102,.07); border-color:var(--red); color:var(--red); }
+
+.lore-body {
+  font-family:var(--font-mono); font-size:10px; font-weight:300;
+  color:var(--muted); line-height:1.75; font-style:italic;
+}
+.lore-body strong { font-style:normal; font-weight:600; color:var(--text); }
+.lore-body .hi { color:#c084fc; font-style:normal; font-weight:500; }
+
+/* ═══ COMMANDES ═══ */
+.cmd {
+  display:flex; gap:0; align-items:stretch;
+  border-bottom:1px solid rgba(76,29,149,.22);
+  min-height:48px;
+}
+.cmd:last-child { border-bottom:none; }
+.cmd-tag {
+  display:flex; align-items:center; justify-content:center;
+  min-width:36px; padding:0 4px;
+  background:rgba(124,58,237,.08);
+  border-right:1px solid var(--bv);
+  font-size:16px; flex-shrink:0;
+}
+.cmd-tag.cyan { background:rgba(6,182,212,.07); border-right-color:rgba(6,182,212,.2); }
+.cmd-tag.red  { background:rgba(255,51,102,.07); border-right-color:rgba(255,51,102,.2); }
+.cmd-inner { padding:9px 12px; flex:1; }
+.cmd-name {
+  font-family:var(--font-mono); font-size:10px; font-weight:600;
+  color:var(--vhi); letter-spacing:.08em; margin-bottom:3px;
+}
+.cmd-name.cyan { color:var(--cyan); }
+.cmd-name.red  { color:var(--red); }
+.cmd-name .arg { color:var(--orange-hi); font-weight:400; font-style:italic; }
+.cmd-desc {
+  font-family:var(--font-mono); font-size:9px; font-weight:300;
+  color:var(--muted); line-height:1.5; font-style:italic;
+}
+.cmd-desc strong { font-style:normal; font-weight:600; color:var(--text); }
+.cmd-desc .hi   { color:#c084fc; font-style:normal; font-weight:500; }
+.cmd-desc .warn { color:var(--orange-hi); font-style:normal; }
+.cmd-desc .danger { color:var(--red); font-style:normal; font-weight:600; }
+.cmd-desc .cd {
+  display:inline-block; margin-top:3px;
+  font-family:var(--font-mono); font-size:7.5px; font-weight:500;
+  color:var(--faint); letter-spacing:.08em; text-transform:uppercase;
+  background:rgba(61,46,90,.4); padding:1px 5px; border-radius:3px;
+}
+/* Pilules de niveau */
+.pill-modo {
+  font-family:var(--font-mono); font-size:7px; font-weight:600;
+  color:var(--cyan); letter-spacing:.1em; text-transform:uppercase;
+  background:rgba(6,182,212,.1); border:1px solid rgba(6,182,212,.35);
+  padding:1px 5px; border-radius:3px; margin-left:5px; vertical-align:middle;
+}
+.pill-owner {
+  font-family:var(--font-mono); font-size:7px; font-weight:600;
+  color:var(--red); letter-spacing:.1em; text-transform:uppercase;
+  background:rgba(255,51,102,.1); border:1px solid rgba(255,51,102,.35);
+  padding:1px 5px; border-radius:3px; margin-left:5px; vertical-align:middle;
+}
+/* Section header interne */
+.section-divider {
+  padding:7px 16px 5px;
+  font-family:var(--font-mono); font-size:7.5px; font-weight:600;
+  color:var(--faint); letter-spacing:.2em; text-transform:uppercase;
+  background:var(--surf2); border-bottom:1px solid rgba(76,29,149,.2);
+  border-top:1px solid rgba(76,29,149,.2);
+}
+/* Quote */
+.entity-quote {
+  margin:10px 16px 14px; padding:8px 10px;
+  border-left:2px solid var(--violet); background:rgba(124,58,237,.1); border-radius:0 4px 4px 0;
+  font-family:var(--font-mono); font-size:9px; color:var(--vhi); font-style:italic; line-height:1.5;
+}
+.entity-quote.red {
+  border-left-color:var(--red); background:rgba(255,51,102,.07); color:var(--red);
+}
+/* ═══ FOOTER ═══ */
+#sfooter { background:var(--surf2); padding:16px; text-align:center; }
+.footer-url { font-family:var(--font-title); font-size:12px; font-weight:700; color:var(--vhi); letter-spacing:.15em; text-transform:uppercase; margin-bottom:6px; }
+.footer-sub { font-family:var(--font-mono); font-size:8.5px; color:var(--muted); line-height:1.8; letter-spacing:.06em; }
+.footer-sub span { color:var(--vhi); font-weight:600; }
+.affil {
+  display:inline-flex; align-items:center; gap:6px; margin-top:10px; padding:5px 12px;
+  background:rgba(255,51,102,.07); border:1px solid rgba(255,51,102,.3); border-radius:4px;
+  font-family:var(--font-mono); font-size:8px; color:var(--red); letter-spacing:.1em; text-transform:uppercase;
+}
+.roger-warn { margin-top:10px; font-family:var(--font-mono); font-size:8px; color:var(--faint); font-style:italic; letter-spacing:.06em; }
+</style>
+</head>
+<body>
+
+<!-- ═══ HERO ═══ -->
+<div class="block" id="s-hero">
+  <div class="file-tag">◈ DREADTHULHU v5 — PROTOCOLE AUTORITÉ · CLASSIFIÉ</div>
+  <div class="hero-name">MODO &amp;<br>OWNER</div>
+  <div class="hero-sub">// ACCÈS RESTREINT — MODÉRATEURS &amp; GRAND DREADLOCKTOPUS<br>// LES VIEWERS ET MEMBRES N'ONT PAS ACCÈS À CES COMMANDES</div>
+  <div class="hero-live"><span class="dot-o"></span>PROTOCOLE AUTORITÉ — DREADTHULHU ACTIF</div>
+  <div class="access-duo">
+    <div class="access-card modo">
+      <div class="ac-icon">🛡️</div>
+      <div class="ac-title">Modérateur</div>
+      <div class="ac-sub">Gardien des abysses. Maintient l'ordre dans le chat.</div>
+    </div>
+    <div class="access-card owner">
+      <div class="ac-icon">👑</div>
+      <div class="ac-title">Owner</div>
+      <div class="ac-sub">Le Grand Dreadlocktopus. Pouvoir absolu. Sans appel.</div>
+    </div>
+  </div>
+</div>
+
+<div class="div-sep"></div>
+
+<!-- ═══ INTRO ═══ -->
+<div class="block" id="s-intro">
+  <div class="slabel">⚠ Briefing Classifié</div>
+  <div class="pad">
+    <div class="warn-bar">⚠ ACCÈS RESTREINT — NIVEAU : AUTORITÉ ABYSSALE</div>
+    <div class="lore-body">
+      Ces commandes sont réservées aux <strong>gardiens officiels</strong> des abysses du stream.
+      Les <span class="hi">modérateurs</span> maintiennent l'ordre dans le chat. Le <strong>Grand Dreadlocktopus</strong> — et lui seul — dispose des pouvoirs ultimes d'excommunication tentaculaire.
+      <br><br>
+      <strong>Roger</strong> vérifie les permissions. Toute tentative d'usurpation sera sanctionnée.
+    </div>
+  </div>
+</div>
+
+<div class="div-sep cyan"></div>
+
+<!-- ═══ SECTION MODO ═══ -->
+<div class="block" id="s-modo">
+  <div class="slabel cyan">🛡️ Arsenal du Modérateur</div>
+
+  <!-- Modération chat -->
+  <div class="section-divider">// Modération Chat</div>
+
+  <div class="cmd">
+    <div class="cmd-tag cyan">⚠️</div>
+    <div class="cmd-inner">
+      <div class="cmd-name cyan">!warn <span class="arg">[pseudo]</span> <span class="pill-modo">MODO</span></div>
+      <div class="cmd-desc">
+        Avertit un utilisateur. Le <strong>compteur s'affiche</strong> (ex&nbsp;: 2/3).
+        Au dépassement du seuil&nbsp;: timeout automatique progressif <span class="warn">60s → 300s → 600s</span>.
+      </div>
+    </div>
+  </div>
+
+  <div class="cmd">
+    <div class="cmd-tag cyan">⏱️</div>
+    <div class="cmd-inner">
+      <div class="cmd-name cyan">!timeout <span class="arg">[pseudo] [durée]</span> <span class="pill-modo">MODO</span></div>
+      <div class="cmd-desc">
+        Timeout direct pour la durée spécifiée <strong>(défaut 60s)</strong>. Confirmation affichée dans le chat.
+      </div>
+    </div>
+  </div>
+
+  <div class="cmd">
+    <div class="cmd-tag cyan">🧹</div>
+    <div class="cmd-inner">
+      <div class="cmd-name cyan">!clearwarn <span class="arg">[pseudo]</span> <span class="pill-modo">MODO</span></div>
+      <div class="cmd-desc">
+        Efface <strong>tous les avertissements</strong> accumulés d'un utilisateur. Remet le compteur à zéro.
+      </div>
+    </div>
+  </div>
+
+  <!-- File AutoMod -->
+  <div class="section-divider">// File de Modération AutoMod</div>
+
+  <div class="cmd">
+    <div class="cmd-tag cyan">📋</div>
+    <div class="cmd-inner">
+      <div class="cmd-name cyan">!queue <span class="pill-modo">MODO</span></div>
+      <div class="cmd-desc">
+        Affiche les <strong>3 premiers messages en attente</strong> de validation&nbsp;: ID, auteur, contenu et raison de mise en file.
+      </div>
+    </div>
+  </div>
+
+  <div class="cmd">
+    <div class="cmd-tag cyan">✅</div>
+    <div class="cmd-inner">
+      <div class="cmd-name cyan">!approve <span class="arg">[id]</span> <span class="pill-modo">MODO</span></div>
+      <div class="cmd-desc">
+        Approuve un message en attente. <strong>Le message est libéré</strong> dans le chat avec confirmation.
+      </div>
+    </div>
+  </div>
+
+  <div class="cmd">
+    <div class="cmd-tag cyan">❌</div>
+    <div class="cmd-inner">
+      <div class="cmd-name cyan">!reject <span class="arg">[id]</span> <span class="pill-modo">MODO</span></div>
+      <div class="cmd-desc">
+        Rejette et supprime définitivement un message en attente. L'utilisateur est notifié selon la config AutoMod.
+      </div>
+    </div>
+  </div>
+
+  <!-- Overlay & Compteurs -->
+  <div class="section-divider">// Overlays &amp; Compteurs Stream</div>
+
+  <div class="cmd">
+    <div class="cmd-tag cyan">🎯</div>
+    <div class="cmd-inner">
+      <div class="cmd-name cyan">!kill <span class="arg">[n]</span> <span class="pill-modo">MODO</span></div>
+      <div class="cmd-desc">
+        +N kills au compteur overlay. Mise à jour <strong>WebSocket temps réel</strong> dans OBS/Streamlabs.
+      </div>
+    </div>
+  </div>
+
+  <div class="cmd">
+    <div class="cmd-tag cyan">💀</div>
+    <div class="cmd-inner">
+      <div class="cmd-name cyan">!die <span class="arg">[n]</span> <span class="pill-modo">MODO</span></div>
+      <div class="cmd-desc">
+        +N morts au compteur overlay. Déclenche optionnellement son + animation GIF configurés.
+      </div>
+    </div>
+  </div>
+
+  <div class="cmd">
+    <div class="cmd-tag cyan">📦</div>
+    <div class="cmd-inner">
+      <div class="cmd-name cyan">!extract <span class="arg">[n]</span> <span class="pill-modo">MODO</span></div>
+      <div class="cmd-desc">
+        +N extractions au compteur overlay. Animation en temps réel.
+      </div>
+    </div>
+  </div>
+
+  <div class="cmd">
+    <div class="cmd-tag cyan">🔁</div>
+    <div class="cmd-inner">
+      <div class="cmd-name cyan">!raz <span class="arg">[compteur]</span> <span class="pill-modo">MODO</span></div>
+      <div class="cmd-desc">
+        Remet à zéro un compteur&nbsp;: <span class="hi">extractions | morts | kills</span>. Notification overlay instantanée.
+        <br><em>Usage&nbsp;: !raz extractions</em>
+      </div>
+    </div>
+  </div>
+
+  <!-- Arc Raiders -->
+  <div class="section-divider">// Arc Raiders — Compteurs Dédiés</div>
+
+  <div class="cmd">
+    <div class="cmd-tag cyan">⚔️</div>
+    <div class="cmd-inner">
+      <div class="cmd-name cyan">!arc_kill · !arc_die · !arc_pvp · !arc_extract <span class="pill-modo">MODO</span></div>
+      <div class="cmd-desc">
+        Compteurs <strong>Arc Raiders dédiés</strong>. Kills, morts PvE, morts PvP, extractions — chacun tracké séparément dans l'overlay.
+      </div>
+    </div>
+  </div>
+
+  <div class="cmd">
+    <div class="cmd-tag cyan">🔄</div>
+    <div class="cmd-inner">
+      <div class="cmd-name cyan">!arc_reset <span class="pill-modo">MODO</span></div>
+      <div class="cmd-desc">
+        Réinitialise <strong>tous les compteurs Arc Raiders</strong> à zéro pour une nouvelle session.
+      </div>
+    </div>
+  </div>
+
+  <!-- Chat & Annonces -->
+  <div class="section-divider">// Chat &amp; Annonces</div>
+
+  <div class="cmd">
+    <div class="cmd-tag cyan">📢</div>
+    <div class="cmd-inner">
+      <div class="cmd-name cyan">!announce <span class="arg">[texte]</span> <span class="pill-modo">MODO</span></div>
+      <div class="cmd-desc">
+        Envoie un message <strong>annoté 📢</strong> dans le chat. Pour communications officielles du stream.
+      </div>
+    </div>
+  </div>
+
+  <div class="cmd">
+    <div class="cmd-tag cyan">🔔</div>
+    <div class="cmd-inner">
+      <div class="cmd-name cyan">!alert <span class="arg">[texte]</span> <span class="pill-modo">MODO</span></div>
+      <div class="cmd-desc">
+        Déclenche une <strong>alerte overlay manuelle 5 secondes</strong>. Affiche le texte dans l'overlay d'alertes OBS via WebSocket.
+      </div>
+    </div>
+  </div>
+
+  <div class="cmd">
+    <div class="cmd-tag cyan">📡</div>
+    <div class="cmd-inner">
+      <div class="cmd-name cyan">!so <span class="arg">[pseudo]</span> <span class="pill-modo">MODO</span></div>
+      <div class="cmd-desc">
+        Shoutout pour un autre streamer. Récupère <strong>le jeu actuel + uptime</strong> via API Twitch Helix. Génère une blague IA sur le jeu.
+      </div>
+    </div>
+  </div>
+
+  <!-- Avatar poulpe -->
+  <div class="section-divider">// Avatar Poulpe VTuber</div>
+
+  <div class="cmd">
+    <div class="cmd-tag cyan">🐙</div>
+    <div class="cmd-inner">
+      <div class="cmd-name cyan">!poulpe <span class="arg">[mood]</span> <span class="pill-modo">MODO</span></div>
+      <div class="cmd-desc">
+        Change l'expression de l'<strong>avatar poulpe overlay</strong> en temps réel.
+        <br>Moods&nbsp;: <span class="hi">idle · happy · excited · rage · sad · sleep</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Commandes custom -->
+  <div class="section-divider">// Commandes Personnalisées</div>
+
+  <div class="cmd">
+    <div class="cmd-tag cyan">➕</div>
+    <div class="cmd-inner">
+      <div class="cmd-name cyan">!addcmd <span class="arg">[nom] [réponse]</span> <span class="pill-modo">MODO</span></div>
+      <div class="cmd-desc">
+        Crée une commande custom <strong>persistante sans redémarrer</strong>. Active instantanément.
+        <br><em>Ex&nbsp;: !addcmd hello Bienvenue dans les abysses&nbsp;!</em>
+      </div>
+    </div>
+  </div>
+
+  <div class="cmd">
+    <div class="cmd-tag cyan">✏️</div>
+    <div class="cmd-inner">
+      <div class="cmd-name cyan">!editcmd <span class="arg">[nom] [réponse]</span> <span class="pill-modo">MODO</span></div>
+      <div class="cmd-desc">
+        Modifie la réponse d'une commande personnalisée existante. <strong>Mise à jour instantanée</strong>.
+      </div>
+    </div>
+  </div>
+
+  <div class="cmd">
+    <div class="cmd-tag cyan">🗑️</div>
+    <div class="cmd-inner">
+      <div class="cmd-name cyan">!delcmd <span class="arg">[nom]</span> <span class="pill-modo">MODO</span></div>
+      <div class="cmd-desc">
+        Supprime définitivement une commande personnalisée. <span class="warn">Les commandes natives du bot ne sont pas affectées.</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="entity-quote">
+    "Un bon modo ne dort pas. Comme Dreadthulhu. Sauf que Dreadthulhu ne dort jamais vraiment."
+  </div>
+</div>
+
+<div class="div-sep red"></div>
+
+<!-- ═══ SECTION OWNER ═══ -->
+<div class="block" id="s-owner">
+  <div class="slabel red">👑 Pouvoirs du Grand Dreadlocktopus</div>
+  <div class="pad" style="padding-bottom:0;">
+    <div class="warn-bar red">👑 ACCÈS EXCLUSIF — GRAND DREADLOCKTOPUS UNIQUEMENT<br>CES COMMANDES NE SONT PAS DÉLÉGUÉES AUX MODOS</div>
+  </div>
+
+  <!-- Ban / Unban -->
+  <div class="section-divider">// Excommunication Tentaculaire</div>
+
+  <div class="cmd">
+    <div class="cmd-tag red">☠️</div>
+    <div class="cmd-inner">
+      <div class="cmd-name red">!ban <span class="arg">[pseudo]</span> <span class="pill-owner">OWNER</span></div>
+      <div class="cmd-desc">
+        <span class="danger">Ban définitif</span> d'un utilisateur des abysses. Les tentacules ne pardonnent pas.
+        <br><em>Réservé exclusivement au Grand Dreadlocktopus.</em>
+      </div>
+    </div>
+  </div>
+
+  <div class="cmd">
+    <div class="cmd-tag red">🔓</div>
+    <div class="cmd-inner">
+      <div class="cmd-name red">!unban <span class="arg">[pseudo]</span> <span class="pill-owner">OWNER</span></div>
+      <div class="cmd-desc">
+        Lève le ban d'un utilisateur. <strong>Les abysses accordent parfois une seconde chance.</strong>
+      </div>
+    </div>
+  </div>
+
+  <!-- XP & Config -->
+  <div class="section-divider">// XP &amp; Configuration Live</div>
+
+  <div class="cmd">
+    <div class="cmd-tag red">⚡</div>
+    <div class="cmd-inner">
+      <div class="cmd-name red">!givexp <span class="arg">[pseudo] [montant]</span> <span class="pill-owner">OWNER</span></div>
+      <div class="cmd-desc">
+        Accorde directement de l'XP à n'importe quel viewer. <strong>Message spécial de l'entité</strong> annonçant le don divin.
+      </div>
+    </div>
+  </div>
+
+  <div class="cmd">
+    <div class="cmd-tag red">🔁</div>
+    <div class="cmd-inner">
+      <div class="cmd-name red">!reload <span class="pill-owner">OWNER</span></div>
+      <div class="cmd-desc">
+        Recharge <strong>toutes les configurations JSON</strong> en live sans redémarrer le bot&nbsp;: settings, commands, ranks, automod, overlays…
+        <br><span class="warn">Essentiel après modification du dashboard.</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="cmd">
+    <div class="cmd-tag red">🎮</div>
+    <div class="cmd-inner">
+      <div class="cmd-name red">!game <span class="arg">[nom]</span> <span class="pill-owner">OWNER</span></div>
+      <div class="cmd-desc">
+        Change le <strong>jeu actuel</strong> utilisé par les overlays et compteurs. Sans argument&nbsp;: affiche le jeu actif. Les overlays s'adaptent automatiquement.
+      </div>
+    </div>
+  </div>
+
+  <div class="cmd">
+    <div class="cmd-tag red">📝</div>
+    <div class="cmd-inner">
+      <div class="cmd-name red">!title <span class="arg">[titre]</span> <span class="pill-owner">OWNER</span></div>
+      <div class="cmd-desc">
+        Affiche ou met à jour le <strong>titre du live</strong> dans la configuration interne. Sans argument&nbsp;: affiche le titre actuel.
+      </div>
+    </div>
+  </div>
+
+  <!-- Compteurs manuels -->
+  <div class="section-divider">// Corrections Manuelles Overlay</div>
+
+  <div class="cmd">
+    <div class="cmd-tag red">🔢</div>
+    <div class="cmd-inner">
+      <div class="cmd-name red">!setkill <span class="arg">[valeur]</span> · !setextract <span class="arg">[valeur]</span> <span class="pill-owner">OWNER</span></div>
+      <div class="cmd-desc">
+        Définit manuellement un compteur à une <strong>valeur précise</strong>. Utile après oubli ou déconnexion overlay.
+      </div>
+    </div>
+  </div>
+
+  <div class="cmd">
+    <div class="cmd-tag red">📊</div>
+    <div class="cmd-inner">
+      <div class="cmd-name red">!leaderboard <span class="pill-owner">OWNER</span></div>
+      <div class="cmd-desc">
+        Rafraîchit manuellement le <strong>leaderboard overlay Top 5 XP</strong>. Force la mise à jour WebSocket immédiate.
+      </div>
+    </div>
+  </div>
+
+  <!-- IA -->
+  <div class="section-divider">// Moteur IA — Gestion Avancée</div>
+
+  <div class="cmd">
+    <div class="cmd-tag red">🤖</div>
+    <div class="cmd-inner">
+      <div class="cmd-name red">!ia <span class="arg">[status|reset|on|off]</span> <span class="pill-owner">OWNER</span></div>
+      <div class="cmd-desc">
+        Gère le moteur IA&nbsp;: <span class="hi">status</span> (état de chaque IA) · <span class="hi">reset</span> (réactiver toutes) · <span class="hi">on/off</span> (activer/désactiver).
+        <br><em>Mode off&nbsp;: fallbacks Kaamelott×Poulpe actifs.</em>
+      </div>
+    </div>
+  </div>
+
+  <div class="entity-quote red">
+    "Le ban est définitif. Le unban est rare. Le Grand Dreadlocktopus a 8 tentacules et une mémoire infaillible."
+  </div>
+</div>
+
+<div class="div-sep"></div>
+
+<!-- ═══ FOOTER ═══ -->
+<div class="block" id="sfooter">
+  <div class="footer-url">DREADLOCKTOPUS76.TWITCH.TV</div>
+  <div class="footer-sub">
+    — Powered by <span>DREADTHULHU v5</span> —<br>
+    Protocole Autorité · Modérateurs &amp; Owner uniquement<br>
+    Gamer Chelou · Né en 86 · Mais on fait avec 🐙
+  </div>
+  <div class="affil">👑 ACCÈS RESTREINT · AUTORITÉ ABYSSALE</div>
+  <div class="roger-warn">⚠️ Ne pas chercher Roger. On a dit NE PAS CHERCHER ROGER.</div>
+</div>
+
+</body>
+</html>
