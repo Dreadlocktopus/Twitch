@@ -1,0 +1,388 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=320">
+<title>Dreadlocktopus — Règles du Chat</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700;900&family=IBM+Plex+Mono:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+html{-webkit-font-smoothing:antialiased;}
+:root {
+  --bg:#06040f; --surf1:#0c0817; --surf2:#120d22; --surf3:#1a1130;
+  --text:#f0eaff; --muted:#9080b8; --faint:#3d2e5a;
+  --violet:#7c3aed; --vhi:#a855f7; --vlo:#4c1d95;
+  --orange:#ff6b00; --orange-hi:#ff9642; --orange-lo:#c44d00;
+  --amber:#ffab2e; --red:#ff3366;
+  --gv:0 0 14px rgba(168,85,247,.45),0 0 40px rgba(124,58,237,.18);
+  --go:0 0 14px rgba(255,107,0,.5),0 0 40px rgba(255,107,0,.18);
+  --bv:rgba(168,85,247,.18); --bo:rgba(255,107,0,.18);
+  --font-title:'Cinzel',serif;
+  --font-mono:'IBM Plex Mono',monospace;
+}
+body {
+  width:320px; margin:0 auto;
+  background:var(--bg);
+  background-image:
+    radial-gradient(ellipse 90% 55% at 50% -5%,rgba(124,58,237,.1) 0%,transparent 65%),
+    radial-gradient(ellipse 50% 40% at 95% 90%,rgba(255,107,0,.06) 0%,transparent 55%),
+    radial-gradient(ellipse 40% 35% at 5% 80%,rgba(124,58,237,.06) 0%,transparent 55%);
+  color:var(--text); font-family:var(--font-mono); font-size:10px;
+}
+body::after {
+  content:''; position:fixed; inset:0; pointer-events:none; z-index:9999;
+  background:repeating-linear-gradient(0deg,transparent,transparent 3px,rgba(0,0,0,.04) 3px,rgba(0,0,0,.04) 4px);
+}
+.block {
+  width:320px; background:var(--surf1);
+  border:1px solid var(--bv); overflow:hidden; position:relative;
+}
+.block+.block { border-top:none; }
+.block::before,.block::after {
+  content:''; position:absolute; width:8px; height:8px;
+  border-color:var(--vhi); border-style:solid; opacity:.5;
+}
+.block::before { top:0;left:0;border-width:1px 0 0 1px; }
+.block::after  { bottom:0;right:0;border-width:0 1px 1px 0; }
+.div-sep {
+  width:320px; height:2px;
+  background:linear-gradient(90deg,transparent 0%,var(--orange-lo) 20%,var(--vhi) 50%,var(--orange-lo) 80%,transparent 100%);
+}
+.div-thin {
+  height:1px;
+  background:linear-gradient(90deg,transparent,var(--faint) 50%,transparent);
+  margin:10px 0;
+}
+.slabel {
+  font-family:var(--font-mono); font-size:8px; font-weight:500;
+  color:var(--orange-hi); letter-spacing:.22em; text-transform:uppercase;
+  display:flex; align-items:center; gap:8px;
+  padding:9px 16px; background:var(--surf2); border-bottom:1px solid var(--bv);
+}
+.slabel::before,.slabel::after { content:''; flex:1; height:1px; }
+.slabel::before { background:linear-gradient(to right,transparent,var(--orange-lo)); }
+.slabel::after  { background:linear-gradient(to left,transparent,var(--orange-lo)); }
+.pad { padding:16px; }
+
+/* ═══ HERO RULES ═══ */
+#s-hero {
+  background:var(--surf1);
+  background-image:
+    radial-gradient(ellipse 80% 60% at 50% 0%,rgba(124,58,237,.18) 0%,transparent 70%),
+    radial-gradient(ellipse 40% 40% at 0% 100%,rgba(255,107,0,.08) 0%,transparent 60%);
+  padding:20px 16px 16px;
+}
+.file-tag {
+  font-family:var(--font-mono); font-size:7.5px; font-weight:500;
+  color:var(--orange-hi); letter-spacing:.2em; text-transform:uppercase;
+  text-align:center; margin-bottom:16px; opacity:.8;
+}
+.hero-name {
+  font-family:var(--font-title); font-size:22px; font-weight:900;
+  line-height:1; letter-spacing:.06em; text-align:center;
+  text-transform:uppercase;
+  background:linear-gradient(135deg,var(--vhi) 0%,#c084fc 40%,var(--orange-hi) 80%);
+  -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text;
+  margin-bottom:4px;
+  filter:drop-shadow(0 0 12px rgba(168,85,247,.4));
+}
+.hero-sub {
+  font-family:var(--font-mono); font-size:8px; font-weight:300;
+  color:var(--muted); letter-spacing:.12em; text-align:center; line-height:1.8; margin-bottom:14px;
+}
+.hero-live {
+  display:flex; align-items:center; justify-content:center; gap:6px;
+  padding:5px 0; border-top:1px solid var(--bv);
+  font-family:var(--font-mono); font-size:8px; font-weight:600;
+  color:var(--red); letter-spacing:.2em; text-transform:uppercase;
+}
+.dot { width:7px; height:7px; background:var(--red); border-radius:50%; box-shadow:0 0 8px var(--red); animation:blink 1.4s ease-in-out infinite; }
+@keyframes blink { 0%,100%{opacity:1;transform:scale(1);} 50%{opacity:.3;transform:scale(.65);} }
+
+/* ═══ INTRO BLOCK ═══ */
+.warn-bar {
+  display:flex; align-items:flex-start; gap:8px; padding:8px 10px;
+  background:rgba(255,107,0,.08); border-left:3px solid var(--orange);
+  margin-bottom:14px;
+  font-family:var(--font-mono); font-size:8px; font-weight:500;
+  color:var(--orange-hi); letter-spacing:.1em; line-height:1.6; text-transform:uppercase;
+}
+.lore-body {
+  font-family:var(--font-mono); font-size:10px; font-weight:300;
+  color:var(--muted); line-height:1.75; font-style:italic;
+}
+.lore-body strong { font-style:normal; font-weight:600; color:var(--text); }
+.lore-body .hi { color:#c084fc; font-style:normal; font-weight:500; }
+
+/* ═══ RÈGLES ═══ */
+.rule {
+  display:flex; gap:12px; align-items:flex-start;
+  padding:12px 16px; border-bottom:1px solid rgba(76,29,149,.25);
+  position:relative;
+}
+.rule:last-child { border-bottom:none; }
+.rule-n {
+  font-family:var(--font-title); font-size:20px; font-weight:700;
+  color:var(--faint); line-height:1; min-width:24px; text-align:right; flex-shrink:0;
+}
+.rule-body {}
+.rule-name {
+  font-family:var(--font-title); font-size:10px; font-weight:700;
+  color:var(--vhi); letter-spacing:.12em; text-transform:uppercase; margin-bottom:5px;
+}
+.rule-desc {
+  font-family:var(--font-mono); font-size:9.5px; font-weight:300;
+  color:var(--muted); line-height:1.6; font-style:italic;
+}
+.rule-desc strong { font-style:normal; font-weight:600; color:var(--text); }
+.rule-desc .hi { color:#c084fc; font-style:normal; font-weight:500; }
+.rule-desc .warn { color:var(--orange-hi); font-style:normal; font-weight:500; }
+.rule.danger .rule-name { color:var(--red); }
+.rule.danger .rule-n   { color:rgba(255,51,102,.3); }
+.rule.special .rule-name { color:var(--amber); }
+.rule.special .rule-n   { color:rgba(255,171,46,.3); }
+
+/* ═══ SANCTIONS BLOCK ═══ */
+.sanction-row {
+  display:flex; align-items:flex-start; gap:10px;
+  padding:8px 16px; border-bottom:1px solid rgba(76,29,149,.2);
+}
+.sanction-row:last-child { border-bottom:none; }
+.sanction-step {
+  font-family:var(--font-mono); font-size:8px; font-weight:600;
+  color:var(--orange-hi); letter-spacing:.12em; text-transform:uppercase;
+  min-width:80px; flex-shrink:0; padding-top:1px;
+}
+.sanction-desc {
+  font-family:var(--font-mono); font-size:9.5px; font-weight:300;
+  color:var(--muted); line-height:1.5; font-style:italic;
+}
+.sanction-desc strong { font-style:normal; font-weight:600; color:var(--text); }
+
+/* ═══ QUOTE FINALE ═══ */
+.entity-quote {
+  margin:10px 16px 14px; padding:8px 10px;
+  border-left:2px solid var(--violet); background:rgba(124,58,237,.1); border-radius:0 4px 4px 0;
+  font-family:var(--font-mono); font-size:9px; color:var(--vhi); font-style:italic; line-height:1.5;
+}
+
+/* ═══ FOOTER ═══ */
+#sfooter { background:var(--surf2); padding:16px; text-align:center; }
+.footer-url { font-family:var(--font-title); font-size:12px; font-weight:700; color:var(--vhi); letter-spacing:.15em; text-transform:uppercase; margin-bottom:6px; }
+.footer-sub { font-family:var(--font-mono); font-size:8.5px; color:var(--muted); line-height:1.8; letter-spacing:.06em; }
+.footer-sub span { color:var(--vhi); font-weight:600; }
+.affil {
+  display:inline-flex; align-items:center; gap:6px; margin-top:10px; padding:5px 12px;
+  background:rgba(124,58,237,.12); border:1px solid var(--bv); border-radius:4px;
+  font-family:var(--font-mono); font-size:8px; color:var(--vhi); letter-spacing:.1em; text-transform:uppercase;
+}
+.roger-warn { margin-top:10px; font-family:var(--font-mono); font-size:8px; color:var(--faint); font-style:italic; letter-spacing:.06em; }
+</style>
+</head>
+<body>
+
+<!-- ═══ HERO ═══ -->
+<div class="block" id="s-hero">
+  <div class="file-tag">◈ PROTOCOLE ABYSSAL — CLASSIFICATION&nbsp;: LOIS DE L'OCÉAN</div>
+  <div class="hero-name">RÈGLES DU CHAT</div>
+  <div class="hero-sub">// LOIS DES ABYSSES · EN VIGUEUR PERMANENTE<br>// APPROUVÉES PAR ROGER LE TENTACULE GROGNON</div>
+  <div class="hero-live"><span class="dot"></span>PROTOCOLE ACTIF — DREADLOCKTOPUS76</div>
+</div>
+
+<div class="div-sep"></div>
+
+<!-- ═══ INTRO ═══ -->
+<div class="block" id="s-intro">
+  <div class="slabel">⚠ Avertissement Abyssal</div>
+  <div class="pad">
+    <div class="warn-bar">⚠ TRANSMISSION RÉGLEMENTAIRE — SOURCE&nbsp;: LES PROFONDEURS<br>NIVEAU D'OBLIGATION&nbsp;: MAXIMAL</div>
+    <div class="lore-body">
+      Bienvenue dans les eaux du <strong>Dreadlocktopus</strong>. Ces abysses sont accueillantes — mais pas sans lois.
+      Tout visiteur pénétrant dans ce chat <span class="hi">devient une ventouse du Poulpe Cosmique</span>, et à ce titre, se soumet au présent Codex Tentaculaire.
+      <br><br>
+      <strong>Roger</strong> observe. Roger note. Roger mord doucement… mais quand même.
+    </div>
+  </div>
+</div>
+
+<div class="div-sep"></div>
+
+<!-- ═══ RÈGLES 1–5 ═══ -->
+<div class="block" id="s-rules-a">
+  <div class="slabel">🐙 Codex Tentaculaire — Articles I à V</div>
+
+  <div class="rule">
+    <div class="rule-n">01</div>
+    <div class="rule-body">
+      <div class="rule-name">Respect des Petites Ventouses</div>
+      <div class="rule-desc">
+        Pas d'insultes. Pas de haine. Pas de drama. On respecte ici <span class="hi">tout le monde</span>&nbsp;: humains, poulpes, krakens, et même les méduses (même si elles sont chiantes).
+        <br>Aucune discrimination&nbsp;: <strong>racisme, sexisme, homophobie, transphobie, validisme</strong> — tout cela est banni des profondeurs.
+        <br><em>Les tentacules sont doux. Restons doux aussi.</em>
+      </div>
+    </div>
+  </div>
+
+  <div class="rule">
+    <div class="rule-n">02</div>
+    <div class="rule-body">
+      <div class="rule-name">Détente &amp; Bonne Vibe</div>
+      <div class="rule-desc">
+        Cette commu = <span class="hi">chill abyssal</span>. On rigole, on blblbl, on n'est pas toxiques — la mer est déjà assez polluée, n'en rajoutez pas ici.
+        <br>Si tu veux gueuler, ragequit ou te battre&hellip; fais-le contre une algue ou un calamar, <strong>pas dans ce chat</strong>.
+      </div>
+    </div>
+  </div>
+
+  <div class="rule">
+    <div class="rule-n">03</div>
+    <div class="rule-body">
+      <div class="rule-name">Zéro Spoil</div>
+      <div class="rule-desc">
+        Le tentacule n°6 (Roger) mord ceux qui spoilent. Doucement, mais quand même.
+        <br>Tout spoil volontaire&nbsp;= <span class="warn">jet d'encre numérique</span> réduisant ta vision de 100%.
+        <br><em>Spoil accidentel&nbsp;? On pardonne — on est des poulpes, pas des orques.</em>
+        <br>En cas de récidive&nbsp;: ton pseudo sera inscrit dans le <strong>Grand Grimoire des Traîtres des Abysses</strong>.
+      </div>
+    </div>
+  </div>
+
+  <div class="rule">
+    <div class="rule-n">04</div>
+    <div class="rule-body">
+      <div class="rule-name">Pas de Backseat Non Demandé</div>
+      <div class="rule-desc">
+        Le Dreadlocktopus est un être millénaire, mais il reste sensible&nbsp;— surtout quand il joue.
+        <br>Évite les <span class="warn">«&nbsp;Va là, fais ci, fais ça&nbsp;»</span> non sollicités.
+        <br>S'il a besoin d'aide, <strong>il te le dira</strong>. Sinon il coulera avec honneur dans les profondeurs abyssales.
+      </div>
+    </div>
+  </div>
+
+  <div class="rule">
+    <div class="rule-n">05</div>
+    <div class="rule-body">
+      <div class="rule-name">Pas de Pub Sauvage</div>
+      <div class="rule-desc">
+        Tu peux parler de ce que tu fais, mais <strong>pas de promo forcée</strong>.
+        <br>La seule créature autorisée à envahir ce chat&nbsp;: <span class="hi">le Dreadlocktopus</span>.
+        <br>Autres streams, discords, chaînes&nbsp;? <span class="warn">C'est non.</span> Roger gère.
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="div-sep"></div>
+
+<!-- ═══ RÈGLES 6–10 ═══ -->
+<div class="block" id="s-rules-b">
+  <div class="slabel">🌊 Codex Tentaculaire — Articles VI à X</div>
+
+  <div class="rule">
+    <div class="rule-n">06</div>
+    <div class="rule-body">
+      <div class="rule-name">Pas de Spam</div>
+      <div class="rule-desc">
+        Même le Dreadlocktopus a <span class="hi">8 bras</span> — il ne peut pas lire 8 lignes de spam à la fois.
+        <br>Évite les floods… <strong>sauf quand demandé</strong> (rituels summoniques acceptés et encouragés 🐙).
+      </div>
+    </div>
+  </div>
+
+  <div class="rule special">
+    <div class="rule-n">07</div>
+    <div class="rule-body">
+      <div class="rule-name">Respect du Lore</div>
+      <div class="rule-desc">
+        Les <strong>calmars sont des ennemis ancestraux</strong>. Les <strong>poulpes, des êtres nobles</strong>. Ce n'est <em>pas négociable</em>.
+        <br>Les méduses sont des casse-tentacule&hellip; mais on les aime quand même.
+        <br><span class="warn">⚠ Ne pas mentionner Kaamelott dans le chat. On a dit NE PAS LE MENTIONNER.</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="rule">
+    <div class="rule-n">08</div>
+    <div class="rule-body">
+      <div class="rule-name">Tout le Monde est Bienvenu</div>
+      <div class="rule-desc">
+        Tant que tu es respectueux, tu deviens instantanément <span class="hi">une ventouse du Poulpe Cosmique</span>.
+        <br>Règle fondamentale de l'océan&nbsp;: toutes les espèces sont les bienvenues.
+        <br><em>Sauf les calamars. (Clause contractuelle.)</em>
+      </div>
+    </div>
+  </div>
+
+  <div class="rule">
+    <div class="rule-n">09</div>
+    <div class="rule-body">
+      <div class="rule-name">Pas de Demandes Cheloues</div>
+      <div class="rule-desc">
+        Oui, le Dreadlocktopus a des tentacules. Non, ils ne servent <strong>pas à ce que tu crois</strong>.
+        <br>On reste <span class="hi">clean</span>&nbsp;— ça évite des bannissements humides et visqueux.
+        <br>Twitch a des règles. On les respecte. Ici <em>et</em> en dehors.
+      </div>
+    </div>
+  </div>
+
+  <div class="rule danger">
+    <div class="rule-n">10</div>
+    <div class="rule-body">
+      <div class="rule-name">⚠ Sanctions Abyssales</div>
+      <div class="rule-desc">
+        Tout non-respect déclenche la <strong>procédure tentaculaire</strong>. Roger a été prévenu.
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="div-sep"></div>
+
+<!-- ═══ SANCTIONS ═══ -->
+<div class="block" id="s-sanctions">
+  <div class="slabel">☠️ Protocole de Sanction — Procédure Roger</div>
+
+  <div class="sanction-row">
+    <div class="sanction-step">① AVERTISSEMENT</div>
+    <div class="sanction-desc">Mise en garde tentaculaire. Roger te regarde. Mal.</div>
+  </div>
+  <div class="sanction-row">
+    <div class="sanction-step">② TIMEOUT</div>
+    <div class="sanction-desc">Mise en chambre de décompression abyssale. Durée variable selon la gravité du forfait.</div>
+  </div>
+  <div class="sanction-row">
+    <div class="sanction-step">③ BAN TEMP.</div>
+    <div class="sanction-desc"><strong>Baignade forcée avec les calamars et les méduses.</strong> Et plus si affinités.</div>
+  </div>
+  <div class="sanction-row">
+    <div class="sanction-step">④ BAN DÉFI.</div>
+    <div class="sanction-desc">
+      En cas de récidive&nbsp;: <strong>invocation de Dreadthulhu</strong>, qui dévorera ton âme et pratiquera ton <em>Excommunication Tentaculaire Totale</em>.
+      <br>Ton modem redeviendra un 56k. Ta vision sera du 8 bits. À vie.
+    </div>
+  </div>
+
+  <div class="div-thin" style="margin:0 16px;"></div>
+  <div class="entity-quote">
+    "Le Dreadlocktopus est clément. Roger, beaucoup moins. Ne cherche pas Roger."
+  </div>
+</div>
+
+<div class="div-sep"></div>
+
+<!-- ═══ FOOTER ═══ -->
+<div class="block" id="sfooter">
+  <div class="footer-url">DREADLOCKTOPUS76.TWITCH.TV</div>
+  <div class="footer-sub">
+    — Powered by <span>DREADTHULHU</span> —<br>
+    Règles appliquées par tentacule depuis les profondeurs<br>
+    Gamer Chelou · Né en 86 · Mais on fait avec 🐙
+  </div>
+  <div class="affil">🐙 CHAT VIVANT · ABYSSE BIENVEILLANT</div>
+  <div class="roger-warn">⚠️ Ne pas chercher Roger. On a dit NE PAS CHERCHER ROGER.</div>
+</div>
+
+</body>
+</html>
