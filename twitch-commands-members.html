@@ -1,0 +1,616 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=320">
+<title>Dreadthulhu — Commandes Membres</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700;900&family=IBM+Plex+Mono:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+html{-webkit-font-smoothing:antialiased;}
+:root {
+  --bg:#06040f; --surf1:#0c0817; --surf2:#120d22; --surf3:#1a1130;
+  --text:#f0eaff; --muted:#9080b8; --faint:#3d2e5a;
+  --violet:#7c3aed; --vhi:#a855f7; --vlo:#4c1d95;
+  --orange:#ff6b00; --orange-hi:#ff9642; --orange-lo:#c44d00;
+  --amber:#ffab2e; --red:#ff3366; --green:#22c55e;
+  --gv:0 0 14px rgba(168,85,247,.45),0 0 40px rgba(124,58,237,.18);
+  --go:0 0 14px rgba(255,107,0,.5),0 0 40px rgba(255,107,0,.18);
+  --bv:rgba(168,85,247,.18); --bo:rgba(255,107,0,.18);
+  --font-title:'Cinzel',serif;
+  --font-mono:'IBM Plex Mono',monospace;
+}
+body {
+  width:320px; margin:0 auto;
+  background:var(--bg);
+  background-image:
+    radial-gradient(ellipse 90% 55% at 50% -5%,rgba(124,58,237,.1) 0%,transparent 65%),
+    radial-gradient(ellipse 50% 40% at 95% 90%,rgba(255,107,0,.06) 0%,transparent 55%),
+    radial-gradient(ellipse 40% 35% at 5% 80%,rgba(124,58,237,.06) 0%,transparent 55%);
+  color:var(--text); font-family:var(--font-mono); font-size:10px;
+}
+body::after {
+  content:''; position:fixed; inset:0; pointer-events:none; z-index:9999;
+  background:repeating-linear-gradient(0deg,transparent,transparent 3px,rgba(0,0,0,.04) 3px,rgba(0,0,0,.04) 4px);
+}
+.block {
+  width:320px; background:var(--surf1);
+  border:1px solid var(--bv); overflow:hidden; position:relative;
+}
+.block+.block { border-top:none; }
+.block::before,.block::after {
+  content:''; position:absolute; width:8px; height:8px;
+  border-color:var(--vhi); border-style:solid; opacity:.5;
+}
+.block::before { top:0;left:0;border-width:1px 0 0 1px; }
+.block::after  { bottom:0;right:0;border-width:0 1px 1px 0; }
+.div-sep {
+  width:320px; height:2px;
+  background:linear-gradient(90deg,transparent 0%,var(--orange-lo) 20%,var(--vhi) 50%,var(--orange-lo) 80%,transparent 100%);
+}
+.div-thin {
+  height:1px;
+  background:linear-gradient(90deg,transparent,var(--faint) 50%,transparent);
+  margin:10px 0;
+}
+.slabel {
+  font-family:var(--font-mono); font-size:8px; font-weight:500;
+  color:var(--orange-hi); letter-spacing:.22em; text-transform:uppercase;
+  display:flex; align-items:center; gap:8px;
+  padding:9px 16px; background:var(--surf2); border-bottom:1px solid var(--bv);
+}
+.slabel::before,.slabel::after { content:''; flex:1; height:1px; }
+.slabel::before { background:linear-gradient(to right,transparent,var(--orange-lo)); }
+.slabel::after  { background:linear-gradient(to left,transparent,var(--orange-lo)); }
+.pad { padding:16px; }
+
+/* ═══ HERO ═══ */
+#s-hero {
+  background:var(--surf1);
+  background-image:
+    radial-gradient(ellipse 80% 60% at 50% 0%,rgba(124,58,237,.18) 0%,transparent 70%),
+    radial-gradient(ellipse 40% 40% at 0% 100%,rgba(255,107,0,.08) 0%,transparent 60%);
+  padding:20px 16px 16px;
+}
+.file-tag {
+  font-family:var(--font-mono); font-size:7.5px; font-weight:500;
+  color:var(--orange-hi); letter-spacing:.2em; text-transform:uppercase;
+  text-align:center; margin-bottom:16px; opacity:.8;
+}
+.hero-name {
+  font-family:var(--font-title); font-size:20px; font-weight:900;
+  line-height:1.1; letter-spacing:.05em; text-align:center;
+  text-transform:uppercase;
+  background:linear-gradient(135deg,var(--vhi) 0%,#c084fc 40%,var(--orange-hi) 80%);
+  -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text;
+  margin-bottom:4px;
+  filter:drop-shadow(0 0 12px rgba(168,85,247,.4));
+}
+.hero-sub {
+  font-family:var(--font-mono); font-size:8px; font-weight:300;
+  color:var(--muted); letter-spacing:.12em; text-align:center; line-height:1.8; margin-bottom:14px;
+}
+.hero-live {
+  display:flex; align-items:center; justify-content:center; gap:6px;
+  padding:5px 0; border-top:1px solid var(--bv);
+  font-family:var(--font-mono); font-size:8px; font-weight:600;
+  color:var(--green); letter-spacing:.2em; text-transform:uppercase;
+}
+.dot-green { width:7px; height:7px; background:var(--green); border-radius:50%; box-shadow:0 0 8px var(--green); animation:blink 1.4s ease-in-out infinite; }
+@keyframes blink { 0%,100%{opacity:1;transform:scale(1);} 50%{opacity:.3;transform:scale(.65);} }
+
+/* ═══ BADGE ACCÈS ═══ */
+.access-banner {
+  margin:14px 16px 0;
+  padding:10px 12px;
+  background:linear-gradient(135deg,rgba(34,197,94,.08),rgba(168,85,247,.08));
+  border:1px solid rgba(34,197,94,.3);
+  border-radius:6px;
+  text-align:center;
+}
+.access-banner .ab-title {
+  font-family:var(--font-title); font-size:11px; font-weight:700;
+  color:var(--green); letter-spacing:.15em; text-transform:uppercase;
+  filter:drop-shadow(0 0 8px rgba(34,197,94,.4));
+  margin-bottom:4px;
+}
+.access-banner .ab-sub {
+  font-family:var(--font-mono); font-size:8px; font-weight:300;
+  color:var(--muted); letter-spacing:.08em; line-height:1.6;
+}
+
+/* ═══ WARN BAR ═══ */
+.warn-bar {
+  display:flex; align-items:flex-start; gap:8px; padding:8px 10px;
+  background:rgba(255,107,0,.08); border-left:3px solid var(--orange);
+  margin-bottom:14px;
+  font-family:var(--font-mono); font-size:8px; font-weight:500;
+  color:var(--orange-hi); letter-spacing:.1em; line-height:1.6; text-transform:uppercase;
+}
+.lore-body {
+  font-family:var(--font-mono); font-size:10px; font-weight:300;
+  color:var(--muted); line-height:1.75; font-style:italic;
+}
+.lore-body strong { font-style:normal; font-weight:600; color:var(--text); }
+.lore-body .hi { color:#c084fc; font-style:normal; font-weight:500; }
+
+/* ═══ COMMANDES ═══ */
+.cmd {
+  display:flex; gap:0; align-items:stretch;
+  border-bottom:1px solid rgba(76,29,149,.22);
+  min-height:48px;
+}
+.cmd:last-child { border-bottom:none; }
+.cmd-tag {
+  display:flex; align-items:center; justify-content:center;
+  min-width:36px; padding:0 4px;
+  background:rgba(124,58,237,.08);
+  border-right:1px solid var(--bv);
+  font-size:16px; flex-shrink:0;
+}
+.cmd-inner {
+  padding:9px 12px; flex:1;
+}
+.cmd-name {
+  font-family:var(--font-mono); font-size:10px; font-weight:600;
+  color:var(--vhi); letter-spacing:.08em; margin-bottom:3px;
+}
+.cmd-name .arg {
+  color:var(--orange-hi); font-weight:400; font-style:italic;
+}
+.cmd-desc {
+  font-family:var(--font-mono); font-size:9px; font-weight:300;
+  color:var(--muted); line-height:1.5; font-style:italic;
+}
+.cmd-desc strong { font-style:normal; font-weight:600; color:var(--text); }
+.cmd-desc .hi { color:#c084fc; font-style:normal; font-weight:500; }
+.cmd-desc .warn { color:var(--orange-hi); font-style:normal; }
+.cmd-desc .cd {
+  display:inline-block; margin-top:3px;
+  font-family:var(--font-mono); font-size:7.5px; font-weight:500;
+  color:var(--faint); letter-spacing:.08em; text-transform:uppercase;
+  background:rgba(61,46,90,.4); padding:1px 5px; border-radius:3px;
+}
+
+/* Sub-only pill */
+.cmd-name .sub-pill {
+  font-family:var(--font-mono); font-size:7px; font-weight:600;
+  color:var(--green); letter-spacing:.1em; text-transform:uppercase;
+  background:rgba(34,197,94,.1); border:1px solid rgba(34,197,94,.35);
+  padding:1px 5px; border-radius:3px; margin-left:5px; vertical-align:middle;
+}
+
+/* ═══ SOULS BLOCK ═══ */
+.souls-display {
+  display:flex; align-items:center; gap:10px;
+  padding:10px 16px; border-bottom:1px solid rgba(76,29,149,.22);
+}
+.souls-icon { font-size:20px; flex-shrink:0; }
+.souls-body {}
+.souls-name {
+  font-family:var(--font-title); font-size:10px; font-weight:700;
+  color:var(--amber); letter-spacing:.1em; text-transform:uppercase; margin-bottom:3px;
+}
+.souls-desc {
+  font-family:var(--font-mono); font-size:9px; font-weight:300;
+  color:var(--muted); line-height:1.5; font-style:italic;
+}
+
+/* ═══ RANGS TABLE ═══ */
+.rank-row {
+  display:flex; align-items:center; gap:8px;
+  padding:6px 16px; border-bottom:1px solid rgba(76,29,149,.18);
+}
+.rank-row:last-child { border-bottom:none; }
+.rank-num {
+  font-family:var(--font-mono); font-size:8px; font-weight:600;
+  color:var(--faint); min-width:20px; text-align:right;
+}
+.rank-emoji { font-size:13px; flex-shrink:0; }
+.rank-name {
+  font-family:var(--font-title); font-size:9px; font-weight:600;
+  color:var(--vhi); letter-spacing:.1em; text-transform:uppercase; flex:1;
+}
+.rank-xp {
+  font-family:var(--font-mono); font-size:8px; font-weight:500;
+  color:var(--orange-hi); text-align:right; white-space:nowrap;
+}
+
+/* ═══ QUOTE ═══ */
+.entity-quote {
+  margin:10px 16px 14px; padding:8px 10px;
+  border-left:2px solid var(--violet); background:rgba(124,58,237,.1); border-radius:0 4px 4px 0;
+  font-family:var(--font-mono); font-size:9px; color:var(--vhi); font-style:italic; line-height:1.5;
+}
+
+/* ═══ FOOTER ═══ */
+#sfooter { background:var(--surf2); padding:16px; text-align:center; }
+.footer-url { font-family:var(--font-title); font-size:12px; font-weight:700; color:var(--vhi); letter-spacing:.15em; text-transform:uppercase; margin-bottom:6px; }
+.footer-sub { font-family:var(--font-mono); font-size:8.5px; color:var(--muted); line-height:1.8; letter-spacing:.06em; }
+.footer-sub span { color:var(--vhi); font-weight:600; }
+.affil {
+  display:inline-flex; align-items:center; gap:6px; margin-top:10px; padding:5px 12px;
+  background:rgba(34,197,94,.08); border:1px solid rgba(34,197,94,.3); border-radius:4px;
+  font-family:var(--font-mono); font-size:8px; color:var(--green); letter-spacing:.1em; text-transform:uppercase;
+}
+.roger-warn { margin-top:10px; font-family:var(--font-mono); font-size:8px; color:var(--faint); font-style:italic; letter-spacing:.06em; }
+</style>
+</head>
+<body>
+
+<!-- ═══ HERO ═══ -->
+<div class="block" id="s-hero">
+  <div class="file-tag">◈ DREADTHULHU — PROTOCOLE MEMBRES · ACCÈS VENTOUSES</div>
+  <div class="hero-name">COMMANDES<br>ABONNÉS</div>
+  <div class="hero-sub">// RÉSERVÉ AUX VENTOUSES DU POULPE COSMIQUE<br>// MODOS &amp; OWNER : VOIR VOTRE PROPRE CODEX</div>
+  <div class="hero-live"><span class="dot-green"></span>ACCÈS MEMBRES — DREADTHULHU ACTIF</div>
+  <div class="access-banner">
+    <div class="ab-title">🐙 Ventouse Confirmée</div>
+    <div class="ab-sub">Ces pouvoirs sont accordés aux abonnés actifs.<br>Sub requis · Aucun mod · Aucun owner</div>
+  </div>
+  <div style="height:16px;"></div>
+</div>
+
+<div class="div-sep"></div>
+
+<!-- ═══ INTRO ═══ -->
+<div class="block" id="s-intro">
+  <div class="slabel">⚠ Briefing Tentaculaire</div>
+  <div class="pad">
+    <div class="warn-bar">⚠ ACCÈS CLASSIFIÉ — SOURCE : DREADTHULHU v5<br>NIVEAU : MEMBRES UNIQUEMENT</div>
+    <div class="lore-body">
+      En tant qu'<strong>abonné des Abysses</strong>, tu bénéficies d'un accès étendu aux protocoles de Dreadthulhu.
+      Ces commandes te sont accordées <span class="hi">personnellement par le Poulpe Cosmique</span> — ni les modos, ni l'owner n'ont besoin de ces outils.
+      <br><br>
+      Utilise-les avec sagesse. <strong>Roger observe.</strong>
+    </div>
+  </div>
+</div>
+
+<div class="div-sep"></div>
+
+<!-- ═══ INFOS MEMBRE ═══ -->
+<div class="block" id="s-info">
+  <div class="slabel">📊 Ton Statut dans les Abysses</div>
+
+  <div class="cmd">
+    <div class="cmd-tag">📊</div>
+    <div class="cmd-inner">
+      <div class="cmd-name">!rank <span class="sub-pill">SUB</span></div>
+      <div class="cmd-desc">
+        Affiche <strong>ton rang actuel</strong>, ton total XP, et le prochain rang avec l'XP restant.
+        <br><em>Ex : 🐙 @Pseudo — 🦑 Kraken | 450 XP | Prochain : Léviathan (encore 150 XP)</em>
+      </div>
+    </div>
+  </div>
+
+  <div class="cmd">
+    <div class="cmd-tag">🏆</div>
+    <div class="cmd-inner">
+      <div class="cmd-name">!top</div>
+      <div class="cmd-desc">
+        <strong>Top 5 des guerriers des Abysses</strong> classés par XP — la Table Ronde du Poulpe Cosmique.
+        <br><span class="cd">⏱ cooldown 30s</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="cmd">
+    <div class="cmd-tag">🌊</div>
+    <div class="cmd-inner">
+      <div class="cmd-name">!sub <span class="sub-pill">SUB</span></div>
+      <div class="cmd-desc">
+        Affiche ton <strong>statut d'abonné des Abysses</strong> avec ton rang XP et tes récompenses actuelles.
+      </div>
+    </div>
+  </div>
+
+  <div class="cmd">
+    <div class="cmd-tag">📅</div>
+    <div class="cmd-inner">
+      <div class="cmd-name">!followage <span class="arg">[pseudo]</span></div>
+      <div class="cmd-desc">
+        Depuis quand tu suis la chaîne. Les <span class="hi">archives abyssales</span> gardent trace de tout depuis le premier jour.
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="div-sep"></div>
+
+<!-- ═══ PRÉSENCE ═══ -->
+<div class="block" id="s-presence">
+  <div class="slabel">👁 Présence Abyssale</div>
+
+  <div class="cmd">
+    <div class="cmd-tag">🌑</div>
+    <div class="cmd-inner">
+      <div class="cmd-name">!lurk</div>
+      <div class="cmd-desc">
+        Active le <strong>mode lurk</strong>. XP passif gagné à intervalles réguliers pendant ton absence.
+        L'entité note ta présence silencieuse dans les profondeurs.
+      </div>
+    </div>
+  </div>
+
+  <div class="cmd">
+    <div class="cmd-tag">☀️</div>
+    <div class="cmd-inner">
+      <div class="cmd-name">!unlurk</div>
+      <div class="cmd-desc">
+        Retour à la surface. <strong>Annonce ton retour</strong> — l'XP passif s'arrête, tu redeviens actif dans le comptage standard.
+      </div>
+    </div>
+  </div>
+
+  <div class="cmd">
+    <div class="cmd-tag">⏱</div>
+    <div class="cmd-inner">
+      <div class="cmd-name">!uptime</div>
+      <div class="cmd-desc">
+        Depuis combien de temps le stream est en cours.
+        <br><em>Ex : ⏱️ Dreadthulhu veille depuis : 2h34min dans les abysses.</em>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="div-sep"></div>
+
+<!-- ═══ IA & LORE ═══ -->
+<div class="block" id="s-ia">
+  <div class="slabel">🤖 Invocations IA — Dreadthulhu Parle</div>
+
+  <div class="cmd">
+    <div class="cmd-tag">🔮</div>
+    <div class="cmd-inner">
+      <div class="cmd-name">!oracle <span class="arg">[question]</span></div>
+      <div class="cmd-desc">
+        Consulte <strong>l'Oracle des Abysses</strong>. L'IA répond avec la personnalité de Dreadthulhu. Détection FR/EN automatique.
+        <br><span class="cd">⏱ cooldown 30s</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="cmd">
+    <div class="cmd-tag">💬</div>
+    <div class="cmd-inner">
+      <div class="cmd-name">!ask <span class="arg">[question]</span> <span class="sub-pill">SUB</span></div>
+      <div class="cmd-desc">
+        Pose directement une question à Dreadthulhu. <strong>Réponse en 2 phrases max</strong> avec personnalité poulpe/Kaamelott unique.
+        <br><span class="cd">⏱ cooldown 30s</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="cmd">
+    <div class="cmd-tag">🐙</div>
+    <div class="cmd-inner">
+      <div class="cmd-name">!poulpe <span class="sub-pill">SUB</span></div>
+      <div class="cmd-desc">
+        <strong>Fun fact poulpe exclusif</strong> réservé aux abonnés. Cooldown réduit (15s). Accède aux secrets des profondeurs que les viewers ordinaires ne voient jamais.
+      </div>
+    </div>
+  </div>
+
+  <div class="cmd">
+    <div class="cmd-tag">🌊</div>
+    <div class="cmd-inner">
+      <div class="cmd-name">!abysse</div>
+      <div class="cmd-desc">
+        Fun fact fascinant sur les <span class="hi">abysses marines</span> — créatures bioluminescentes, grands fonds, mystères cosmiques — généré par IA.
+      </div>
+    </div>
+  </div>
+
+  <div class="cmd">
+    <div class="cmd-tag">⚔️</div>
+    <div class="cmd-inner">
+      <div class="cmd-name">!kaamelott</div>
+      <div class="cmd-desc">
+        Citation aléatoire authentique via <strong>l'API Kaamelott officielle</strong>. Fallback local de qualité si l'API dors.
+        <br><span class="cd">⏱ cooldown 20s</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="cmd">
+    <div class="cmd-tag">🫦</div>
+    <div class="cmd-inner">
+      <div class="cmd-name">!adore</div>
+      <div class="cmd-desc">
+        Déclenche une <strong>déclaration d'adoration au Dreadlocktopus</strong>. Message IA sarcastique et lovecraftien.
+        <br><span class="cd">⏱ cooldown 60s</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="div-sep"></div>
+
+<!-- ═══ ÂMES ABYSSALES ═══ -->
+<div class="block" id="s-souls">
+  <div class="slabel">👻 Âmes Abyssales — Monnaie des Profondeurs</div>
+
+  <div class="cmd">
+    <div class="cmd-tag">💰</div>
+    <div class="cmd-inner">
+      <div class="cmd-name">!souls <span class="arg">[pseudo]</span></div>
+      <div class="cmd-desc">
+        Consulte ton <strong>solde d'Âmes Abyssales</strong>. Optionnel : vérifie le solde d'un autre viewer.
+      </div>
+    </div>
+  </div>
+
+  <div class="cmd">
+    <div class="cmd-tag">🏪</div>
+    <div class="cmd-inner">
+      <div class="cmd-name">!shop</div>
+      <div class="cmd-desc">
+        Affiche les <strong>articles disponibles</strong> dans la boutique abyssale. ID, nom et prix en Âmes.
+        <br><span class="cd">⏱ cooldown 30s</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="cmd">
+    <div class="cmd-tag">🛒</div>
+    <div class="cmd-inner">
+      <div class="cmd-name">!buy <span class="arg">[id]</span></div>
+      <div class="cmd-desc">
+        Achète un article de la boutique avec son ID. <strong>Solde vérifié automatiquement</strong> — effets déclenchés si configurés.
+      </div>
+    </div>
+  </div>
+
+  <div class="cmd">
+    <div class="cmd-tag">🎁</div>
+    <div class="cmd-inner">
+      <div class="cmd-name">!give <span class="arg">[pseudo] [montant]</span></div>
+      <div class="cmd-desc">
+        Transfère des Âmes Abyssales à un autre viewer. Fonds vérifiés avant tout transfert.
+      </div>
+    </div>
+  </div>
+
+  <div class="cmd">
+    <div class="cmd-tag">🗡️</div>
+    <div class="cmd-inner">
+      <div class="cmd-name">!steal <span class="arg">[pseudo]</span></div>
+      <div class="cmd-desc">
+        Tente de <strong>voler des Âmes</strong> à un autre viewer. Réussite probabiliste. <span class="warn">Peut échouer.</span>
+        <br><span class="cd">⏱ cooldown 120s</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="div-sep"></div>
+
+<!-- ═══ JEUX ═══ -->
+<div class="block" id="s-games">
+  <div class="slabel">🎲 Jeux des Abysses — Que le Chaos Règne</div>
+
+  <div class="cmd">
+    <div class="cmd-tag">⚔️</div>
+    <div class="cmd-inner">
+      <div class="cmd-name">!duel <span class="arg">[pseudo]</span></div>
+      <div class="cmd-desc">
+        Défie un autre viewer en <strong>duel des abysses</strong>. Le défi reste en attente jusqu'à acceptation.
+      </div>
+    </div>
+  </div>
+
+  <div class="cmd">
+    <div class="cmd-tag">🤝</div>
+    <div class="cmd-inner">
+      <div class="cmd-name">!accept</div>
+      <div class="cmd-desc">
+        Accepte un duel en cours. <strong>Combat résolu immédiatement</strong> avec message dramatique dans le chat.
+      </div>
+    </div>
+  </div>
+
+  <div class="cmd">
+    <div class="cmd-tag">🎰</div>
+    <div class="cmd-inner">
+      <div class="cmd-name">!roulette <span class="arg">[mise]</span></div>
+      <div class="cmd-desc">
+        Joue à la <strong>Roulette des Abysses</strong>. Mise défaut : 50 Âmes. Victoire, défaite ou événement spécial.
+      </div>
+    </div>
+  </div>
+
+  <div class="cmd">
+    <div class="cmd-tag">🎟️</div>
+    <div class="cmd-inner">
+      <div class="cmd-name">!lottery</div>
+      <div class="cmd-desc">
+        Lance une <strong>loterie communautaire</strong>. Tout le chat peut rejoindre avec <span class="hi">!join</span>. Gagnant tiré au sort.
+      </div>
+    </div>
+  </div>
+
+  <div class="cmd">
+    <div class="cmd-tag">✋</div>
+    <div class="cmd-inner">
+      <div class="cmd-name">!join</div>
+      <div class="cmd-desc">
+        Rejoins la loterie en cours. Confirmation de participation par l'entité.
+      </div>
+    </div>
+  </div>
+
+  <div class="cmd">
+    <div class="cmd-tag">🧠</div>
+    <div class="cmd-inner">
+      <div class="cmd-name">!trivia</div>
+      <div class="cmd-desc">
+        Question de trivia générée par IA. <strong>Le premier à répondre correctement gagne de l'XP.</strong>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="div-sep"></div>
+
+<!-- ═══ RANGS XP ═══ -->
+<div class="block" id="s-ranks">
+  <div class="slabel">🌊 Les 15 Rangs des Abysses</div>
+
+  <div class="rank-row"><span class="rank-num">01</span><span class="rank-emoji">🪸</span><span class="rank-name">Larve des Fonds</span><span class="rank-xp">0 XP</span></div>
+  <div class="rank-row"><span class="rank-num">02</span><span class="rank-emoji">🦀</span><span class="rank-name">Crabe Errant</span><span class="rank-xp">50 XP</span></div>
+  <div class="rank-row"><span class="rank-num">03</span><span class="rank-emoji">🐚</span><span class="rank-name">Coquillage Éveillé</span><span class="rank-xp">150 XP</span></div>
+  <div class="rank-row"><span class="rank-num">04</span><span class="rank-emoji">🦑</span><span class="rank-name">Calmar Rebelle</span><span class="rank-xp">300 XP</span></div>
+  <div class="rank-row"><span class="rank-num">05</span><span class="rank-emoji">🐙</span><span class="rank-name">Poulpe Apprenti</span><span class="rank-xp">500 XP</span></div>
+  <div class="rank-row"><span class="rank-num">06</span><span class="rank-emoji">🌊</span><span class="rank-name">Vague Consciente</span><span class="rank-xp">750 XP</span></div>
+  <div class="rank-row"><span class="rank-num">07</span><span class="rank-emoji">🦈</span><span class="rank-name">Requin des Abysses</span><span class="rank-xp">1000 XP</span></div>
+  <div class="rank-row"><span class="rank-num">08</span><span class="rank-emoji">🦑</span><span class="rank-name">Kraken Émergent</span><span class="rank-xp">1400 XP</span></div>
+  <div class="rank-row"><span class="rank-num">09</span><span class="rank-emoji">🌀</span><span class="rank-name">Vortex Abyssal</span><span class="rank-xp">1900 XP</span></div>
+  <div class="rank-row"><span class="rank-num">10</span><span class="rank-emoji">🐋</span><span class="rank-name">Léviathan</span><span class="rank-xp">2500 XP</span></div>
+  <div class="rank-row"><span class="rank-num">11</span><span class="rank-emoji">🌑</span><span class="rank-name">Ombre Primordiale</span><span class="rank-xp">3200 XP</span></div>
+  <div class="rank-row"><span class="rank-num">12</span><span class="rank-emoji">⚡</span><span class="rank-name">Éclair des Profondeurs</span><span class="rank-xp">4000 XP</span></div>
+  <div class="rank-row"><span class="rank-num">13</span><span class="rank-emoji">👁️</span><span class="rank-name">Œil Cosmique</span><span class="rank-xp">5000 XP</span></div>
+  <div class="rank-row"><span class="rank-num">14</span><span class="rank-emoji">🔱</span><span class="rank-name">Entité des Abysses</span><span class="rank-xp">6500 XP</span></div>
+  <div class="rank-row"><span class="rank-num">15</span><span class="rank-emoji">🐙</span><span class="rank-name">Dreadthulhu Éveillé</span><span class="rank-xp">8888 XP</span></div>
+
+  <div class="entity-quote">
+    "L'XP est gagné à chaque message. En mode lurk, les abysses t'en accordent aussi en silence. Roger vérifie."
+  </div>
+</div>
+
+<div class="div-sep"></div>
+
+<!-- ═══ BONUS XP ═══ -->
+<div class="block" id="s-xp">
+  <div class="slabel">⚡ Comment Gagner de l'XP</div>
+  <div class="pad">
+    <div class="warn-bar">📡 DONNÉES ABYSSALES — MÉTHODES D'ACCUMULATION XP</div>
+    <div class="lore-body">
+      <strong>Messages actifs</strong> — chaque message dans le chat accorde de l'XP configurable.<br>
+      <strong>Mode lurk</strong> — XP passif à intervalles réguliers tant que !lurk est actif.<br>
+      <strong>Événements spéciaux</strong> — sub, resub, raid, cheer, channel points → <span class="hi">bonus XP automatiques</span>.<br>
+      <strong>Boss communautaire</strong> — top attaquant = bonus XP à la victoire.<br>
+      <strong>Trivia</strong> — première bonne réponse = XP direct.
+    </div>
+  </div>
+</div>
+
+<div class="div-sep"></div>
+
+<!-- ═══ FOOTER ═══ -->
+<div class="block" id="sfooter">
+  <div class="footer-url">DREADLOCKTOPUS76.TWITCH.TV</div>
+  <div class="footer-sub">
+    — Powered by <span>DREADTHULHU v5</span> —<br>
+    Commandes actives · Abonnés uniquement<br>
+    Gamer Chelou · Né en 86 · Mais on fait avec 🐙
+  </div>
+  <div class="affil">🐙 MEMBRE CONFIRMÉ · VENTOUSE ACTIVE</div>
+  <div class="roger-warn">⚠️ Ne pas chercher Roger. On a dit NE PAS CHERCHER ROGER.</div>
+</div>
+
+</body>
+</html>
