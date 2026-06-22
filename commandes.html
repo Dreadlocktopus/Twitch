@@ -1,0 +1,2610 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>🐙 Le Grimoire de Dreadthulhu — Codex des Commandes</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Pirata+One&family=Cinzel:wght@500;700;900&family=Manrope:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --abyss-0:#06030d;--abyss-1:#120a26;--abyss-2:#1d1140;--abyss-3:#2e1a5e;--abyss-4:#432685;
+  --purple-glow:#7c4dff;--orange:#ff6a1a;--orange-bright:#ffae42;--orange-dim:#a8420f;
+  --teal:#2de8c4;--gold:#ffd166;--pink:#d98fff;--red:#ff4d4d;--ink:#f3ecff;
+  --muted:#a896d1;--muted-2:#7a6aa3;
+  --wood-dark:#2a1a08;--wood-mid:#3d2510;--wood-light:#5c3a1a;
+  --font-display:'Pirata One',serif;--font-eng:'Cinzel',serif;
+  --font-body:'Manrope',sans-serif;--font-mono:'JetBrains Mono',monospace;
+}
+*{box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{margin:0;background:radial-gradient(ellipse 1200px 700px at 18% -10%,rgba(124,77,255,var(--bg-glow1,.28)),transparent 60%),radial-gradient(ellipse 900px 600px at 100% 10%,rgba(255,106,26,var(--bg-glow2,.10)),transparent 55%),radial-gradient(ellipse 1000px 900px at 50% 110%,rgba(45,232,196,var(--bg-glow3,.06)),transparent 60%),var(--abyss-0);color:var(--ink);font-family:var(--font-body);line-height:1.55;min-height:100vh;overflow-x:hidden;}
+body::before{content:"";position:fixed;inset:0;z-index:0;pointer-events:none;background:linear-gradient(180deg,transparent,rgba(2,1,8,var(--depth-veil,0)) 100%);}
+::selection{background:var(--orange);color:var(--abyss-0);}
+a{color:var(--orange-bright);}
+::-webkit-scrollbar{width:10px;}
+::-webkit-scrollbar-track{background:var(--abyss-0);}
+::-webkit-scrollbar-thumb{background:var(--abyss-4);border-radius:6px;}
+::-webkit-scrollbar-thumb:hover{background:var(--purple-glow);}
+
+.noise{position:fixed;inset:0;pointer-events:none;z-index:1;opacity:.04;mix-blend-mode:overlay;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");}
+
+/* ── Profondimètre ─── */
+#depth-gauge{position:fixed;right:14px;top:50%;transform:translateY(-50%);width:178px;height:64vh;max-height:580px;z-index:50;display:flex;flex-direction:column;align-items:flex-end;font-family:var(--font-mono);}
+#depth-gauge .tube{position:relative;flex:1;width:6px;border-radius:6px;background:linear-gradient(to bottom,var(--abyss-3),var(--abyss-0));box-shadow:inset 0 0 6px rgba(0,0,0,.6),0 0 12px rgba(124,77,255,.15);}
+#depth-gauge .fill{position:absolute;bottom:0;left:0;width:100%;height:0%;border-radius:6px;background:linear-gradient(to top,var(--orange),var(--teal));box-shadow:0 0 10px var(--orange);transition:height .08s linear;}
+#depth-gauge .pod{font-size:18px;margin-bottom:6px;filter:drop-shadow(0 0 6px var(--orange));transition:transform .08s linear;}
+#depth-gauge .reading{margin-top:6px;font-size:10.5px;color:var(--teal);text-align:right;line-height:1.35;text-shadow:0 0 8px rgba(45,232,196,.6);white-space:normal;width:100%;}
+@media(max-width:1100px){#depth-gauge{display:none;}}
+
+.wrap{position:relative;z-index:2;max-width:1220px;margin:0 auto;padding:0 22px 80px;}
+
+/* ── HERO ─── */
+header.hero{text-align:center;padding:74px 16px 46px;position:relative;}
+.hero-glyph{font-size:54px;display:inline-block;margin-bottom:6px;filter:drop-shadow(0 0 22px var(--purple-glow));animation:float 5s ease-in-out infinite;}
+@keyframes float{0%,100%{transform:translateY(0) rotate(-2deg);}50%{transform:translateY(-10px) rotate(2deg);}}
+h1.title{font-family:var(--font-display);font-size:clamp(40px,7vw,84px);margin:0;background:linear-gradient(180deg,#fff 0%,var(--orange-bright) 55%,var(--orange) 100%);-webkit-background-clip:text;background-clip:text;color:transparent;line-height:1.05;}
+p.subtitle{font-family:var(--font-eng);letter-spacing:3px;text-transform:uppercase;font-size:13px;color:var(--muted);margin:14px 0 0;font-weight:600;}
+.hero-rule{width:220px;height:2px;margin:26px auto;border:none;background:linear-gradient(90deg,transparent,var(--orange),var(--purple-glow),transparent);}
+.stat-row{display:flex;justify-content:center;gap:14px;flex-wrap:wrap;margin-top:8px;}
+.stat-pill{font-family:var(--font-mono);font-size:13px;background:rgba(255,255,255,.03);border:1px solid var(--abyss-4);padding:8px 16px;border-radius:30px;color:var(--muted);}
+.stat-pill b{color:var(--orange-bright);font-weight:700;}
+
+/* ── LORE CARD ─── */
+.lore-card{margin:50px 0 64px;border-radius:22px;position:relative;overflow:hidden;background:linear-gradient(160deg,var(--abyss-1) 0%,var(--abyss-2) 100%);border:1px solid var(--abyss-4);box-shadow:0 30px 80px -30px rgba(0,0,0,.7);padding:40px clamp(20px,4vw,52px);}
+.lore-card::before{content:"🐙";position:absolute;right:-40px;bottom:-60px;font-size:280px;opacity:.05;filter:blur(1px);pointer-events:none;}
+.lore-grid{display:grid;grid-template-columns:1.4fr 1fr;gap:40px;position:relative;}
+@media(max-width:760px){.lore-grid{grid-template-columns:1fr;}}
+.lore-eyebrow{font-family:var(--font-eng);font-size:12px;letter-spacing:3px;text-transform:uppercase;color:var(--orange);font-weight:700;margin:0 0 10px;}
+.lore-card h2{font-family:var(--font-display);font-size:clamp(28px,4vw,40px);margin:0 0 18px;color:var(--ink);}
+.lore-card p{color:#cfc3ec;font-size:15.5px;margin:0 0 14px;}
+.lore-card p strong{color:var(--orange-bright);font-weight:700;}
+.lore-card p em{color:var(--teal);font-style:normal;}
+.sheet{background:rgba(6,3,13,.45);border:1px solid var(--abyss-4);border-radius:16px;padding:22px;align-self:start;}
+.sheet-title{font-family:var(--font-eng);font-size:11px;letter-spacing:2px;text-transform:uppercase;color:var(--muted);margin-bottom:16px;display:flex;justify-content:space-between;}
+.sheet-title span:last-child{color:var(--teal);}
+.stat-bar-row{margin-bottom:13px;}
+.stat-bar-label{display:flex;justify-content:space-between;font-size:12.5px;color:var(--muted);margin-bottom:5px;font-family:var(--font-mono);}
+.stat-bar-label b{color:var(--ink);font-weight:600;font-family:var(--font-body);}
+.stat-bar-track{height:7px;border-radius:6px;background:var(--abyss-0);overflow:hidden;border:1px solid var(--abyss-3);}
+.stat-bar-fill{height:100%;border-radius:6px;background:linear-gradient(90deg,var(--purple-glow),var(--orange));}
+.sheet-foot{margin-top:18px;padding-top:14px;border-top:1px dashed var(--abyss-4);font-size:11.5px;color:var(--muted-2);font-family:var(--font-mono);}
+
+/* ── CONTRÔLES ─── */
+.controls{position:sticky;top:0;z-index:30;padding:16px 0;margin-bottom:10px;background:linear-gradient(180deg,var(--abyss-0) 70%,transparent);backdrop-filter:blur(6px);}
+.controls-inner{background:rgba(18,10,38,.85);border:1px solid var(--abyss-4);border-radius:18px;padding:16px 18px;display:flex;flex-wrap:wrap;gap:12px;align-items:center;box-shadow:0 14px 40px -16px rgba(0,0,0,.6);}
+#search{flex:1 1 220px;background:var(--abyss-0);border:1px solid var(--abyss-4);color:var(--ink);padding:11px 16px;border-radius:12px;font-family:var(--font-body);font-size:14px;outline:none;}
+#search::placeholder{color:var(--muted-2);}
+#search:focus{border-color:var(--orange);box-shadow:0 0 0 3px rgba(255,106,26,.15);}
+.pills{display:flex;gap:6px;flex-wrap:wrap;}
+.pill{font-family:var(--font-mono);font-size:12px;padding:8px 13px;border-radius:30px;cursor:pointer;background:var(--abyss-0);border:1px solid var(--abyss-4);color:var(--muted);user-select:none;transition:all .15s ease;white-space:nowrap;}
+.pill:hover{border-color:var(--purple-glow);color:var(--ink);}
+.pill.active{background:linear-gradient(135deg,var(--orange),var(--orange-dim));border-color:var(--orange);color:#1a0b00;font-weight:700;box-shadow:0 0 16px rgba(255,106,26,.45);}
+.pill.active[data-role="viewer"],.pill.active[data-cat]{background:linear-gradient(135deg,var(--purple-glow),#5631b8);border-color:var(--purple-glow);color:#fff;box-shadow:0 0 16px rgba(124,77,255,.4);}
+#sort,#display-mode{background:var(--abyss-0);border:1px solid var(--abyss-4);color:var(--ink);padding:10px 12px;border-radius:12px;font-family:var(--font-body);font-size:13px;cursor:pointer;outline:none;}
+#display-mode{border-color:var(--purple-glow);color:var(--pink);font-weight:600;}
+.count-readout{font-family:var(--font-mono);font-size:12px;color:var(--teal);padding-left:4px;white-space:nowrap;}
+
+/* ════════════════════════════════════════
+   MODE ABYSSAL — pancartes chaos
+   ════════════════════════════════════════ */
+body.mode-abyss #grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fill,minmax(280px,1fr));
+  gap:0;
+  margin-top:32px;
+  align-items:end;
+}
+body.mode-abyss .sign-post{
+  display:flex;flex-direction:column;align-items:center;
+  position:relative;padding:0 8px;
+}
+/* Décors sur pancartes en mode abyssal */
+body.mode-abyss .card-coral,
+body.mode-abyss .card-tentacle,
+body.mode-abyss .card-barnacle{display:block;}
+.card-coral,.card-tentacle,.card-barnacle{display:none;}
+
+/* La pancarte — fond bois marin */
+body.mode-abyss .card{
+  order:1;position:relative;
+  padding:18px 16px 16px;
+  overflow:visible;
+  transition:filter .15s ease,transform .2s ease;
+  z-index:2;min-height:165px;width:100%;
+}
+body.mode-abyss .card:hover{
+  filter:brightness(1.15);
+  z-index:10;
+}
+
+/* Le bâton */
+body.mode-abyss .sign-stake{width:auto;flex-shrink:0;order:2;position:relative;z-index:1;}
+body.mode-abyss .sign-joint{display:flex;justify-content:center;align-items:center;flex-shrink:0;position:relative;z-index:3;}
+
+/* ════════════════════════════════════════
+   MODE SIMPLE — grille clean
+   ════════════════════════════════════════ */
+body.mode-simple #grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fill,minmax(280px,1fr));
+  gap:14px;
+  margin-top:24px;
+  align-items:start;
+}
+body.mode-simple .sign-post{
+  display:block;
+  transform:none !important;
+}
+body.mode-simple .sign-stake,
+body.mode-simple .sign-joint,
+body.mode-simple .card-coral,
+body.mode-simple .card-tentacle,
+body.mode-simple .card-barnacle{display:none !important;}
+body.mode-simple .card{
+  border-radius:12px;
+  padding:16px 18px;
+  background:rgba(18,10,38,.9);
+  border:1px solid var(--abyss-4);
+  box-shadow:0 4px 16px rgba(0,0,0,.4);
+  transition:box-shadow .15s,border-color .15s;
+  overflow:hidden;
+  min-height:auto;
+}
+body.mode-simple .card:hover{
+  border-color:var(--purple-glow);
+  box-shadow:0 6px 24px rgba(124,77,255,.25);
+}
+body.mode-simple .card[data-rank="viewer"]{border-left:3px solid var(--teal);}
+body.mode-simple .card[data-rank="follower"]{border-left:3px solid #7dd3fc;}
+body.mode-simple .card[data-rank="sub"]{border-left:3px solid var(--pink);}
+body.mode-simple .card[data-rank="vip"]{border-left:3px solid var(--gold);}
+body.mode-simple .card[data-rank="mod"]{border-left:3px solid var(--orange);}
+body.mode-simple .card[data-rank="owner"]{border-left:3px solid var(--red);}
+body.mode-simple .cmd-name{font-size:15px;}
+body.mode-simple .cmd-desc{font-size:13px;margin-bottom:8px;}
+
+/* Dividers */
+.section-divider{display:flex;align-items:center;gap:14px;margin:20px 2px 10px;grid-column:1/-1;padding:0 8px;}
+.section-divider .label{font-family:var(--font-eng);font-size:12px;letter-spacing:2.5px;text-transform:uppercase;color:var(--ink);font-weight:700;white-space:nowrap;}
+.tentacle-rule-line{flex:1;height:2px;background:linear-gradient(90deg,rgba(124,77,255,.5),rgba(255,106,26,.3),transparent);border-radius:2px;}
+
+/* Contenu de carte commun */
+.card-content{position:relative;z-index:2;}
+.card-top{display:flex;justify-content:space-between;align-items:flex-start;gap:8px;margin-bottom:8px;}
+.cmd-name{font-family:var(--font-mono);font-size:17px;font-weight:700;color:var(--ink);}
+.cmd-name .bang{color:var(--orange-bright);}
+.cat-icon{font-size:15px;opacity:.85;flex-shrink:0;}
+.badge{display:inline-flex;align-items:center;gap:4px;font-family:var(--font-eng);font-size:10px;letter-spacing:1.2px;text-transform:uppercase;font-weight:700;padding:4px 9px;border-radius:30px;}
+.badge-row{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:9px;}
+.badge.viewer{background:rgba(45,232,196,.12);color:var(--teal);border:1px solid rgba(45,232,196,.35);}
+.badge.follower{background:rgba(125,211,252,.12);color:#7dd3fc;border:1px solid rgba(125,211,252,.35);}
+.badge.sub{background:rgba(217,143,255,.12);color:var(--pink);border:1px solid rgba(217,143,255,.35);}
+.badge.vip{background:rgba(255,209,102,.13);color:var(--gold);border:1px solid rgba(255,209,102,.35);}
+.badge.mod{background:rgba(255,106,26,.14);color:var(--orange-bright);border:1px solid rgba(255,106,26,.4);}
+.badge.owner{background:rgba(255,77,77,.15);color:#ff8080;border:1px solid rgba(255,77,77,.45);box-shadow:0 0 10px rgba(255,77,77,.18);}
+.cmd-desc{font-size:13px;color:#c8bce6;margin:0 0 10px;min-height:34px;}
+.cmd-aliases{display:flex;flex-wrap:wrap;gap:5px;margin-bottom:9px;}
+.alias-chip{font-family:var(--font-mono);font-size:10.5px;color:var(--muted);background:rgba(0,0,0,.4);border:1px solid rgba(255,255,255,.08);padding:2px 7px;border-radius:6px;}
+.card-foot{display:flex;justify-content:space-between;align-items:center;font-size:11px;color:var(--muted-2);font-family:var(--font-mono);border-top:1px dashed rgba(255,255,255,.08);padding-top:8px;}
+
+/* ── Particules ─── */
+#abyss-particles{position:fixed;inset:0;z-index:1;pointer-events:none;overflow:hidden;}
+.particle{position:absolute;bottom:-60px;opacity:0;border-radius:50%;animation:rise linear infinite;}
+.particle.bubble{background:radial-gradient(circle at 35% 30%,rgba(255,255,255,.5),rgba(45,232,196,.05) 70%);box-shadow:0 0 6px rgba(45,232,196,.35);}
+.particle.jelly{background:radial-gradient(circle at 50% 20%,rgba(217,143,255,.5),rgba(124,77,255,.04) 75%);box-shadow:0 0 14px rgba(217,143,255,.3);border-radius:50% 50% 45% 45%;}
+@keyframes rise{0%{transform:translateY(0) translateX(0);opacity:0;}8%{opacity:.55;}92%{opacity:.4;}100%{transform:translateY(-115vh) translateX(var(--drift,30px));opacity:0;}}
+
+/* ── Nageurs ─── */
+.swimmer{position:fixed;z-index:1;pointer-events:none;font-size:32px;opacity:.45;filter:drop-shadow(0 0 10px rgba(124,77,255,.35));}
+.swimmer.octo{font-size:40px;}
+
+/* ── SVG layers ─── */
+#tentacle-layer{position:fixed;inset:0;pointer-events:none;z-index:1;overflow:visible;}
+#coral-reef{position:fixed;left:0;right:0;bottom:0;height:100px;z-index:1;pointer-events:none;overflow:visible;}
+
+/* ── Empty ─── */
+#empty{display:none;text-align:center;padding:60px 20px;color:var(--muted);font-family:var(--font-eng);letter-spacing:1px;grid-column:1/-1;}
+
+/* ── Footer ─── */
+footer{margin-top:70px;text-align:center;padding-top:30px;border-top:1px solid var(--abyss-3);color:var(--muted-2);font-size:12.5px;font-family:var(--font-mono);}
+footer .tentacle-rule{font-size:18px;letter-spacing:14px;margin-bottom:14px;opacity:.5;}
+
+/* ── Mobile ─── */
+@media(max-width:600px){
+  body.mode-abyss .sign-post{transform:none !important;}
+  body.mode-abyss #grid{grid-template-columns:1fr;}
+  body.mode-simple #grid{grid-template-columns:1fr;}
+  .controls-inner{flex-direction:column;align-items:stretch;}
+  #search{min-width:0;}
+}
+</style>
+</head>
+<body class="mode-abyss">
+<div class="noise"></div>
+<div id="abyss-particles"></div>
+<div id="tentacle-layer"></div>
+<div id="coral-reef"></div>
+<div id="swimmers"></div>
+
+<div id="depth-gauge">
+  <div class="pod">🤿</div>
+  <div class="tube"><div class="fill" id="gauge-fill"></div></div>
+  <div class="reading" id="gauge-reading">0 m<br>Surface</div>
+</div>
+
+<div class="wrap">
+  <header class="hero">
+    <div class="hero-glyph">🐙</div>
+    <h1 class="title">Le Grimoire de Dreadthulhu</h1>
+    <p class="subtitle">⚓ Codex des incantations du chat — Dreadlocktopus ⚓</p>
+    <hr class="hero-rule">
+    <div class="stat-row">
+      <div class="stat-pill">🌀 <b id="stat-total">0</b> commandes recensées</div>
+      <div class="stat-pill">💬 <b id="stat-chat">0</b> de chat</div>
+      <div class="stat-pill">🎬 <b id="stat-overlay">0</b> overlay</div>
+      <div class="stat-pill">⚙️ <b id="stat-custom">0</b> personnalisées</div>
+    </div>
+  </header>
+
+  <section class="lore-card">
+    <div class="lore-grid">
+      <div>
+        <p class="lore-eyebrow">📜 Bestiaire des Abysses — Entrée n°1</p>
+        <h2>Qui est Dreadthulhu ?</h2>
+        <p>Tout en bas, là où la lumière du stream ne descend jamais vraiment, dort <strong>Dreadthulhu</strong> — un <strong>dieu-poulpe ancien</strong>, mauvais par principe et sarcastique par vocation.</p>
+        <p>Il n'est ni un bot, ni vraiment un dieu : c'est <em>les deux à la fois</em>. Chaque nouvelle fonctionnalité ajoutée est un nouveau tentacule. Il <strong>mute en permanence</strong>, au gré des commits.</p>
+      </div>
+      <div class="sheet">
+        <div class="sheet-title"><span>🐙 Fiche de l'entité</span><span>● en évolution</span></div>
+        <div class="stat-bar-row"><div class="stat-bar-label"><b>Cruauté</b><span>89%</span></div><div class="stat-bar-track"><div class="stat-bar-fill" style="width:89%"></div></div></div>
+        <div class="stat-bar-row"><div class="stat-bar-label"><b>Sarcasme</b><span>96%</span></div><div class="stat-bar-track"><div class="stat-bar-fill" style="width:96%"></div></div></div>
+        <div class="stat-bar-row"><div class="stat-bar-label"><b>Loyauté envers le chat</b><span>62%</span></div><div class="stat-bar-track"><div class="stat-bar-fill" style="width:62%"></div></div></div>
+        <div class="stat-bar-row"><div class="stat-bar-label"><b>Tentacules actifs</b><span id="sheet-tentacles">0</span></div><div class="stat-bar-track"><div class="stat-bar-fill" id="sheet-tentacles-bar" style="width:0%"></div></div></div>
+        <div class="sheet-foot">Dernière mue : <span id="sheet-date">—</span></div>
+      </div>
+    </div>
+  </section>
+
+  <div class="controls">
+    <div class="controls-inner">
+      <input id="search" type="text" placeholder="🔍 Chercher une commande (!, alias, description...)">
+      <div class="pills" id="role-pills"></div>
+      <div class="pills" id="cat-pills"></div>
+      <select id="sort">
+        <option value="role">Trier par rôle</option>
+        <option value="alpha">Trier A → Z</option>
+        <option value="cat">Trier par catégorie</option>
+      </select>
+      <select id="display-mode">
+        <option value="abyss">🌊 Mode Abyssal</option>
+        <option value="simple">📋 Mode Simple</option>
+      </select>
+      <div class="count-readout" id="count-readout">— commandes</div>
+    </div>
+  </div>
+
+  <main id="grid"></main>
+  <div id="empty">🦑 Aucune commande ne correspond à ta recherche dans ces abysses-là.</div>
+
+  <footer>
+    <div class="tentacle-rule">🐙 ─ ⚓ ─ 🐙</div>
+    <div>Codex généré automatiquement le <span id="footer-date">—</span></div>
+    <div style="margin-top:6px;opacity:.7">Dreadthulhu • Bot des Abysses de Dreadlocktopus</div>
+  </footer>
+</div>
+
+<script id="commands-data" type="application/json">
+{
+  "commands": [
+    {
+      "category": "chat",
+      "name": "8ball",
+      "aliases": [
+        "boule",
+        "oracle"
+      ],
+      "desc": "La boule magique répond",
+      "cooldown": "10s",
+      "perm": "viewer",
+      "roles": [
+        "viewer"
+      ]
+    },
+    {
+      "category": "chat",
+      "name": "abysses",
+      "aliases": [
+        "abysse",
+        "profondeur"
+      ],
+      "desc": "Fun fact sur les abysses marines",
+      "cooldown": "30s",
+      "perm": "viewer",
+      "roles": [
+        "viewer"
+      ]
+    },
+    {
+      "category": "chat",
+      "name": "accept",
+      "aliases": [
+        "accepter"
+      ],
+      "desc": "Accepter un duel en cours",
+      "cooldown": "0s",
+      "perm": "viewer",
+      "roles": [
+        "viewer"
+      ]
+    },
+    {
+      "category": "chat",
+      "name": "accepterduelmot",
+      "aliases": [
+        "acceptmot"
+      ],
+      "desc": "Accepter un duel de mots",
+      "cooldown": "0s",
+      "perm": "viewer",
+      "roles": [
+        "viewer"
+      ]
+    },
+    {
+      "category": "chat",
+      "name": "acheter",
+      "aliases": [
+        "buy"
+      ],
+      "desc": "Achète un article du shop",
+      "cooldown": "0s",
+      "perm": "viewer",
+      "roles": [
+        "viewer"
+      ]
+    },
+    {
+      "category": "chat",
+      "name": "attaque",
+      "aliases": [],
+      "desc": "Attaquer le boss en cours",
+      "cooldown": "3s",
+      "perm": "viewer",
+      "roles": [
+        "viewer"
+      ]
+    },
+    {
+      "category": "chat",
+      "name": "balance",
+      "aliases": [
+        "monnaie",
+        "ames",
+        "âmes",
+        "solde",
+        "coins",
+        "wallet"
+      ],
+      "desc": "Voir son solde de monnaie",
+      "cooldown": "10s",
+      "perm": "viewer",
+      "roles": [
+        "viewer"
+      ]
+    },
+    {
+      "category": "chat",
+      "name": "banque",
+      "aliases": [
+        "bank",
+        "epargne"
+      ],
+      "desc": "Voir le solde bancaire",
+      "cooldown": "3s",
+      "perm": "viewer",
+      "roles": [
+        "viewer"
+      ]
+    },
+    {
+      "category": "chat",
+      "name": "bingostatus",
+      "aliases": [
+        "statusbingo"
+      ],
+      "desc": "Voir l'état de la partie de bingo",
+      "cooldown": "5s",
+      "perm": "viewer",
+      "roles": [
+        "viewer"
+      ]
+    },
+    {
+      "category": "chat",
+      "name": "boss",
+      "aliases": [],
+      "desc": "Voir l'état du boss actuel",
+      "cooldown": "5s",
+      "perm": "viewer",
+      "roles": [
+        "viewer"
+      ]
+    },
+    {
+      "category": "chat",
+      "name": "cartebingo",
+      "aliases": [
+        "bingocard"
+      ],
+      "desc": "Obtenir sa carte de bingo",
+      "cooldown": "0s",
+      "perm": "viewer",
+      "roles": [
+        "viewer"
+      ]
+    },
+    {
+      "category": "chat",
+      "name": "clip",
+      "aliases": [],
+      "desc": "Crée un clip Twitch du moment présent",
+      "cooldown": "20s",
+      "perm": "viewer",
+      "roles": [
+        "viewer"
+      ]
+    },
+    {
+      "category": "chat",
+      "name": "clips",
+      "aliases": [
+        "dernierclip",
+        "lastclip"
+      ],
+      "desc": "Affiche les 3 derniers clips créés",
+      "cooldown": "15s",
+      "perm": "viewer",
+      "roles": [
+        "viewer"
+      ]
+    },
+    {
+      "category": "chat",
+      "name": "commandes",
+      "aliases": [
+        "help",
+        "aide",
+        "commands"
+      ],
+      "desc": "Liste les commandes disponibles",
+      "cooldown": "30s",
+      "perm": "viewer",
+      "roles": [
+        "viewer"
+      ]
+    },
+    {
+      "category": "chat",
+      "name": "corruption",
+      "aliases": [
+        "chaos"
+      ],
+      "desc": "Voir le niveau de corruption/chaos",
+      "cooldown": "5s",
+      "perm": "viewer",
+      "roles": [
+        "viewer"
+      ]
+    },
+    {
+      "category": "chat",
+      "name": "daily",
+      "aliases": [
+        "quotidien"
+      ],
+      "desc": "Récupérer la récompense quotidienne",
+      "cooldown": "0s",
+      "perm": "viewer",
+      "roles": [
+        "viewer"
+      ]
+    },
+    {
+      "category": "chat",
+      "name": "depot",
+      "aliases": [
+        "epargner",
+        "save"
+      ],
+      "desc": "Déposer des âmes à la banque",
+      "cooldown": "3s",
+      "perm": "viewer",
+      "roles": [
+        "viewer"
+      ]
+    },
+    {
+      "category": "chat",
+      "name": "discord",
+      "aliases": [
+        "serveur",
+        "server",
+        "dc"
+      ],
+      "desc": "Lien vers le serveur Discord",
+      "cooldown": "30s",
+      "perm": "viewer",
+      "roles": [
+        "viewer"
+      ]
+    },
+    {
+      "category": "custom",
+      "name": "discord",
+      "aliases": [],
+      "desc": "🐙 Rejoins la communauté Dreadlocktopus sur Discord : {discord_url}",
+      "cooldown": "30s",
+      "perm": "viewer",
+      "roles": [
+        "viewer"
+      ]
+    },
+    {
+      "category": "chat",
+      "name": "donner",
+      "aliases": [
+        "give",
+        "transfer",
+        "don"
+      ],
+      "desc": "Donner de la monnaie à un autre viewer",
+      "cooldown": "0s",
+      "perm": "viewer",
+      "roles": [
+        "viewer"
+      ]
+    },
+    {
+      "category": "overlay",
+      "name": "dread",
+      "aliases": [],
+      "desc": "Déclenche 4 GIF/vidéos à l'écran — « 🐙 @@toi invoque le plus grand beau gosse de ce stream ! »",
+      "cooldown": "30s",
+      "perm": "everyone",
+      "roles": [
+        "everyone"
+      ]
+    },
+    {
+      "category": "chat",
+      "name": "duel",
+      "aliases": [],
+      "desc": "Défier un viewer en duel (XP et monnaie en jeu)",
+      "cooldown": "60s",
+      "perm": "viewer",
+      "roles": [
+        "viewer"
+      ]
+    },
+    {
+      "category": "chat",
+      "name": "duelmot",
+      "aliases": [
+        "worduel",
+        "motduel"
+      ],
+      "desc": "Lancer un duel de mots",
+      "cooldown": "5s",
+      "perm": "viewer",
+      "roles": [
+        "viewer"
+      ]
+    },
+    {
+      "category": "chat",
+      "name": "faction",
+      "aliases": [],
+      "desc": "Rejoindre/voir une faction",
+      "cooldown": "5s",
+      "perm": "viewer",
+      "roles": [
+        "viewer"
+      ]
+    },
+    {
+      "category": "chat",
+      "name": "followage",
+      "aliases": [],
+      "desc": "Depuis quand tu follow la chaîne",
+      "cooldown": "0s",
+      "perm": "viewer",
+      "roles": [
+        "viewer"
+      ]
+    },
+    {
+      "category": "custom",
+      "name": "followage",
+      "aliases": [],
+      "desc": "dynamic",
+      "cooldown": "10s",
+      "perm": "viewer",
+      "roles": [
+        "viewer"
+      ]
+    },
+    {
+      "category": "chat",
+      "name": "funfact",
+      "aliases": [
+        "fact",
+        "anecdote",
+        "saviez"
+      ],
+      "desc": "Fun fact varié via API externe + IA (hors poulpes)",
+      "cooldown": "30s",
+      "perm": "viewer",
+      "roles": [
+        "viewer"
+      ]
+    },
+    {
+      "category": "chat",
+      "name": "genremoi",
+      "aliases": [
+        "mongenre",
+        "pronom",
+        "monpronom"
+      ],
+      "desc": "Indique le pronom que le bot doit utiliser pour toi",
+      "cooldown": "0s",
+      "perm": "viewer",
+      "roles": [
+        "viewer"
+      ]
+    },
+    {
+      "category": "chat",
+      "name": "histoire",
+      "aliases": [],
+      "desc": "Histoire collaborative — contribuer",
+      "cooldown": "5s",
+      "perm": "viewer",
+      "roles": [
+        "viewer"
+      ]
+    },
+    {
+      "category": "chat",
+      "name": "histoirestatus",
+      "aliases": [],
+      "desc": "Voir l'état de l'histoire collaborative",
+      "cooldown": "5s",
+      "perm": "viewer",
+      "roles": [
+        "viewer"
+      ]
+    },
+    {
+      "category": "chat",
+      "name": "jeu",
+      "aliases": [
+        "game"
+      ],
+      "desc": "Présente le jeu en cours (ou un jeu donné) via IGDB : résumé + lien",
+      "cooldown": "20s",
+      "perm": "viewer",
+      "roles": [
+        "viewer"
+      ]
+    },
+    {
+      "category": "chat",
+      "name": "join",
+      "aliases": [
+        "participer"
+      ],
+      "desc": "Rejoindre la loterie en cours",
+      "cooldown": "0s",
+      "perm": "viewer",
+      "roles": [
+        "viewer"
+      ]
+    },
+    {
+      "category": "chat",
+      "name": "kaamelott",
+      "aliases": [
+        "citation",
+        "quote",
+        "arthur"
+      ],
+      "desc": "Citation de Kaamelott aléatoire",
+      "cooldown": "20s",
+      "perm": "viewer",
+      "roles": [
+        "viewer"
+      ]
+    },
+    {
+      "category": "overlay",
+      "name": "knockout",
+      "aliases": [],
+      "desc": "Déclenche 1 GIF/vidéo + 1 son à l'écran — « Ce soir, on monte sur le ring pour affronter la pire ennemie de l'humanité : la Karen. 😱 Entre humour déjanté, combats façon Punch-Out!! et personnages complètement barrés, préparez-vous à distribuer quelques uppercuts bien mérités !\n\n💙 Pensez à ajouter le jeu à votre wishlist pour soutenir les devs indés :\n https://store.steampowered.com/app/2349350/Knockout_2_Wrath_of_the_Karen/ »",
+      "cooldown": "30s",
+      "perm": "everyone",
+      "roles": [
+        "everyone"
+      ]
+    },
+    {
+      "category": "chat",
+      "name": "lurk",
+      "aliases": [
+        "afk"
+      ],
+      "desc": "Mode lurk (+XP passif)",
+      "cooldown": "0s",
+      "perm": "viewer",
+      "roles": [
+        "viewer"
+      ]
+    },
+    {
+      "category": "chat",
+      "name": "mafaction",
+      "aliases": [
+        "clan"
+      ],
+      "desc": "Voir sa faction actuelle",
+      "cooldown": "5s",
+      "perm": "viewer",
+      "roles": [
+        "viewer"
+      ]
+    },
+    {
+      "category": "overlay",
+      "name": "mesoké",
+      "aliases": [],
+      "desc": "Déclenche 1 GIF/vidéo + 1 son à l'écran — « @toi se renseigne sur cette merveilleuse pépite indé ! Le jeu est né de l'idée d'un solo développeur talentueux. Merci de soutenir le développeur en ajoutant le jeu à votre wishlist, et en l'achetant si vous en avez les moyens. C'est un super jeu poétique, onirique, avec une douce musique relaxante basé sur le vol et l'exploration sans pression ni contrainte. Venez rêver avec nous https://store.steampowered.com/app/3239940/Mesok/ »",
+      "cooldown": "30s",
+      "perm": "everyone",
+      "roles": [
+        "everyone"
+      ]
+    },
+    {
+      "category": "chat",
+      "name": "parier",
+      "aliases": [
+        "bet"
+      ],
+      "desc": "Parier des âmes sur un jeu de hasard",
+      "cooldown": "5s",
+      "perm": "viewer",
+      "roles": [
+        "viewer"
+      ]
+    },
+    {
+      "category": "chat",
+      "name": "pariercheval",
+      "aliases": [
+        "pariercourse"
+      ],
+      "desc": "Parier sur un cheval",
+      "cooldown": "5s",
+      "perm": "viewer",
+      "roles": [
+        "viewer"
+      ]
+    },
+    {
+      "category": "chat",
+      "name": "pfc",
+      "aliases": [
+        "rps"
+      ],
+      "desc": "Pierre-feuille-ciseaux contre le bot",
+      "cooldown": "10s",
+      "perm": "viewer",
+      "roles": [
+        "viewer"
+      ]
+    },
+    {
+      "category": "chat",
+      "name": "poulpe",
+      "aliases": [
+        "poulpy",
+        "octopus"
+      ],
+      "desc": "🐙 Avatar poulpe — change le mood (mod+ uniquement)",
+      "cooldown": "0s",
+      "perm": "viewer",
+      "roles": [
+        "viewer"
+      ]
+    },
+    {
+      "category": "chat",
+      "name": "praise",
+      "aliases": [
+        "loa",
+        "hommage"
+      ],
+      "desc": "Hommage au créateur du bot",
+      "cooldown": "60s",
+      "perm": "viewer",
+      "roles": [
+        "viewer"
+      ]
+    },
+    {
+      "category": "chat",
+      "name": "prophetie",
+      "aliases": [
+        "prophecy",
+        "oracle"
+      ],
+      "desc": "Recevoir une prophétie de l'oracle",
+      "cooldown": "10s",
+      "perm": "viewer",
+      "roles": [
+        "viewer"
+      ]
+    },
+    {
+      "category": "chat",
+      "name": "rank",
+      "aliases": [
+        "rang",
+        "xp",
+        "niveau"
+      ],
+      "desc": "Affiche ton rang, XP et progression",
+      "cooldown": "30s",
+      "perm": "viewer",
+      "roles": [
+        "viewer"
+      ]
+    },
+    {
+      "category": "chat",
+      "name": "rejoindretournoi",
+      "aliases": [
+        "jointournoi"
+      ],
+      "desc": "Rejoindre le tournoi en cours",
+      "cooldown": "0s",
+      "perm": "viewer",
+      "roles": [
+        "viewer"
+      ]
+    },
+    {
+      "category": "chat",
+      "name": "retrait",
+      "aliases": [
+        "withdraw"
+      ],
+      "desc": "Retirer des âmes de la banque",
+      "cooldown": "3s",
+      "perm": "viewer",
+      "roles": [
+        "viewer"
+      ]
+    },
+    {
+      "category": "chat",
+      "name": "richesse",
+      "aliases": [
+        "topcoins",
+        "fortunee"
+      ],
+      "desc": "Classement des plus riches",
+      "cooldown": "10s",
+      "perm": "viewer",
+      "roles": [
+        "viewer"
+      ]
+    },
+    {
+      "category": "chat",
+      "name": "rituel",
+      "aliases": [
+        "ritual"
+      ],
+      "desc": "Effectuer un rituel",
+      "cooldown": "180s (base — voir options.base_cooldown, x1.0 à x5.0 selon le rituel)",
+      "perm": "viewer",
+      "roles": [
+        "viewer"
+      ]
+    },
+    {
+      "category": "chat",
+      "name": "roulette",
+      "aliases": [],
+      "desc": "Roulette russe avec sa monnaie",
+      "cooldown": "60s",
+      "perm": "viewer",
+      "roles": [
+        "viewer"
+      ]
+    },
+    {
+      "category": "chat",
+      "name": "sanctuaire",
+      "aliases": [
+        "sanctuary"
+      ],
+      "desc": "Interagir avec le sanctuaire",
+      "cooldown": "10s",
+      "perm": "viewer",
+      "roles": [
+        "viewer"
+      ]
+    },
+    {
+      "category": "custom",
+      "name": "schedule",
+      "aliases": [],
+      "desc": "📅 Planning des lives : {schedule_text}",
+      "cooldown": "60s",
+      "perm": "viewer",
+      "roles": [
+        "viewer"
+      ]
+    },
+    {
+      "category": "chat",
+      "name": "shop",
+      "aliases": [
+        "boutique",
+        "magasin"
+      ],
+      "desc": "Affiche les articles disponibles",
+      "cooldown": "30s",
+      "perm": "viewer",
+      "roles": [
+        "viewer"
+      ]
+    },
+    {
+      "category": "chat",
+      "name": "slot",
+      "aliases": [],
+      "desc": "Jouer à la machine à sous",
+      "cooldown": "12s",
+      "perm": "viewer",
+      "roles": [
+        "viewer"
+      ]
+    },
+    {
+      "category": "chat",
+      "name": "so",
+      "aliases": [
+        "shoutout"
+      ],
+      "desc": "Shoutout d'un viewer/streamer",
+      "cooldown": "0s",
+      "perm": "viewer",
+      "roles": [
+        "viewer"
+      ]
+    },
+    {
+      "category": "custom",
+      "name": "specs",
+      "aliases": [],
+      "desc": "💻 Config de Dreadlocktopus : {specs_text}",
+      "cooldown": "60s",
+      "perm": "viewer",
+      "roles": [
+        "viewer"
+      ]
+    },
+    {
+      "category": "overlay",
+      "name": "stl",
+      "aliases": [],
+      "desc": "Déclenche 4 GIF/vidéos à l'écran — « le mois de juin est le mois des fiertés ✨\nC’est un moment de visibilité, de soutien et de célébration pour les personnes LGBTQIA+. On répand de l’amour, du\nrespect et de la bienveillance ici. Pas besoin d’être concerné.e pour soutenir : être une safe place, ça compte aussi. »",
+      "cooldown": "30s",
+      "perm": "everyone",
+      "roles": [
+        "everyone"
+      ]
+    },
+    {
+      "category": "chat",
+      "name": "top",
+      "aliases": [
+        "leaderboard",
+        "classement"
+      ],
+      "desc": "Top 5 viewers par XP",
+      "cooldown": "30s",
+      "perm": "viewer",
+      "roles": [
+        "viewer"
+      ]
+    },
+    {
+      "category": "chat",
+      "name": "topfaction",
+      "aliases": [
+        "factiontop"
+      ],
+      "desc": "Classement des factions",
+      "cooldown": "10s",
+      "perm": "viewer",
+      "roles": [
+        "viewer"
+      ]
+    },
+    {
+      "category": "chat",
+      "name": "trivia",
+      "aliases": [
+        "quiz"
+      ],
+      "desc": "Lance une question de trivia",
+      "cooldown": "0s",
+      "perm": "viewer",
+      "roles": [
+        "viewer"
+      ]
+    },
+    {
+      "category": "chat",
+      "name": "unlurk",
+      "aliases": [
+        "back",
+        "retour"
+      ],
+      "desc": "Retour du lurk",
+      "cooldown": "0s",
+      "perm": "viewer",
+      "roles": [
+        "viewer"
+      ]
+    },
+    {
+      "category": "chat",
+      "name": "uptime",
+      "aliases": [],
+      "desc": "Durée du stream en cours",
+      "cooldown": "30s",
+      "perm": "viewer",
+      "roles": [
+        "viewer"
+      ]
+    },
+    {
+      "category": "chat",
+      "name": "voler",
+      "aliases": [
+        "steal",
+        "vol"
+      ],
+      "desc": "Tente de voler de la monnaie à quelqu'un (45% succès)",
+      "cooldown": "120s",
+      "perm": "viewer",
+      "roles": [
+        "viewer"
+      ]
+    },
+    {
+      "category": "chat",
+      "name": "voter",
+      "aliases": [
+        "vote"
+      ],
+      "desc": "Voter pour une option du Conseil de la Table Ronde en cours",
+      "cooldown": "0s",
+      "perm": "everyone",
+      "roles": [
+        "everyone"
+      ]
+    },
+    {
+      "category": "chat",
+      "name": "benediction",
+      "aliases": [
+        "bless"
+      ],
+      "desc": "Réservé aux abonnés rang 7+ (Sire des Tentacules) — buff XP ×2 pendant 5min, 1x/stream",
+      "cooldown": "0s",
+      "perm": "sub",
+      "roles": [
+        "sub"
+      ]
+    },
+    {
+      "category": "chat",
+      "name": "conseil",
+      "aliases": [
+        "council"
+      ],
+      "desc": "Perk table_ronde (rang 12+ 'Grand Poulpe de la Table Ronde', ET abonné) — lance un vote collectif",
+      "cooldown": "0s",
+      "perm": "sub",
+      "roles": [
+        "sub"
+      ]
+    },
+    {
+      "category": "chat",
+      "name": "prophetie_perso",
+      "aliases": [
+        "propheciepersonnelle",
+        "oraclemoi"
+      ],
+      "desc": "Prophétie personnelle IA (abonnés) — tisse ton profil dans le destin",
+      "cooldown": "300s",
+      "perm": "sub",
+      "roles": [
+        "sub"
+      ]
+    },
+    {
+      "category": "chat",
+      "name": "subask",
+      "aliases": [
+        "demander"
+      ],
+      "desc": "Poser une question privée au bot (IA)",
+      "cooldown": "30s",
+      "perm": "sub",
+      "roles": [
+        "sub"
+      ]
+    },
+    {
+      "category": "chat",
+      "name": "subbadge",
+      "aliases": [
+        "monrang"
+      ],
+      "desc": "Affiche ton rang d'abonné",
+      "cooldown": "0s",
+      "perm": "sub",
+      "roles": [
+        "sub"
+      ]
+    },
+    {
+      "category": "chat",
+      "name": "subfact",
+      "aliases": [],
+      "desc": "Fun fact varié exclusif abonnés via API + IA",
+      "cooldown": "15s",
+      "perm": "sub",
+      "roles": [
+        "sub"
+      ]
+    },
+    {
+      "category": "chat",
+      "name": "subpoulpe",
+      "aliases": [],
+      "desc": "Anecdote poulpe exclusive abonnés (DB locale)",
+      "cooldown": "15s",
+      "perm": "sub",
+      "roles": [
+        "sub"
+      ]
+    },
+    {
+      "category": "chat",
+      "name": "addcoins",
+      "aliases": [
+        "ajoutercoins",
+        "addames",
+        "givecoins"
+      ],
+      "desc": "Ajoute manuellement de la monnaie à un viewer",
+      "cooldown": "0s",
+      "perm": "mod",
+      "roles": [
+        "mod"
+      ]
+    },
+    {
+      "category": "chat",
+      "name": "admingenre",
+      "aliases": [
+        "setgenre",
+        "setpronom"
+      ],
+      "desc": "Corrige le pronom utilisé pour un viewer",
+      "cooldown": "0s",
+      "perm": "mod",
+      "roles": [
+        "mod"
+      ]
+    },
+    {
+      "category": "chat",
+      "name": "alert",
+      "aliases": [],
+      "desc": "Déclenche une alerte overlay manuelle",
+      "cooldown": "0s",
+      "perm": "mod",
+      "roles": [
+        "mod"
+      ]
+    },
+    {
+      "category": "chat",
+      "name": "announce",
+      "aliases": [
+        "annonce"
+      ],
+      "desc": "Envoyer une annonce formatée immédiate",
+      "cooldown": "0s",
+      "perm": "mod",
+      "roles": [
+        "mod"
+      ]
+    },
+    {
+      "category": "chat",
+      "name": "approve",
+      "aliases": [
+        "approuver",
+        "valider"
+      ],
+      "desc": "Approuver le n-ième message en modqueue (défaut 1)",
+      "cooldown": "0s",
+      "perm": "mod",
+      "roles": [
+        "mod"
+      ]
+    },
+    {
+      "category": "chat",
+      "name": "bingo",
+      "aliases": [
+        "startbingo"
+      ],
+      "desc": "Lancer/voir une partie de bingo",
+      "cooldown": "60s",
+      "perm": "mod",
+      "roles": [
+        "mod"
+      ]
+    },
+    {
+      "category": "chat",
+      "name": "chiffre",
+      "aliases": [
+        "gtn",
+        "guess"
+      ],
+      "desc": "Devine le nombre mystère",
+      "cooldown": "60s",
+      "perm": "mod",
+      "roles": [
+        "mod"
+      ]
+    },
+    {
+      "category": "chat",
+      "name": "clearwarnings",
+      "aliases": [
+        "clearwarn"
+      ],
+      "desc": "Effacer les avertissements d'un viewer",
+      "cooldown": "0s",
+      "perm": "mod",
+      "roles": [
+        "mod"
+      ]
+    },
+    {
+      "category": "chat",
+      "name": "course",
+      "aliases": [
+        "horses",
+        "chevalrace"
+      ],
+      "desc": "Lancer/voir une course de chevaux",
+      "cooldown": "120s",
+      "perm": "mod",
+      "roles": [
+        "mod"
+      ]
+    },
+    {
+      "category": "chat",
+      "name": "debutstory",
+      "aliases": [
+        "startstory"
+      ],
+      "desc": "Démarrer une histoire collaborative (mod/owner)",
+      "cooldown": "5s",
+      "perm": "mod",
+      "roles": [
+        "mod"
+      ]
+    },
+    {
+      "category": "chat",
+      "name": "finstory",
+      "aliases": [
+        "stopstory",
+        "endstory"
+      ],
+      "desc": "Clore l'histoire collaborative en cours, génère la fin via IA (mod/owner)",
+      "cooldown": "5s",
+      "perm": "mod",
+      "roles": [
+        "mod"
+      ]
+    },
+    {
+      "category": "chat",
+      "name": "lottery",
+      "aliases": [
+        "loterie",
+        "tirage"
+      ],
+      "desc": "Lance une loterie",
+      "cooldown": "1800s",
+      "perm": "mod",
+      "roles": [
+        "mod"
+      ]
+    },
+    {
+      "category": "chat",
+      "name": "modqueue",
+      "aliases": [
+        "queue",
+        "file"
+      ],
+      "desc": "Voir la file de modération avec position",
+      "cooldown": "0s",
+      "perm": "mod",
+      "roles": [
+        "mod"
+      ]
+    },
+    {
+      "category": "chat",
+      "name": "reject",
+      "aliases": [
+        "rejeter",
+        "refuser"
+      ],
+      "desc": "Rejeter le n-ième message en modqueue (défaut 1)",
+      "cooldown": "0s",
+      "perm": "mod",
+      "roles": [
+        "mod"
+      ]
+    },
+    {
+      "category": "chat",
+      "name": "removecoins",
+      "aliases": [
+        "retraitcoins",
+        "delcoins",
+        "takecoins"
+      ],
+      "desc": "Retire manuellement de la monnaie à un viewer",
+      "cooldown": "0s",
+      "perm": "mod",
+      "roles": [
+        "mod"
+      ]
+    },
+    {
+      "category": "chat",
+      "name": "resetarc",
+      "aliases": [
+        "reset_arc"
+      ],
+      "desc": "Réinitialise les compteurs Arc Raiders (extractions/morts/kills)",
+      "cooldown": "0s",
+      "perm": "mod",
+      "roles": [
+        "mod"
+      ]
+    },
+    {
+      "category": "chat",
+      "name": "setcoins",
+      "aliases": [
+        "fixcoins"
+      ],
+      "desc": "Fixe le solde exact de monnaie d'un viewer",
+      "cooldown": "0s",
+      "perm": "mod",
+      "roles": [
+        "mod"
+      ]
+    },
+    {
+      "category": "chat",
+      "name": "setext",
+      "aliases": [],
+      "desc": "Fixe manuellement le compteur d'extractions Arc Raiders",
+      "cooldown": "0s",
+      "perm": "mod",
+      "roles": [
+        "mod"
+      ]
+    },
+    {
+      "category": "chat",
+      "name": "setkills",
+      "aliases": [],
+      "desc": "Fixe manuellement le compteur de kills Arc Raiders",
+      "cooldown": "0s",
+      "perm": "mod",
+      "roles": [
+        "mod"
+      ]
+    },
+    {
+      "category": "chat",
+      "name": "soclip",
+      "aliases": [],
+      "desc": "Shoutout avec clip d'un autre streamer",
+      "cooldown": "5s",
+      "perm": "mod",
+      "roles": [
+        "mod"
+      ]
+    },
+    {
+      "category": "chat",
+      "name": "timeout",
+      "aliases": [
+        "to"
+      ],
+      "desc": "Timeout temporaire",
+      "cooldown": "0s",
+      "perm": "mod",
+      "roles": [
+        "mod"
+      ]
+    },
+    {
+      "category": "chat",
+      "name": "tournoi",
+      "aliases": [
+        "tournament"
+      ],
+      "desc": "Lancer/voir un tournoi",
+      "cooldown": "600s",
+      "perm": "mod",
+      "roles": [
+        "mod"
+      ]
+    },
+    {
+      "category": "chat",
+      "name": "tresor",
+      "aliases": [
+        "treasure"
+      ],
+      "desc": "Chercher un trésor caché",
+      "cooldown": "300s",
+      "perm": "mod",
+      "roles": [
+        "mod"
+      ]
+    },
+    {
+      "category": "chat",
+      "name": "updatetop",
+      "aliases": [
+        "refreshtop"
+      ],
+      "desc": "Rafraîchit le leaderboard overlay",
+      "cooldown": "0s",
+      "perm": "mod",
+      "roles": [
+        "mod"
+      ]
+    },
+    {
+      "category": "chat",
+      "name": "warn",
+      "aliases": [],
+      "desc": "Avertir un viewer (timeout auto au-delà du seuil)",
+      "cooldown": "0s",
+      "perm": "mod",
+      "roles": [
+        "mod"
+      ]
+    },
+    {
+      "category": "chat",
+      "name": "addcmd",
+      "aliases": [
+        "newcmd",
+        "ajoutercmd"
+      ],
+      "desc": "Ajouter une commande personnalisée",
+      "cooldown": "0s",
+      "perm": "owner",
+      "roles": [
+        "owner"
+      ]
+    },
+    {
+      "category": "chat",
+      "name": "ai",
+      "aliases": [],
+      "desc": "Statut / activation du moteur IA",
+      "cooldown": "0s",
+      "perm": "owner",
+      "roles": [
+        "owner"
+      ]
+    },
+    {
+      "category": "chat",
+      "name": "ban",
+      "aliases": [],
+      "desc": "Bannir un viewer définitivement",
+      "cooldown": "0s",
+      "perm": "owner",
+      "roles": [
+        "owner"
+      ]
+    },
+    {
+      "category": "overlay",
+      "name": "coco",
+      "aliases": [],
+      "desc": "Déclenche 1 GIF/vidéo à l'écran — « @toi se casse en courant ! »",
+      "cooldown": "30s",
+      "perm": "owner",
+      "roles": [
+        "follower",
+        "sub_t1",
+        "sub_t2",
+        "sub_t3",
+        "vip",
+        "mod",
+        "owner"
+      ]
+    },
+    {
+      "category": "chat",
+      "name": "delcmd",
+      "aliases": [
+        "removecmd",
+        "supprimercmd"
+      ],
+      "desc": "Supprimer une commande personnalisée",
+      "cooldown": "0s",
+      "perm": "owner",
+      "roles": [
+        "owner"
+      ]
+    },
+    {
+      "category": "chat",
+      "name": "editcmd",
+      "aliases": [],
+      "desc": "Modifier une commande personnalisée",
+      "cooldown": "0s",
+      "perm": "owner",
+      "roles": [
+        "owner"
+      ]
+    },
+    {
+      "category": "chat",
+      "name": "extract",
+      "aliases": [
+        "extraction"
+      ],
+      "desc": "Incrémente le compteur d'extractions (overlay jeu)",
+      "cooldown": "0s",
+      "perm": "owner",
+      "roles": [
+        "owner"
+      ]
+    },
+    {
+      "category": "chat",
+      "name": "givexp",
+      "aliases": [
+        "addxp"
+      ],
+      "desc": "Donner manuellement de l'XP à un viewer",
+      "cooldown": "0s",
+      "perm": "owner",
+      "roles": [
+        "owner"
+      ]
+    },
+    {
+      "category": "overlay",
+      "name": "grosdoc",
+      "aliases": [],
+      "desc": "Déclenche 1 GIF/vidéo à l'écran — « @toi est venu tous vous exterminer ! »",
+      "cooldown": "30s",
+      "perm": "owner",
+      "roles": [
+        "sub_t1",
+        "sub_t2",
+        "sub_t3",
+        "vip",
+        "mod",
+        "owner"
+      ]
+    },
+    {
+      "category": "chat",
+      "name": "guestjoin",
+      "aliases": [],
+      "desc": "Ajouter une chaîne invitée à la rotation",
+      "cooldown": "0s",
+      "perm": "owner",
+      "roles": [
+        "owner"
+      ]
+    },
+    {
+      "category": "chat",
+      "name": "guestleave",
+      "aliases": [],
+      "desc": "Retirer une chaîne invitée",
+      "cooldown": "0s",
+      "perm": "owner",
+      "roles": [
+        "owner"
+      ]
+    },
+    {
+      "category": "chat",
+      "name": "guestlist",
+      "aliases": [],
+      "desc": "Lister les chaînes invitées",
+      "cooldown": "0s",
+      "perm": "owner",
+      "roles": [
+        "owner"
+      ]
+    },
+    {
+      "category": "chat",
+      "name": "iareset",
+      "aliases": [
+        "resetia",
+        "aifix",
+        "iafix"
+      ],
+      "desc": "Réinitialise le moteur IA en urgence (fallback bloqué)",
+      "cooldown": "0s",
+      "perm": "owner",
+      "roles": [
+        "owner"
+      ]
+    },
+    {
+      "category": "chat",
+      "name": "kill",
+      "aliases": [
+        "kills"
+      ],
+      "desc": "Incrémente le compteur de kills (overlay jeu)",
+      "cooldown": "0s",
+      "perm": "owner",
+      "roles": [
+        "owner"
+      ]
+    },
+    {
+      "category": "overlay",
+      "name": "korn",
+      "aliases": [],
+      "desc": "Déclenche 1 GIF/vidéo à l'écran — « @toi se muscle le popotin en rythme »",
+      "cooldown": "30s",
+      "perm": "owner",
+      "roles": [
+        "follower",
+        "sub_t1",
+        "sub_t2",
+        "sub_t3",
+        "vip",
+        "mod",
+        "owner"
+      ]
+    },
+    {
+      "category": "chat",
+      "name": "livestart",
+      "aliases": [
+        "testlive",
+        "livedebut"
+      ],
+      "desc": "Démarre manuellement une période de live (tests)",
+      "cooldown": "0s",
+      "perm": "owner",
+      "roles": [
+        "owner"
+      ]
+    },
+    {
+      "category": "chat",
+      "name": "livestop",
+      "aliases": [
+        "testlivestop",
+        "livefin"
+      ],
+      "desc": "Arrête la période de live en cours + génère le résumé",
+      "cooldown": "0s",
+      "perm": "owner",
+      "roles": [
+        "owner"
+      ]
+    },
+    {
+      "category": "overlay",
+      "name": "mha",
+      "aliases": [],
+      "desc": "Déclenche 1 GIF/vidéo à l'écran — « @toi est prête pour pécho tout ce qui bouge et même qui bouge pas ! »",
+      "cooldown": "30s",
+      "perm": "owner",
+      "roles": [
+        "sub_t1",
+        "sub_t2",
+        "sub_t3",
+        "vip",
+        "mod",
+        "owner"
+      ]
+    },
+    {
+      "category": "chat",
+      "name": "mort",
+      "aliases": [
+        "death",
+        "die"
+      ],
+      "desc": "Incrémente le compteur de morts (overlay jeu)",
+      "cooldown": "0s",
+      "perm": "owner",
+      "roles": [
+        "owner"
+      ]
+    },
+    {
+      "category": "overlay",
+      "name": "narco",
+      "aliases": [],
+      "desc": "Déclenche 1 GIF/vidéo à l'écran — « @toi invoque la naine royale ! »",
+      "cooldown": "30s",
+      "perm": "owner",
+      "roles": [
+        "sub_t1",
+        "sub_t2",
+        "sub_t3",
+        "vip",
+        "mod",
+        "owner"
+      ]
+    },
+    {
+      "category": "chat",
+      "name": "profil",
+      "aliases": [
+        "profile"
+      ],
+      "desc": "Voir / changer le profil de stream actif",
+      "cooldown": "5s",
+      "perm": "owner",
+      "roles": [
+        "owner"
+      ]
+    },
+    {
+      "category": "chat",
+      "name": "reload",
+      "aliases": [],
+      "desc": "Recharge toute la configuration JSON à chaud",
+      "cooldown": "0s",
+      "perm": "owner",
+      "roles": [
+        "owner"
+      ]
+    },
+    {
+      "category": "chat",
+      "name": "resetcounter",
+      "aliases": [
+        "resetcount",
+        "raz"
+      ],
+      "desc": "Remet un compteur (extractions/morts/kills) à zéro",
+      "cooldown": "0s",
+      "perm": "owner",
+      "roles": [
+        "owner"
+      ]
+    },
+    {
+      "category": "chat",
+      "name": "resume",
+      "aliases": [
+        "forceresume",
+        "genereresume",
+        "summary"
+      ],
+      "desc": "Génère/régénère le résumé final (Générique de Fin)",
+      "cooldown": "0s",
+      "perm": "owner",
+      "roles": [
+        "owner"
+      ]
+    },
+    {
+      "category": "chat",
+      "name": "rotations",
+      "aliases": [],
+      "desc": "Activer/désactiver les rotations automatiques",
+      "cooldown": "0s",
+      "perm": "owner",
+      "roles": [
+        "owner"
+      ]
+    },
+    {
+      "category": "chat",
+      "name": "setgame",
+      "aliases": [],
+      "desc": "Change le jeu actuel affiché par les overlays",
+      "cooldown": "0s",
+      "perm": "owner",
+      "roles": [
+        "owner"
+      ]
+    },
+    {
+      "category": "chat",
+      "name": "title",
+      "aliases": [],
+      "desc": "Affiche ou change le titre du stream",
+      "cooldown": "0s",
+      "perm": "owner",
+      "roles": [
+        "owner"
+      ]
+    },
+    {
+      "category": "chat",
+      "name": "unban",
+      "aliases": [],
+      "desc": "Débannir un viewer",
+      "cooldown": "0s",
+      "perm": "owner",
+      "roles": [
+        "owner"
+      ]
+    }
+  ],
+  "counts": {
+    "total": 123,
+    "chat": 110,
+    "overlay": 9,
+    "custom": 4
+  },
+  "generated_at": "22/06/2026 à 07:30",
+  "perm_labels": {
+    "viewer": "Viewer",
+    "everyone": "Viewer",
+    "follower": "Follower",
+    "sub": "Abonné",
+    "sub_t1": "Abonné T1",
+    "sub_t2": "Abonné T2",
+    "sub_t3": "Abonné T3",
+    "vip": "VIP",
+    "mod": "Modérateur",
+    "owner": "Créateur"
+  }
+}
+</script>
+
+<script>
+(function(){
+'use strict';
+
+// ─── RNG déterministe par seed ────────────────────────────────────────────────
+function seededRand(seed){
+  let s=seed^0x9e3779b9;
+  s=Math.imul(s^(s>>>16),0x45d9f3b);
+  s=Math.imul(s^(s>>>16),0x45d9f3b);
+  return((s^(s>>>16))>>>0)/4294967296;
+}
+// Graine globale unique à chaque chargement de page
+const PAGE_SEED = Math.floor(Math.random()*0xFFFFFF);
+
+function rnd(idx,off){ return seededRand(PAGE_SEED*31+idx*1337+off*7919); }
+
+// ─── Data ─────────────────────────────────────────────────────────────────────
+const DATA = JSON.parse(document.getElementById('commands-data').textContent);
+const PERM_ORDER = {viewer:0,everyone:0,follower:1,sub:2,sub_t1:2,sub_t2:3,sub_t3:4,vip:5,mod:6,owner:7};
+const PERM_LABEL = DATA.perm_labels||{};
+const CAT_META = {chat:{label:'💬 Chat',icon:'💬'},overlay:{label:'🎬 Overlay',icon:'🎬'},custom:{label:'⚙️ Perso',icon:'⚙️'}};
+
+document.getElementById('stat-total').textContent = DATA.counts.total;
+document.getElementById('stat-chat').textContent = DATA.counts.chat;
+document.getElementById('stat-overlay').textContent = DATA.counts.overlay;
+document.getElementById('stat-custom').textContent = DATA.counts.custom;
+document.getElementById('sheet-tentacles').textContent = DATA.counts.total;
+document.getElementById('sheet-tentacles-bar').style.width = Math.min(100,DATA.counts.total)+'%';
+document.getElementById('sheet-date').textContent = DATA.generated_at;
+document.getElementById('footer-date').textContent = DATA.generated_at;
+
+// ─── Filtres ──────────────────────────────────────────────────────────────────
+function roleBucket(r){if(r==='everyone')return 'viewer';if(['sub_t1','sub_t2','sub_t3'].includes(r))return 'sub';return r;}
+const roleOrder=['all','viewer','follower','sub','vip','mod','owner'];
+const roleLabels={all:'🌊 Tous',viewer:'👁️ Viewer',follower:'⭐ Follower',sub:'💜 Abonné',vip:'💎 VIP',mod:'🛡️ Modo',owner:'👑 Créateur'};
+const catOrder=['all','chat','overlay','custom'];
+const catLabels={all:'🔱 Toutes',chat:'💬 Chat',overlay:'🎬 Overlay',custom:'⚙️ Perso'};
+
+const rolePillsEl=document.getElementById('role-pills');
+roleOrder.forEach(r=>{const el=document.createElement('div');el.className='pill'+(r==='all'?' active':'');el.dataset.role=r;el.textContent=roleLabels[r];rolePillsEl.appendChild(el);});
+const catPillsEl=document.getElementById('cat-pills');
+catOrder.forEach(c=>{const el=document.createElement('div');el.className='pill'+(c==='all'?' active':'');el.dataset.cat=c;el.textContent=catLabels[c];catPillsEl.appendChild(el);});
+
+let state={role:'all',cat:'all',search:'',sort:'role',mode:'abyss'};
+
+function matches(cmd){
+  if(state.role!=='all'){const roles=(cmd.roles&&cmd.roles.length)?cmd.roles:[cmd.perm];if(!roles.map(roleBucket).includes(state.role))return false;}
+  if(state.cat!=='all'&&cmd.category!==state.cat)return false;
+  if(state.search){const hay=(cmd.name+' '+(cmd.aliases||[]).join(' ')+' '+cmd.desc).toLowerCase();if(!hay.includes(state.search))return false;}
+  return true;
+}
+function sortList(list){
+  const arr=list.slice();
+  if(state.sort==='alpha')arr.sort((a,b)=>a.name.localeCompare(b.name));
+  else if(state.sort==='cat')arr.sort((a,b)=>a.category.localeCompare(b.category)||a.name.localeCompare(b.name));
+  else arr.sort((a,b)=>(PERM_ORDER[a.perm]-PERM_ORDER[b.perm])||a.name.localeCompare(b.name));
+  return arr;
+}
+function dominantRank(cmd){
+  const roles=(cmd.roles&&cmd.roles.length)?cmd.roles:[cmd.perm];
+  const buckets=roles.map(roleBucket);
+  let best='viewer',bestScore=-1;
+  buckets.forEach(b=>{const s=PERM_ORDER[b]??0;if(s>bestScore){bestScore=s;best=b;}});
+  return best==='everyone'?'viewer':best;
+}
+function sectionKey(cmd){
+  if(state.sort==='cat')return cmd.category;
+  if(state.sort==='role')return roleBucket((cmd.roles&&cmd.roles[0])||cmd.perm);
+  return null;
+}
+function sectionLabel(key){
+  if(state.sort==='cat')return catLabels[key]||key;
+  if(state.sort==='role')return roleLabels[key]||key;
+  return '';
+}
+
+// ─── Génération de pancarte abyssale unique ───────────────────────────────────
+// Chaque pancarte est entièrement différente à chaque rechargement de page
+
+const WOOD_TEXTURES=[
+  // (bg CSS) : bois sombre marin
+  'repeating-linear-gradient(87deg,rgba(255,255,255,.015) 0,rgba(255,255,255,.015) 1px,transparent 1px,transparent 18px),linear-gradient(170deg,#0f0a1e 0%,#0a0616 100%)',
+  'repeating-linear-gradient(91deg,rgba(255,255,255,.012) 0,rgba(255,255,255,.012) 1px,transparent 1px,transparent 20px),linear-gradient(175deg,#110b20 0%,#08050f 100%)',
+  'repeating-linear-gradient(89deg,rgba(255,255,255,.018) 0,rgba(255,255,255,.018) 1px,transparent 1px,transparent 16px),linear-gradient(165deg,#0d0818 0%,#0b0719 100%)',
+  'repeating-linear-gradient(85deg,rgba(255,255,255,.014) 0,rgba(255,255,255,.014) 1px,transparent 1px,transparent 22px),linear-gradient(172deg,#130c22 0%,#090614 100%)',
+];
+
+const BORDER_SHAPES=[
+  // border-radius valeurs pour illusion de planche taillée à la main
+  '4px 8px 5px 3px','6px 3px 7px 4px','3px 6px 4px 7px','5px 4px 3px 6px',
+  '7px 3px 5px 4px','2px 7px 6px 5px','4px 5px 7px 2px','6px 4px 2px 7px',
+  '8px 2px 4px 6px','3px 8px 6px 2px',
+];
+
+const CLIP_PATHS=[
+  // coins légèrement écaillés / érodés
+  'polygon(0 0,100% 0,100% 100%,0 100%)',
+  'polygon(2px 0,100% 0,100% 3px,calc(100% - 1px) 100%,0 calc(100% - 1px),0 3px)',
+  'polygon(0 0,calc(100% - 3px) 0,100% 3px,100% 100%,4px 100%,0 calc(100% - 3px))',
+  'polygon(3px 0,100% 0,100% calc(100% - 2px),calc(100% - 3px) 100%,0 100%,0 2px)',
+  'polygon(0 2px,3px 0,100% 0,100% 100%,calc(100% - 2px) calc(100% - 0px),0 100%)',
+  'polygon(2px 0,calc(100% - 2px) 0,100% 2px,100% calc(100% - 3px),calc(100% - 4px) 100%,2px 100%,0 calc(100% - 2px),0 2px)',
+  'polygon(4px 0,100% 0,100% calc(100% - 4px),calc(100% - 2px) 100%,0 100%,0 3px)',
+];
+
+// Taches d'usure / lichen en SVG inline
+function genWearSVG(seed){
+  let svg='<svg xmlns="http://www.w3.org/2000/svg" style="position:absolute;inset:0;width:100%;height:100%;pointer-events:none;z-index:0;border-radius:inherit;" preserveAspectRatio="none">';
+  const nSpots=Math.floor(rnd(seed,0)*3)+1;
+  for(let i=0;i<nSpots;i++){
+    const cx=(rnd(seed,i*3+1)*80+10).toFixed(1);
+    const cy=(rnd(seed,i*3+2)*80+10).toFixed(1);
+    const rx=(rnd(seed,i*3+3)*25+15).toFixed(1);
+    const ry=(rnd(seed,i*3+4)*18+10).toFixed(1);
+    const op=(rnd(seed,i*3+5)*0.18+0.08).toFixed(2);
+    svg+=`<ellipse cx="${cx}%" cy="${cy}%" rx="${rx}%" ry="${ry}%" fill="rgba(0,0,0,${op})"/>`;
+  }
+  // Stries de vieillissement
+  const nLines=Math.floor(rnd(seed,20)*4)+1;
+  for(let i=0;i<nLines;i++){
+    const x1=(rnd(seed,i*5+21)*80+10).toFixed(1);
+    const y1=(rnd(seed,i*5+22)*60+20).toFixed(1);
+    const x2=(parseFloat(x1)+(rnd(seed,i*5+23)*20-10)).toFixed(1);
+    const y2=(parseFloat(y1)+(rnd(seed,i*5+24)*15+5)).toFixed(1);
+    const op=(rnd(seed,i*5+25)*0.12+0.04).toFixed(2);
+    svg+=`<line x1="${x1}%" y1="${y1}%" x2="${x2}%" y2="${y2}%" stroke="rgba(255,255,255,${op})" stroke-width="${(rnd(seed,i*5+26)*1.5+0.3).toFixed(1)}"/>`;
+  }
+  svg+='</svg>';
+  return svg;
+}
+
+// Mini-coraux et animaux décoratifs sur la pancarte
+function genCardDecor(seed,rank){
+  const coralColors=['#d98fff','#2de8c4','#ffae42','#ff6a1a','#ff8080','#7c4dff'];
+  const col1=coralColors[Math.floor(rnd(seed,40)*coralColors.length)];
+  const col2=coralColors[Math.floor(rnd(seed,41)*coralColors.length)];
+
+  let decors='';
+
+  // Coin bas-gauche : petit décor corail
+  const type=Math.floor(rnd(seed,42)*4);
+  const opacity=(0.35+rnd(seed,43)*0.35).toFixed(2);
+  if(type===0){
+    // Branches
+    decors+=`<svg xmlns="http://www.w3.org/2000/svg" class="card-coral" style="position:absolute;bottom:-2px;left:6px;width:36px;height:32px;pointer-events:none;z-index:4;opacity:${opacity}">
+      <path d="M8,32 L8,10 M8,22 L2,12 M8,16 L14,8 M2,12 L0,5 M14,8 L16,2" stroke="${col1}" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+    </svg>`;
+  } else if(type===1){
+    // Anémone
+    const petals=5+Math.floor(rnd(seed,44)*4);
+    let paths='';
+    for(let p=0;p<petals;p++){
+      const a=(p/petals)*Math.PI*2;
+      const len=8+rnd(seed,44+p)*8;
+      paths+=`<line x1="10" y1="30" x2="${(10+Math.sin(a)*len).toFixed(1)}" y2="${(30-Math.cos(Math.abs(a))*len).toFixed(1)}" stroke="${p%2===0?col1:col2}" stroke-width="2" stroke-linecap="round"/>
+      <circle cx="${(10+Math.sin(a)*len).toFixed(1)}" cy="${(30-Math.cos(Math.abs(a))*len).toFixed(1)}" r="2.5" fill="${col2}"/>`;
+    }
+    decors+=`<svg xmlns="http://www.w3.org/2000/svg" class="card-coral" style="position:absolute;bottom:-2px;left:2px;width:26px;height:34px;pointer-events:none;z-index:4;opacity:${opacity}">${paths}</svg>`;
+  } else if(type===2){
+    // Tubes
+    decors+=`<svg xmlns="http://www.w3.org/2000/svg" class="card-coral" style="position:absolute;bottom:-2px;left:4px;width:32px;height:28px;pointer-events:none;z-index:4;opacity:${opacity}">
+      <path d="M6,28 Q6,10 10,7 Q14,10 14,28" fill="${col1}" fill-opacity="0.7"/>
+      <ellipse cx="10" cy="6" rx="4" ry="3" fill="${col2}"/>
+      <path d="M16,28 Q16,14 19,12 Q22,14 22,28" fill="${col1}" fill-opacity="0.6"/>
+      <ellipse cx="19" cy="11" rx="3" ry="2.5" fill="${col2}"/>
+    </svg>`;
+  } else {
+    // Étoile de mer
+    decors+=`<svg xmlns="http://www.w3.org/2000/svg" class="card-coral" style="position:absolute;bottom:4px;left:3px;width:22px;height:22px;pointer-events:none;z-index:4;opacity:${opacity}">
+      <polygon points="11,2 13,8 19,8 14,12 16,18 11,14 6,18 8,12 3,8 9,8" fill="${col1}"/>
+    </svg>`;
+  }
+
+  // Éventuellement un mini-tentacule SVG animé sur le bord droit
+  if(rnd(seed,60)>0.45){
+    const tcol=coralColors[Math.floor(rnd(seed,61)*coralColors.length)];
+    const tlen=18+rnd(seed,62)*16;
+    const dur=(2.5+rnd(seed,63)*2.5).toFixed(1);
+    decors+=`<svg xmlns="http://www.w3.org/2000/svg" class="card-tentacle" style="position:absolute;top:${(8+rnd(seed,64)*40).toFixed(0)}px;right:-10px;width:22px;height:${Math.round(tlen+10)}px;pointer-events:none;z-index:4;opacity:0.5;overflow:visible">
+      <path id="tt${seed}" d="M2,0 Q${(6+rnd(seed,65)*8).toFixed(0)},${(tlen*0.3).toFixed(0)} ${(4+rnd(seed,66)*6).toFixed(0)},${tlen.toFixed(0)}" stroke="${tcol}" stroke-width="3" fill="none" stroke-linecap="round">
+        <animate attributeName="d" values="M2,0 Q${(4+rnd(seed,65)*10).toFixed(0)},${(tlen*0.3).toFixed(0)} ${(3+rnd(seed,66)*8).toFixed(0)},${tlen.toFixed(0)};M2,0 Q${(8+rnd(seed,67)*8).toFixed(0)},${(tlen*0.35).toFixed(0)} ${(6+rnd(seed,68)*6).toFixed(0)},${tlen.toFixed(0)};M2,0 Q${(4+rnd(seed,65)*10).toFixed(0)},${(tlen*0.3).toFixed(0)} ${(3+rnd(seed,66)*8).toFixed(0)},${tlen.toFixed(0)}" dur="${dur}s" repeatCount="indefinite" calcMode="linear"/>
+      </path>
+    </svg>`;
+  }
+
+  // Barnacles (petits cercles usure)
+  if(rnd(seed,70)>0.5){
+    let bars='';
+    const nb=2+Math.floor(rnd(seed,71)*4);
+    for(let b=0;b<nb;b++){
+      const bx=(rnd(seed,72+b)*85+5).toFixed(1);
+      const by=(rnd(seed,73+b)*60+10).toFixed(1);
+      const br=(1.5+rnd(seed,74+b)*2.5).toFixed(1);
+      bars+=`<circle cx="${bx}%" cy="${by}%" r="${br}" fill="none" stroke="${col1}" stroke-width="1" opacity="${(0.3+rnd(seed,75+b)*0.4).toFixed(2)}"/>`;
+    }
+    decors+=`<svg xmlns="http://www.w3.org/2000/svg" class="card-barnacle" style="position:absolute;inset:0;width:100%;height:100%;pointer-events:none;z-index:3;">${bars}</svg>`;
+  }
+
+  return decors;
+}
+
+// Génération de bâton unique
+function genStake(seed,rank){
+  const baseH = {viewer:75,follower:95,sub:110,vip:125,mod:145,owner:165}[rank]||85;
+  const h = Math.floor(baseH + rnd(seed,80)*60 - 15);
+  const w = Math.floor(10 + rnd(seed,81)*6); // largeur variable 10-16px
+  // Inclinaison du bâton
+  const lean = (rnd(seed,82)*6 - 3).toFixed(1); // -3 à +3 deg
+  // Texture bois : couleur de base variable
+  const brightness = (0.85+rnd(seed,83)*0.3).toFixed(2);
+  // Écorce ou lisse
+  const worn = rnd(seed,84) > 0.5;
+  // Pointe : longue ou courte
+  const tipH = Math.floor(8+rnd(seed,85)*14);
+  // Nœuds du bois (protubérances)
+  const knots = rnd(seed,86)>0.5 ? `<div style="position:absolute;left:${Math.floor(rnd(seed,87)*(w-4))}px;top:${Math.floor(rnd(seed,88)*h*0.6+h*0.1)}px;width:${Math.floor(4+rnd(seed,89)*4)}px;height:${Math.floor(3+rnd(seed,90)*3)}px;border-radius:50%;background:rgba(0,0,0,0.35);"></div>` : '';
+
+  const grainCSS=worn
+    ? `repeating-linear-gradient(0deg,transparent 0,transparent ${Math.floor(4+rnd(seed,91)*5)}px,rgba(0,0,0,.18) ${Math.floor(4+rnd(seed,91)*5)}px,rgba(0,0,0,.18) ${Math.floor(5+rnd(seed,91)*5)+1}px)`
+    : `repeating-linear-gradient(0deg,transparent 0,transparent ${Math.floor(6+rnd(seed,92)*8)}px,rgba(0,0,0,.10) ${Math.floor(6+rnd(seed,92)*8)}px,rgba(0,0,0,.10) ${Math.floor(7+rnd(seed,92)*8)+1}px)`;
+
+  return `<div class="sign-stake" style="transform:rotate(${lean}deg);transform-origin:top center;">
+    <div style="width:${w}px;height:${h}px;background:linear-gradient(90deg,#1e1206 0%,filter:brightness(${brightness}),#4a2e14 35%,#2e1a08 60%,#1e1206 100%),${grainCSS};background:linear-gradient(90deg,#1e1206 0%,#${Math.floor(0x4a+rnd(seed,93)*0x18).toString(16)}2e14 35%,#2e1a08 60%,#1a0e06 100%);border-radius:2px 2px 3px 3px;position:relative;box-shadow:2px 0 4px rgba(0,0,0,.5),-1px 0 2px rgba(255,255,255,.03);filter:brightness(${brightness})">
+      <div style="position:absolute;inset:0;border-radius:inherit;${grainCSS.includes('repeating')?`background:${grainCSS}`:''}"></div>
+      ${knots}
+      <div style="position:absolute;bottom:-${tipH}px;left:50%;transform:translateX(-50%);width:0;height:0;border-left:${Math.floor(w/2)}px solid transparent;border-right:${Math.floor(w/2)}px solid transparent;border-top:${tipH}px solid #1a0e06;"></div>
+    </div>
+  </div>`;
+}
+
+// Jointure bâton-pancarte unique
+function genJoint(seed){
+  const style=Math.floor(rnd(seed,100)*3);
+  const w=Math.floor(22+rnd(seed,101)*14);
+  const h=Math.floor(6+rnd(seed,102)*6);
+  const col=`hsl(${Math.floor(20+rnd(seed,103)*15)},${Math.floor(40+rnd(seed,104)*20)}%,${Math.floor(18+rnd(seed,105)*12)}%)`;
+  if(style===0){
+    // Planche horizontale avec clous
+    return `<div style="width:${w}px;height:${h}px;background:${col};border-radius:3px;position:relative;box-shadow:0 2px 4px rgba(0,0,0,.5);">
+      <div style="position:absolute;top:50%;left:4px;width:4px;height:4px;border-radius:50%;background:#6b4c2a;transform:translateY(-50%);"></div>
+      <div style="position:absolute;top:50%;right:4px;width:4px;height:4px;border-radius:50%;background:#6b4c2a;transform:translateY(-50%);"></div>
+    </div>`;
+  } else if(style===1){
+    // Double planche croisée
+    return `<div style="width:${w+8}px;height:${h+4}px;position:relative;">
+      <div style="position:absolute;top:0;left:0;right:0;height:${Math.floor(h/2+1)}px;background:${col};border-radius:2px;"></div>
+      <div style="position:absolute;bottom:0;left:4px;right:4px;height:${Math.floor(h/2+1)}px;background:${col};opacity:.7;border-radius:2px;"></div>
+    </div>`;
+  } else {
+    // Simple anneau
+    return `<div style="width:${h+4}px;height:${h+4}px;border:3px solid ${col};border-radius:50%;background:transparent;box-shadow:0 0 4px rgba(0,0,0,.4);"></div>`;
+  }
+}
+
+// ─── Construction HTML carte (mode abyssal) ─────────────────────────────────
+function cardHTMLAbyss(cmd, cardIdx){
+  const meta=CAT_META[cmd.category]||CAT_META.chat;
+  const rank=dominantRank(cmd);
+  const seed=PAGE_SEED+cardIdx*127;
+
+  const aliasesHTML=(cmd.aliases||[]).length
+    ?`<div class="cmd-aliases">${cmd.aliases.map(a=>`<span class="alias-chip">!${a}</span>`).join('')}</div>`:'';
+  const roles=(cmd.roles&&cmd.roles.length)?cmd.roles:[cmd.perm];
+  const badgesHTML=roles.map(r=>`<span class="badge ${roleBucket(r)}">${PERM_LABEL[r]||r}</span>`).join('');
+
+  // Transformation aléatoire de la pancarte entière
+  const ty=(rnd(seed,0)*70-35).toFixed(1); // -35 à +35px
+  const rot=(rnd(seed,1)*10-5).toFixed(2); // -5 à +5deg
+  const bgTex=WOOD_TEXTURES[Math.floor(rnd(seed,2)*WOOD_TEXTURES.length)];
+  const borderShape=BORDER_SHAPES[Math.floor(rnd(seed,3)*BORDER_SHAPES.length)];
+  const clipPath=CLIP_PATHS[Math.floor(rnd(seed,4)*CLIP_PATHS.length)];
+  const wearSVG=genWearSVG(seed);
+  const cardDecor=genCardDecor(seed,rank);
+
+  // Couleurs de bordure selon rang
+  const rankBorders={
+    viewer:`2px solid rgba(45,232,196,${(0.15+rnd(seed,10)*0.25).toFixed(2)})`,
+    follower:`2px solid rgba(125,211,252,${(0.15+rnd(seed,10)*0.25).toFixed(2)})`,
+    sub:`2px solid rgba(217,143,255,${(0.2+rnd(seed,10)*0.3).toFixed(2)})`,
+    vip:`${(1.5+rnd(seed,11)*1.5).toFixed(0)}px solid rgba(255,209,102,${(0.25+rnd(seed,10)*0.3).toFixed(2)})`,
+    mod:`${(2+rnd(seed,11)*2).toFixed(0)}px solid rgba(255,106,26,${(0.3+rnd(seed,10)*0.3).toFixed(2)})`,
+    owner:`${(2+rnd(seed,11)*2.5).toFixed(0)}px solid rgba(255,77,77,${(0.4+rnd(seed,10)*0.3).toFixed(2)})`,
+  };
+  const rankGlows={
+    viewer:`0 4px 20px rgba(0,0,0,.8),inset 0 0 30px rgba(45,232,196,0.04)`,
+    follower:`0 4px 20px rgba(0,0,0,.8),inset 0 0 30px rgba(125,211,252,0.05)`,
+    sub:`0 6px 24px rgba(0,0,0,.85),inset 0 0 40px rgba(217,143,255,0.06)`,
+    vip:`0 6px 28px rgba(0,0,0,.85),inset 0 0 45px rgba(255,209,102,0.08),0 0 ${Math.floor(rnd(seed,12)*8+4)}px rgba(255,209,102,0.12)`,
+    mod:`0 8px 32px rgba(0,0,0,.9),inset 0 0 50px rgba(255,106,26,0.08),0 0 ${Math.floor(rnd(seed,12)*10+6)}px rgba(255,106,26,0.18)`,
+    owner:`0 10px 40px rgba(0,0,0,.95),inset 0 0 60px rgba(255,77,77,0.10),0 0 ${Math.floor(rnd(seed,12)*14+8)}px rgba(255,77,77,${(0.15+rnd(seed,13)*0.2).toFixed(2)})`,
+  };
+
+  // Clous aux coins (positions légèrement aléatoires)
+  const nailCSS=`radial-gradient(circle 4px at ${8+Math.floor(rnd(seed,15)*4)}px ${8+Math.floor(rnd(seed,16)*4)}px,#4a3820 50%,transparent 52%),radial-gradient(circle 4px at calc(100% - ${8+Math.floor(rnd(seed,17)*4)}px) ${8+Math.floor(rnd(seed,18)*4)}px,#4a3820 50%,transparent 52%),radial-gradient(circle 3px at ${8+Math.floor(rnd(seed,19)*3)}px calc(100% - ${7+Math.floor(rnd(seed,20)*4)}px),#3a2810 50%,transparent 52%),radial-gradient(circle 3px at calc(100% - ${8+Math.floor(rnd(seed,21)*3)}px) calc(100% - ${7+Math.floor(rnd(seed,22)*4)}px),#3a2810 50%,transparent 52%)`;
+
+  const stakeHTML=genStake(seed,rank);
+  const jointHTML=genJoint(seed);
+
+  return `<div class="sign-post" style="transform:translateY(${ty}px) rotate(${rot}deg);">
+    <div class="card" data-rank="${rank}" style="background:${bgTex};border:${rankBorders[rank]||rankBorders.viewer};border-radius:${borderShape};clip-path:${clipPath};box-shadow:${rankGlows[rank]||rankGlows.viewer};min-height:160px;width:100%;position:relative;padding:18px 16px 16px;overflow:visible;">
+      ${wearSVG}
+      ${cardDecor}
+      <div style="position:absolute;inset:0;pointer-events:none;background:${nailCSS};z-index:3;border-radius:inherit;"></div>
+      <div class="card-content">
+        <div class="card-top">
+          <div class="cmd-name"><span class="bang">!</span>${cmd.name}</div>
+          <div class="cat-icon" title="${meta.label}">${meta.icon}</div>
+        </div>
+        <div class="badge-row">${badgesHTML}</div>
+        <p class="cmd-desc">${cmd.desc||'Pas encore de description.'}</p>
+        ${aliasesHTML}
+        <div class="card-foot"><span>⏱ ${cmd.cooldown||'0s'}</span><span>${meta.label}</span></div>
+      </div>
+    </div>
+    <div style="display:flex;justify-content:center;align-items:center;">${jointHTML}</div>
+    ${stakeHTML}
+  </div>`;
+}
+
+// ─── Construction HTML carte (mode simple) ───────────────────────────────────
+function cardHTMLSimple(cmd){
+  const meta=CAT_META[cmd.category]||CAT_META.chat;
+  const rank=dominantRank(cmd);
+  const aliasesHTML=(cmd.aliases||[]).length
+    ?`<div class="cmd-aliases">${cmd.aliases.map(a=>`<span class="alias-chip">!${a}</span>`).join('')}</div>`:'';
+  const roles=(cmd.roles&&cmd.roles.length)?cmd.roles:[cmd.perm];
+  const badgesHTML=roles.map(r=>`<span class="badge ${roleBucket(r)}">${PERM_LABEL[r]||r}</span>`).join('');
+  return `<div class="sign-post">
+    <div class="card" data-rank="${rank}">
+      <div class="card-content">
+        <div class="card-top">
+          <div class="cmd-name"><span class="bang">!</span>${cmd.name}</div>
+          <div class="cat-icon" title="${meta.label}">${meta.icon}</div>
+        </div>
+        <div class="badge-row">${badgesHTML}</div>
+        <p class="cmd-desc">${cmd.desc||'Pas encore de description.'}</p>
+        ${aliasesHTML}
+        <div class="card-foot"><span>⏱ ${cmd.cooldown||'0s'}</span><span>${meta.label}</span></div>
+      </div>
+    </div>
+  </div>`;
+}
+
+function dividerHTML(key){
+  return `<div class="section-divider">
+    <div class="tentacle-rule-line"></div>
+    <span class="label">${sectionLabel(key)}</span>
+    <div class="tentacle-rule-line"></div>
+  </div>`;
+}
+
+// ─── Rendu ───────────────────────────────────────────────────────────────────
+function render(){
+  const list=sortList(DATA.commands.filter(matches));
+  const grid=document.getElementById('grid');
+  let html='',lastKey=undefined,cardIdx=0;
+  list.forEach(cmd=>{
+    const key=sectionKey(cmd);
+    if(key!==null&&key!==lastKey){html+=dividerHTML(key);lastKey=key;}
+    html+=state.mode==='simple'?cardHTMLSimple(cmd):cardHTMLAbyss(cmd,cardIdx++);
+  });
+  grid.innerHTML=html;
+  document.getElementById('empty').style.display=list.length?'none':'block';
+  document.getElementById('count-readout').textContent=`${list.length} / ${DATA.commands.length} commandes`;
+}
+
+// ─── Évènements contrôles ─────────────────────────────────────────────────────
+rolePillsEl.addEventListener('click',e=>{const p=e.target.closest('.pill');if(!p)return;[...rolePillsEl.children].forEach(x=>x.classList.remove('active'));p.classList.add('active');state.role=p.dataset.role;render();});
+catPillsEl.addEventListener('click',e=>{const p=e.target.closest('.pill');if(!p)return;[...catPillsEl.children].forEach(x=>x.classList.remove('active'));p.classList.add('active');state.cat=p.dataset.cat;render();});
+document.getElementById('search').addEventListener('input',e=>{state.search=e.target.value.trim().toLowerCase();render();});
+document.getElementById('sort').addEventListener('change',e=>{state.sort=e.target.value;render();});
+document.getElementById('display-mode').addEventListener('change',e=>{
+  state.mode=e.target.value;
+  document.body.className=state.mode==='simple'?'mode-simple':'mode-abyss';
+  // Tentacules background & créatures : masqués en mode simple
+  document.getElementById('tentacle-layer').style.display=state.mode==='simple'?'none':'block';
+  document.getElementById('abyss-particles').style.display=state.mode==='simple'?'none':'block';
+  document.getElementById('swimmers').style.display=state.mode==='simple'?'none':'block';
+  document.getElementById('coral-reef').style.display=state.mode==='simple'?'none':'block';
+  document.getElementById('depth-gauge').style.display=state.mode==='simple'?'none':'';
+  render();
+});
+
+render();
+
+// ─── Tentacules background ────────────────────────────────────────────────────
+(function spawnTentacles(){
+  const NS='http://www.w3.org/2000/svg';
+  const NSEG=22,NF=8;
+  const COUNT=window.innerWidth<700?5:12;
+  const W=window.innerWidth,H=window.innerHeight;
+
+  function hsl(h,s,l){return `hsl(${(h+360)%360},${s}%,${l}%)`;}
+  function tentacleColors(){
+    const bodyHue=(200+Math.random()*180)%360;
+    const suckHue=(bodyHue+140+Math.random()*60)%360;
+    return{body:hsl(bodyHue,72+Math.random()*20,28+Math.random()*18),suckRim:hsl(suckHue,88+Math.random()*10,68+Math.random()*20),suckFill:hsl(suckHue,78,54)};
+  }
+  function spine(ox,oy,ang,len,curlDir,curlAmt,waveMag,waveFreq,phase){
+    const pts=[];
+    for(let s=0;s<=NSEG;s++){
+      const t=s/NSEG,dir=ang+curlDir*curlAmt*t*t;
+      const perp=dir+Math.PI*0.5;
+      const wave=Math.sin(t*waveFreq*Math.PI+phase)*waveMag*t;
+      pts.push([ox+Math.cos(dir)*len*t+Math.cos(perp)*wave,oy+Math.sin(dir)*len*t+Math.sin(perp)*wave]);
+    }
+    return pts;
+  }
+  function buildPoly(pts,baseW){
+    const L=[],R=[];
+    for(let i=0;i<=NSEG;i++){
+      const t=i/NSEG,w=baseW*Math.pow(1-t,1.25)+0.25;
+      const a=pts[Math.max(i-1,0)],b=pts[Math.min(i+1,NSEG)];
+      const tx=b[0]-a[0],ty=b[1]-a[1],tl=Math.sqrt(tx*tx+ty*ty)||1;
+      const nx=-ty/tl,ny=tx/tl;
+      L.push([pts[i][0]+nx*w,pts[i][1]+ny*w]);
+      R.push([pts[i][0]-nx*w,pts[i][1]-ny*w]);
+    }
+    return 'M '+[...L,...[...R].reverse()].map(p=>`${p[0].toFixed(1)},${p[1].toFixed(1)}`).join(' L ')+' Z';
+  }
+  function buildHighlight(pts,baseW){
+    const side=[];
+    for(let i=0;i<=NSEG;i++){
+      const t=i/NSEG,w=baseW*Math.pow(1-t,1.25)*0.35;
+      const a=pts[Math.max(i-1,0)],b=pts[Math.min(i+1,NSEG)];
+      const tx=b[0]-a[0],ty=b[1]-a[1],tl=Math.sqrt(tx*tx+ty*ty)||1;
+      const nx=-ty/tl,ny=tx/tl;
+      side.push([pts[i][0]+nx*w,pts[i][1]+ny*w]);
+    }
+    return 'M '+side.map(p=>`${p[0].toFixed(1)},${p[1].toFixed(1)}`).join(' L ');
+  }
+  function animSuckerGroup(grp,frames,idx,dur,del){
+    const p0=frames[0].sp[idx];
+    grp.setAttribute('transform',`translate(${p0[0].toFixed(2)},${p0[1].toFixed(2)})`);
+    const vals=frames.map(f=>`${f.sp[idx][0].toFixed(2)},${f.sp[idx][1].toFixed(2)}`).join(';');
+    const at=document.createElementNS(NS,'animateTransform');
+    at.setAttribute('attributeName','transform');at.setAttribute('type','translate');
+    at.setAttribute('values',vals);at.setAttribute('dur',`${dur}s`);
+    at.setAttribute('begin',`${del}s`);at.setAttribute('repeatCount','indefinite');
+    at.setAttribute('calcMode','linear');at.setAttribute('additive','replace');
+    grp.appendChild(at);
+  }
+
+  const layer=document.getElementById('tentacle-layer');
+  const svg=document.createElementNS(NS,'svg');
+  svg.style.cssText='position:fixed;inset:0;width:100%;height:100%;pointer-events:none;overflow:visible';
+  svg.setAttribute('viewBox',`0 0 ${W} ${H}`);
+  svg.setAttribute('preserveAspectRatio','xMidYMid slice');
+
+  const positions=[
+    {ox:0,oy:H*0.2,ang:0},{ox:0,oy:H*0.6,ang:0.2},
+    {ox:W,oy:H*0.15,ang:Math.PI},{ox:W,oy:H*0.5,ang:Math.PI-0.3},
+    {ox:W,oy:H*0.8,ang:Math.PI+0.2},{ox:W*0.2,oy:H,ang:-Math.PI/2+0.3},
+    {ox:W*0.5,oy:H,ang:-Math.PI/2},{ox:W*0.75,oy:H,ang:-Math.PI/2-0.3},
+    {ox:W*0.1,oy:H*0.9,ang:-0.8},{ox:W*0.9,oy:H*0.1,ang:Math.PI+0.5},
+    {ox:0,oy:H*0.4,ang:0.4},{ox:W*0.6,oy:H,ang:-Math.PI/2+0.5},
+  ];
+
+  for(let i=0;i<COUNT;i++){
+    const pos=positions[i%positions.length];
+    const cols=tentacleColors();
+    const opacity=0.35+Math.random()*0.45;
+    const len=100+Math.random()*200;
+    const baseW=6+Math.random()*9;
+    const curlDir=Math.random()>.5?1:-1;
+    const curlAmt=0.4+Math.random()*1.2;
+    const waveMag=15+Math.random()*30;
+    const waveFreq=0.7+Math.random()*2.2;
+    const nSuckers=Math.floor(6+Math.random()*5);
+    const dur=(3+Math.random()*6).toFixed(2);
+    const del=(Math.random()*-15).toFixed(2);
+    const ang=pos.ang+(Math.random()-.5)*0.6;
+    const frames=Array.from({length:NF+1},(_,f)=>{
+      const phase=(f/NF)*Math.PI*2;
+      const sp=spine(pos.ox,pos.oy,ang,len,curlDir,curlAmt,waveMag,waveFreq,phase);
+      return{sp,poly:buildPoly(sp,baseW),hl:buildHighlight(sp,baseW)};
+    });
+    const g=document.createElementNS(NS,'g');
+    g.setAttribute('opacity',opacity.toFixed(2));
+    const body=document.createElementNS(NS,'path');
+    body.setAttribute('d',frames[0].poly);body.setAttribute('fill',cols.body);body.setAttribute('stroke',cols.body);body.setAttribute('stroke-width','0.5');body.setAttribute('stroke-linejoin','round');
+    const ab=document.createElementNS(NS,'animate');
+    ab.setAttribute('attributeName','d');ab.setAttribute('values',frames.map(f=>f.poly).join(';'));ab.setAttribute('dur',`${dur}s`);ab.setAttribute('begin',`${del}s`);ab.setAttribute('repeatCount','indefinite');ab.setAttribute('calcMode','linear');
+    body.appendChild(ab);g.appendChild(body);
+    const hl=document.createElementNS(NS,'path');
+    hl.setAttribute('d',frames[0].hl);hl.setAttribute('fill','none');hl.setAttribute('stroke','#ffffff');hl.setAttribute('stroke-width','0.65');hl.setAttribute('stroke-linecap','round');hl.setAttribute('opacity','0.22');
+    const ah=document.createElementNS(NS,'animate');
+    ah.setAttribute('attributeName','d');ah.setAttribute('values',frames.map(f=>f.hl).join(';'));ah.setAttribute('dur',`${dur}s`);ah.setAttribute('begin',`${del}s`);ah.setAttribute('repeatCount','indefinite');ah.setAttribute('calcMode','linear');
+    hl.appendChild(ah);g.appendChild(hl);
+    for(let s=0;s<nSuckers;s++){
+      const t=0.08+(s/nSuckers)*0.84;
+      const idx=Math.round(t*NSEG);
+      const w=baseW*Math.pow(1-t,1.25);
+      const sr=Math.max(0.9,w*0.68);
+      const sg=document.createElementNS(NS,'g');
+      animSuckerGroup(sg,frames,idx,dur,del);
+      const rim=document.createElementNS(NS,'circle');
+      rim.setAttribute('cx','0');rim.setAttribute('cy','0');rim.setAttribute('r',sr.toFixed(2));
+      rim.setAttribute('fill','none');rim.setAttribute('stroke',cols.suckRim);rim.setAttribute('stroke-width',Math.max(0.7,sr*0.45).toFixed(2));rim.setAttribute('opacity','0.9');
+      sg.appendChild(rim);
+      const hollow=document.createElementNS(NS,'circle');
+      hollow.setAttribute('cx','0');hollow.setAttribute('cy','0');hollow.setAttribute('r',(sr*0.60).toFixed(2));hollow.setAttribute('fill',cols.suckFill);hollow.setAttribute('opacity','0.45');
+      sg.appendChild(hollow);
+      const glint=document.createElementNS(NS,'circle');
+      glint.setAttribute('cx',(-sr*0.24).toFixed(2));glint.setAttribute('cy',(-sr*0.24).toFixed(2));glint.setAttribute('r',(sr*0.26).toFixed(2));glint.setAttribute('fill','#ffffff');glint.setAttribute('opacity','0.65');
+      sg.appendChild(glint);
+      g.appendChild(sg);
+    }
+    svg.appendChild(g);
+  }
+  layer.appendChild(svg);
+})();
+
+// ─── Coraux de fond ───────────────────────────────────────────────────────────
+(function spawnReef(){
+  const NS='http://www.w3.org/2000/svg';
+  const reef=document.getElementById('coral-reef');
+  const W=window.innerWidth;
+  const svg=document.createElementNS(NS,'svg');
+  svg.style.cssText='width:100%;height:100%;overflow:visible';
+  svg.setAttribute('viewBox',`0 0 ${W} 100`);
+  svg.setAttribute('preserveAspectRatio','none');
+  const colors=['#d98fff','#2de8c4','#ffae42','#ff6a1a','#7c4dff','#ff8080'];
+  const positions=[
+    {x:60,type:'branch'},{x:130,type:'fan'},{x:220,type:'tube'},
+    {x:310,type:'branch'},{x:400,type:'anemone'},{x:W*0.4,type:'fan'},
+    {x:W*0.5,type:'branch'},{x:W*0.6,type:'tube'},{x:W*0.7,type:'anemone'},
+    {x:W-300,type:'branch'},{x:W-200,type:'fan'},{x:W-100,type:'tube'},
+  ];
+  positions.forEach((pos,i)=>{
+    const col=colors[i%colors.length],col2=colors[(i+2)%colors.length];
+    const delay=i*0.7,dur=4+Math.random()*3;
+    const g=document.createElementNS(NS,'g');
+    g.setAttribute('opacity','0.55');
+    const anim=document.createElementNS(NS,'animateTransform');
+    anim.setAttribute('attributeName','transform');anim.setAttribute('type','rotate');
+    anim.setAttribute('values',`-3,${pos.x},100;3,${pos.x},100;-3,${pos.x},100`);
+    anim.setAttribute('dur',`${dur}s`);anim.setAttribute('begin',`${delay}s`);anim.setAttribute('repeatCount','indefinite');
+    if(pos.type==='branch'){
+      const path=document.createElementNS(NS,'path');
+      path.setAttribute('d',`M${pos.x},100 L${pos.x},60 M${pos.x},80 L${pos.x-15},55 M${pos.x},70 L${pos.x+12},48 M${pos.x-15},55 L${pos.x-22},38 M${pos.x+12},48 L${pos.x+20},32`);
+      path.setAttribute('stroke',col);path.setAttribute('stroke-width','3');path.setAttribute('fill','none');path.setAttribute('stroke-linecap','round');
+      g.appendChild(path);g.appendChild(anim);
+    } else if(pos.type==='fan'){
+      for(let f=0;f<7;f++){
+        const angle=(-60+f*20)*(Math.PI/180),len=30+Math.random()*20;
+        const line=document.createElementNS(NS,'line');
+        line.setAttribute('x1',String(pos.x));line.setAttribute('y1','100');
+        line.setAttribute('x2',String(pos.x+Math.sin(angle)*len));line.setAttribute('y2',String(100-Math.cos(angle)*len));
+        line.setAttribute('stroke',f%2===0?col:col2);line.setAttribute('stroke-width','2.5');line.setAttribute('stroke-linecap','round');line.setAttribute('opacity','0.9');
+        g.appendChild(line);
+      }
+      g.appendChild(anim);
+    } else if(pos.type==='tube'){
+      for(let t=0;t<3;t++){
+        const ox=pos.x+(t-1)*10,h=40+t*12;
+        const rect=document.createElementNS(NS,'path');
+        rect.setAttribute('d',`M${ox-4},100 Q${ox-4},${100-h} ${ox},${100-h-6} Q${ox+4},${100-h} ${ox+4},100`);
+        rect.setAttribute('fill',col);rect.setAttribute('opacity','0.7');
+        const circle=document.createElementNS(NS,'ellipse');
+        circle.setAttribute('cx',String(ox));circle.setAttribute('cy',String(100-h-3));circle.setAttribute('rx','4');circle.setAttribute('ry','3');circle.setAttribute('fill',col2);
+        g.appendChild(rect);g.appendChild(circle);
+      }
+      g.appendChild(anim);
+    } else if(pos.type==='anemone'){
+      for(let a=0;a<8;a++){
+        const angle=(a/8)*Math.PI*2,len=25+Math.random()*15;
+        const path=document.createElementNS(NS,'path');
+        const mx=pos.x+Math.cos(angle)*8,my=100-Math.sin(Math.abs(angle))*8;
+        const ex=pos.x+Math.cos(angle)*len,ey=100-len*0.8;
+        path.setAttribute('d',`M${pos.x},100 Q${mx},${my} ${ex},${ey}`);
+        path.setAttribute('stroke',col);path.setAttribute('stroke-width','2');path.setAttribute('fill','none');path.setAttribute('stroke-linecap','round');
+        const tip=document.createElementNS(NS,'circle');
+        tip.setAttribute('cx',String(ex));tip.setAttribute('cy',String(ey));tip.setAttribute('r','3');tip.setAttribute('fill',col2);
+        g.appendChild(path);g.appendChild(tip);
+      }
+      g.appendChild(anim);
+    }
+    svg.appendChild(g);
+  });
+  [W*0.15,W*0.35,W*0.55,W*0.82].forEach(rx=>{
+    const rock=document.createElementNS(NS,'ellipse');
+    rock.setAttribute('cx',String(rx));rock.setAttribute('cy','100');
+    rock.setAttribute('rx',String(20+Math.random()*30));rock.setAttribute('ry',String(8+Math.random()*10));
+    rock.setAttribute('fill','#1a0e2e');rock.setAttribute('opacity','0.8');
+    svg.appendChild(rock);
+  });
+  reef.appendChild(svg);
+})();
+
+// ─── Particules ───────────────────────────────────────────────────────────────
+(function spawnParticles(){
+  const host=document.getElementById('abyss-particles');
+  if(!host)return;
+  const COUNT=window.innerWidth<700?7:16;
+  for(let i=0;i<COUNT;i++){
+    const el=document.createElement('div');
+    const isJelly=Math.random()<0.32;
+    el.className='particle '+(isJelly?'jelly':'bubble');
+    const size=isJelly?(14+Math.random()*16):(4+Math.random()*10);
+    el.style.width=size+'px';el.style.height=(isJelly?size*0.85:size)+'px';
+    el.style.left=(Math.random()*100)+'vw';
+    el.style.setProperty('--drift',(Math.random()*80-40)+'px');
+    const dur=16+Math.random()*22;
+    el.style.animationDuration=dur+'s';el.style.animationDelay=(-Math.random()*dur)+'s';
+    host.appendChild(el);
+  }
+})();
+
+// ─── Nageurs CHAOTIQUES ───────────────────────────────────────────────────────
+// Trajectoires aléatoires non-rectilignes : courbes de Bézier via CSS custom properties
+(function spawnSwimmers(){
+  const host=document.getElementById('swimmers');
+  if(!host)return;
+  const creatures=['🐙','🐙','🪼','🦑','🪼','🐡','🦀','🐠'];
+  creatures.forEach((emoji,i)=>{
+    const el=document.createElement('div');
+    el.className='swimmer'+(emoji==='🐙'?' octo':'');
+    el.textContent=emoji;
+
+    const startSide=Math.random()>0.5;// vient de gauche ou droite
+    const startY=(8+Math.random()*75)+'vh';
+    el.style.top=startY;
+    el.style.fontSize=(24+Math.random()*28)+'px';
+
+    const dur=22+Math.random()*30;
+    const del=(-Math.random()*dur).toFixed(1);
+
+    // Keyframe unique par créature via style tag (injection dynamique)
+    const kfName=`swim_${i}_${Math.floor(Math.random()*9999)}`;
+    // 5 points de passage avec Y oscillants et X progressant
+    const pts=[];
+    const nPts=5;
+    for(let p=0;p<=nPts;p++){
+      const xPct=startSide?(p/nPts*130-10):((1-p/nPts)*130-10);
+      const yOff=(-40+Math.random()*80)+'vh'; // dérive verticale chaotique
+      const rot=(-30+Math.random()*60).toFixed(0);
+      const sc=(0.7+Math.random()*0.6).toFixed(2);
+      pts.push({x:xPct.toFixed(1)+'vw',yo:yOff,rot,sc});
+    }
+    const pct=pts.map((pt,pi)=>`${Math.round((pi/nPts)*100)}%{transform:translate(${pt.x},calc(${pt.yo})) rotate(${pt.rot}deg) scale(${pt.sc});opacity:${pi===0||pi===nPts?0:0.5+Math.random()*0.3};}`).join('');
+    const styleEl=document.createElement('style');
+    styleEl.textContent=`@keyframes ${kfName}{${pct}}`;
+    document.head.appendChild(styleEl);
+
+    el.style.left='0';
+    el.style.opacity='0';
+    el.style.animation=`${kfName} ${dur}s ${del}s linear infinite`;
+    if(!startSide)el.style.transform='scaleX(-1)';
+    host.appendChild(el);
+  });
+})();
+
+// ─── Profondimètre ────────────────────────────────────────────────────────────
+const MAX_DEPTH=10994;
+const milestones=[
+  {d:0,label:'Surface',pod:'🤿'},{d:200,label:'Zone crépusculaire',pod:'🐠'},
+  {d:700,label:'Zone obscure',pod:'🦐'},{d:1000,label:'Zone de minuit',pod:'🦑'},
+  {d:2000,label:'Plaine glaciale',pod:'🐡'},{d:4000,label:'Plaine abyssale',pod:'🐙'},
+  {d:8000,label:'Antichambre de Dreadthulhu',pod:'💀'},{d:10994,label:'Antre de Dreadthulhu',pod:'🌌'},
+];
+milestones.forEach(m=>m.p=(m.d/MAX_DEPTH)*100);
+const fillEl=document.getElementById('gauge-fill');
+const readingEl=document.getElementById('gauge-reading');
+const podEl=document.querySelector('#depth-gauge .pod');
+function updateGauge(){
+  const doc=document.documentElement;
+  const max=doc.scrollHeight-doc.clientHeight;
+  const pct=max>0?Math.min(100,(window.scrollY/max)*100):0;
+  fillEl.style.height=pct+'%';
+  let cur=milestones[0];
+  for(const m of milestones)if(pct>=m.p)cur=m;
+  const depth=Math.round((pct/100)*MAX_DEPTH);
+  readingEl.innerHTML='−'+depth.toLocaleString('fr-FR')+' m<br>'+cur.label;
+  podEl.textContent=cur.pod;
+  const f=pct/100;
+  document.documentElement.style.setProperty('--depth-veil',(f*0.78).toFixed(3));
+  document.documentElement.style.setProperty('--bg-glow1',(0.28-f*0.16).toFixed(3));
+  document.documentElement.style.setProperty('--bg-glow2',(0.10-f*0.07).toFixed(3));
+  document.documentElement.style.setProperty('--bg-glow3',(0.06+f*0.05).toFixed(3));
+}
+document.addEventListener('scroll',updateGauge,{passive:true});
+window.addEventListener('resize',updateGauge);
+updateGauge();
+
+})();
+</script>
+</body>
+</html>
