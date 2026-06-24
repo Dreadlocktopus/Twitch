@@ -919,7 +919,7 @@ footer .tentacle-rule{font-size:18px;letter-spacing:14px;margin-bottom:14px;opac
         "ritual"
       ],
       "desc": "Effectuer un rituel",
-      "cooldown": "180s",
+      "cooldown": "180s (base — voir options.base_cooldown, x1.0 à x5.0 selon le rituel)",
       "perm": "viewer",
       "roles": [
         "viewer"
@@ -1202,6 +1202,35 @@ footer .tentacle-rule{font-size:18px;letter-spacing:14px;margin-bottom:14px;opac
     },
     {
       "category": "chat",
+      "name": "addcoins",
+      "aliases": [
+        "ajoutercoins",
+        "addames",
+        "givecoins"
+      ],
+      "desc": "Ajoute manuellement de la monnaie à un viewer",
+      "cooldown": "0s",
+      "perm": "mod",
+      "roles": [
+        "mod"
+      ]
+    },
+    {
+      "category": "chat",
+      "name": "admingenre",
+      "aliases": [
+        "setgenre",
+        "setpronom"
+      ],
+      "desc": "Corrige le pronom utilisé pour un viewer",
+      "cooldown": "0s",
+      "perm": "mod",
+      "roles": [
+        "mod"
+      ]
+    },
+    {
+      "category": "chat",
       "name": "alert",
       "aliases": [],
       "desc": "Déclenche une alerte overlay manuelle",
@@ -1363,11 +1392,39 @@ footer .tentacle-rule{font-size:18px;letter-spacing:14px;margin-bottom:14px;opac
     },
     {
       "category": "chat",
+      "name": "removecoins",
+      "aliases": [
+        "retraitcoins",
+        "delcoins",
+        "takecoins"
+      ],
+      "desc": "Retire manuellement de la monnaie à un viewer",
+      "cooldown": "0s",
+      "perm": "mod",
+      "roles": [
+        "mod"
+      ]
+    },
+    {
+      "category": "chat",
       "name": "resetarc",
       "aliases": [
         "reset_arc"
       ],
       "desc": "Réinitialise les compteurs Arc Raiders (extractions/morts/kills)",
+      "cooldown": "0s",
+      "perm": "mod",
+      "roles": [
+        "mod"
+      ]
+    },
+    {
+      "category": "chat",
+      "name": "setcoins",
+      "aliases": [
+        "fixcoins"
+      ],
+      "desc": "Fixe le solde exact de monnaie d'un viewer",
       "cooldown": "0s",
       "perm": "mod",
       "roles": [
@@ -1478,35 +1535,6 @@ footer .tentacle-rule{font-size:18px;letter-spacing:14px;margin-bottom:14px;opac
         "ajoutercmd"
       ],
       "desc": "Ajouter une commande personnalisée",
-      "cooldown": "0s",
-      "perm": "owner",
-      "roles": [
-        "owner"
-      ]
-    },
-    {
-      "category": "chat",
-      "name": "addcoins",
-      "aliases": [
-        "ajoutercoins",
-        "addames",
-        "givecoins"
-      ],
-      "desc": "Ajoute manuellement de la monnaie à un viewer",
-      "cooldown": "0s",
-      "perm": "owner",
-      "roles": [
-        "owner"
-      ]
-    },
-    {
-      "category": "chat",
-      "name": "admingenre",
-      "aliases": [
-        "setgenre",
-        "setpronom"
-      ],
-      "desc": "Corrige le pronom utilisé pour un viewer",
       "cooldown": "0s",
       "perm": "owner",
       "roles": [
@@ -1797,21 +1825,6 @@ footer .tentacle-rule{font-size:18px;letter-spacing:14px;margin-bottom:14px;opac
     },
     {
       "category": "chat",
-      "name": "removecoins",
-      "aliases": [
-        "retraitcoins",
-        "delcoins",
-        "takecoins"
-      ],
-      "desc": "Retire manuellement de la monnaie à un viewer",
-      "cooldown": "0s",
-      "perm": "owner",
-      "roles": [
-        "owner"
-      ]
-    },
-    {
-      "category": "chat",
       "name": "resetcounter",
       "aliases": [
         "resetcount",
@@ -1844,19 +1857,6 @@ footer .tentacle-rule{font-size:18px;letter-spacing:14px;margin-bottom:14px;opac
       "name": "rotations",
       "aliases": [],
       "desc": "Activer/désactiver les rotations automatiques",
-      "cooldown": "0s",
-      "perm": "owner",
-      "roles": [
-        "owner"
-      ]
-    },
-    {
-      "category": "chat",
-      "name": "setcoins",
-      "aliases": [
-        "fixcoins"
-      ],
-      "desc": "Fixe le solde exact de monnaie d'un viewer",
       "cooldown": "0s",
       "perm": "owner",
       "roles": [
@@ -1903,7 +1903,7 @@ footer .tentacle-rule{font-size:18px;letter-spacing:14px;margin-bottom:14px;opac
     "overlay": 9,
     "custom": 4
   },
-  "generated_at": "22/06/2026 à 15:28",
+  "generated_at": "24/06/2026 à 04:24",
   "perm_labels": {
     "viewer": "Viewer",
     "everyone": "Viewer",
