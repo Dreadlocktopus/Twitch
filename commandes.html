@@ -700,6 +700,20 @@ footer .tentacle-rule{font-size:18px;letter-spacing:14px;margin-bottom:14px;opac
     },
     {
       "category": "chat",
+      "name": "idee",
+      "aliases": [
+        "idea",
+        "suggestion"
+      ],
+      "desc": "Propose une idée qui apparaît en post-it sur l'overlay",
+      "cooldown": "20s",
+      "perm": "everyone",
+      "roles": [
+        "everyone"
+      ]
+    },
+    {
+      "category": "chat",
       "name": "jeu",
       "aliases": [
         "game"
@@ -782,6 +796,20 @@ footer .tentacle-rule{font-size:18px;letter-spacing:14px;margin-bottom:14px;opac
       "aliases": [],
       "desc": "Déclenche 1 GIF/vidéo + 1 son à l'écran — « @toi se renseigne sur cette merveilleuse pépite indé ! Le jeu est né de l'idée d'un solo développeur talentueux. Merci de soutenir le développeur en ajoutant le jeu à votre wishlist, et en l'achetant si vous en avez les moyens. C'est un super jeu poétique, onirique, avec une douce musique relaxante basé sur le vol et l'exploration sans pression ni contrainte. Venez rêver avec nous https://store.steampowered.com/app/3239940/Mesok/ »",
       "cooldown": "30s",
+      "perm": "everyone",
+      "roles": [
+        "everyone"
+      ]
+    },
+    {
+      "category": "chat",
+      "name": "objectifs",
+      "aliases": [
+        "objectives",
+        "goals"
+      ],
+      "desc": "Affiche la liste actuelle des objectifs dans le chat",
+      "cooldown": "0s",
       "perm": "everyone",
       "roles": [
         "everyone"
@@ -1380,6 +1408,20 @@ footer .tentacle-rule{font-size:18px;letter-spacing:14px;margin-bottom:14px;opac
     },
     {
       "category": "chat",
+      "name": "idees_clear",
+      "aliases": [
+        "ideesclear",
+        "clearideas"
+      ],
+      "desc": "Efface tous les post-it de l'overlay idées",
+      "cooldown": "0s",
+      "perm": "mod",
+      "roles": [
+        "mod"
+      ]
+    },
+    {
+      "category": "chat",
       "name": "lottery",
       "aliases": [
         "loterie",
@@ -1400,6 +1442,43 @@ footer .tentacle-rule{font-size:18px;letter-spacing:14px;margin-bottom:14px;opac
         "file"
       ],
       "desc": "Voir la file de modération avec position",
+      "cooldown": "0s",
+      "perm": "mod",
+      "roles": [
+        "mod"
+      ]
+    },
+    {
+      "category": "chat",
+      "name": "objectif",
+      "aliases": [
+        "objective"
+      ],
+      "desc": "Gère la liste d'objectifs du stream (add/done/del/clear)",
+      "cooldown": "0s",
+      "perm": "mod",
+      "roles": [
+        "mod"
+      ]
+    },
+    {
+      "category": "chat",
+      "name": "raidgo",
+      "aliases": [],
+      "desc": "Lance le raid Twitch vers la cible tirée par !raidroulette",
+      "cooldown": "0s",
+      "perm": "mod",
+      "roles": [
+        "mod"
+      ]
+    },
+    {
+      "category": "chat",
+      "name": "raidroulette",
+      "aliases": [
+        "raidwheel"
+      ],
+      "desc": "Tire au sort un petit stream live à raider (overlay dédié)",
       "cooldown": "0s",
       "perm": "mod",
       "roles": [
@@ -1942,12 +2021,12 @@ footer .tentacle-rule{font-size:18px;letter-spacing:14px;margin-bottom:14px;opac
     }
   ],
   "counts": {
-    "total": 127,
-    "chat": 110,
+    "total": 133,
+    "chat": 116,
     "overlay": 13,
     "custom": 4
   },
-  "generated_at": "02/07/2026 à 06:44",
+  "generated_at": "03/07/2026 à 01:03",
   "perm_labels": {
     "viewer": "Viewer",
     "everyone": "Viewer",
