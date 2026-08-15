@@ -447,6 +447,34 @@ footer .tentacle-rule{font-size:18px;letter-spacing:14px;margin-bottom:14px;opac
     },
     {
       "category": "chat",
+      "name": "chant",
+      "aliases": [
+        "chanson",
+        "invoquer"
+      ],
+      "desc": "Ajoute un chant YouTube à la file d'invocation sonore : lien seul, ou 'Groupe - Titre <lien>'",
+      "cooldown": "8s",
+      "perm": "viewer",
+      "roles": [
+        "viewer"
+      ]
+    },
+    {
+      "category": "chat",
+      "name": "chantfile",
+      "aliases": [
+        "fileattente",
+        "chantqueue"
+      ],
+      "desc": "Affiche le chant en cours et les prochains dans le chat",
+      "cooldown": "10s",
+      "perm": "viewer",
+      "roles": [
+        "viewer"
+      ]
+    },
+    {
+      "category": "chat",
       "name": "clip",
       "aliases": [],
       "desc": "Crée un clip Twitch du moment présent",
@@ -1354,6 +1382,34 @@ footer .tentacle-rule{font-size:18px;letter-spacing:14px;margin-bottom:14px;opac
     },
     {
       "category": "chat",
+      "name": "chantsuivante",
+      "aliases": [
+        "chantnext",
+        "skipchant"
+      ],
+      "desc": "Passe au chant suivant de la file d'invocation sonore",
+      "cooldown": "0s",
+      "perm": "mod",
+      "roles": [
+        "mod"
+      ]
+    },
+    {
+      "category": "chat",
+      "name": "chantvider",
+      "aliases": [
+        "chantclear",
+        "viderfile"
+      ],
+      "desc": "Vide la file d'attente des chants (ne coupe pas le chant en cours)",
+      "cooldown": "0s",
+      "perm": "mod",
+      "roles": [
+        "mod"
+      ]
+    },
+    {
+      "category": "chat",
       "name": "chiffre",
       "aliases": [
         "gtn",
@@ -2157,12 +2213,12 @@ footer .tentacle-rule{font-size:18px;letter-spacing:14px;margin-bottom:14px;opac
     }
   ],
   "counts": {
-    "total": 142,
-    "chat": 119,
+    "total": 146,
+    "chat": 123,
     "overlay": 19,
     "custom": 4
   },
-  "generated_at": "15/08/2026 à 04:32",
+  "generated_at": "15/08/2026 à 06:46",
   "perm_labels": {
     "viewer": "Viewer",
     "everyone": "Viewer",
