@@ -68,6 +68,7 @@ p.subtitle{font-family:var(--font-eng);letter-spacing:3px;text-transform:upperca
 .viewer-head{text-align:center;margin-bottom:38px;}
 .viewer-head h2{font-family:var(--font-display);font-size:clamp(26px,4vw,38px);margin:0 0 6px;color:var(--ink);}
 .viewer-head .global{font-family:var(--font-mono);font-size:13px;color:var(--teal);}
+.viewer-head .global.openings{color:var(--gold);margin-top:3px;}
 
 .theme-block{max-width:1200px;margin:0 auto 54px;}
 .theme-block h3{font-size:17px;border-bottom:1px solid rgba(255,255,255,.12);padding-bottom:10px;display:flex;justify-content:space-between;align-items:baseline;font-family:var(--font-eng);letter-spacing:1px;}
@@ -76,11 +77,25 @@ p.subtitle{font-family:var(--font-eng);letter-spacing:3px;text-transform:upperca
 .card{position:relative;border-radius:10px;overflow:hidden;border:2px solid var(--rcolor,#888);aspect-ratio:2/3;background:#141420;transition:transform .15s;}
 .card:hover{transform:translateY(-4px) scale(1.03);}
 .card.missing{opacity:.35;filter:grayscale(1);}
+.card.owned{cursor:zoom-in;}
 .card img{width:100%;height:100%;object-fit:cover;display:block;}
 .silhouette{width:100%;height:100%;display:flex;align-items:center;justify-content:center;font-size:36px;color:#555;}
 .card-label{position:absolute;left:0;right:0;bottom:0;padding:6px 8px;background:linear-gradient(0deg,rgba(0,0,0,.88),transparent);font-size:10.5px;}
 .rarity{display:block;color:var(--rcolor,#888);font-weight:700;font-size:9.5px;margin-top:2px;font-family:var(--font-mono);}
 .count{float:right;color:var(--gold);font-weight:700;}
+
+/* ── Lightbox (agrandir une carte possédée) ─── */
+#card-lightbox{position:fixed;inset:0;z-index:100;display:none;align-items:center;justify-content:center;
+  background:rgba(4,2,10,.86);backdrop-filter:blur(4px);padding:30px;cursor:zoom-out;}
+#card-lightbox.open{display:flex;}
+#card-lightbox .lb-inner{position:relative;max-width:min(92vw,520px);max-height:88vh;text-align:center;}
+#card-lightbox img{max-width:100%;max-height:78vh;border-radius:14px;border:3px solid var(--rcolor,#888);
+  box-shadow:0 30px 80px -20px rgba(0,0,0,.8),0 0 40px rgba(124,77,255,.25);}
+#card-lightbox .lb-caption{margin-top:14px;font-family:var(--font-eng);color:var(--ink);font-size:16px;}
+#card-lightbox .lb-caption .rarity{display:inline;font-size:12px;margin-left:8px;}
+#card-lightbox .lb-close{position:absolute;top:-16px;right:-16px;width:34px;height:34px;border-radius:50%;
+  background:var(--abyss-1);border:1px solid var(--abyss-4);color:var(--ink);font-size:18px;line-height:1;
+  cursor:pointer;display:flex;align-items:center;justify-content:center;}
 
 footer{margin-top:70px;text-align:center;padding-top:30px;border-top:1px solid var(--abyss-3);color:var(--muted-2);font-size:12.5px;font-family:var(--font-mono);position:relative;z-index:2;}
 footer .tentacle-rule{font-size:18px;letter-spacing:14px;margin-bottom:14px;opacity:.5;}
@@ -116,6 +131,14 @@ footer .tentacle-rule{font-size:18px;letter-spacing:14px;margin-bottom:14px;opac
 
   <div id="results"></div>
 
+  <div id="card-lightbox">
+    <div class="lb-inner">
+      <div class="lb-close" id="lb-close">✕</div>
+      <img id="lb-img" src="" alt="">
+      <div class="lb-caption" id="lb-caption"></div>
+    </div>
+  </div>
+
   <footer>
     <div class="tentacle-rule">⛧⛧⛧⛧⛧⛧⛧⛧⛧⛧</div>
     <div id="generated-at"></div>
@@ -125,7 +148,7 @@ footer .tentacle-rule{font-size:18px;letter-spacing:14px;margin-bottom:14px;opac
 
 <script>
 const DATA = {
-  "generated_at": "01/10/2026 à 07:04",
+  "generated_at": "01/10/2026 à 07:49",
   "rarities": [
     {
       "id": "commune",
@@ -227,7 +250,8 @@ const DATA = {
         "demo_dreadthulhu": {
           "demo_dreadlocktopus": 1
         }
-      }
+      },
+      "openings_count": 1
     },
     "dreadlocktopus76": {
       "display_name": "dreadlocktopus76",
@@ -245,18 +269,27 @@ const DATA = {
           "one_piece_oo1": 22,
           "deathnote_001": 29
         }
-      }
+      },
+      "openings_count": 69
     }
   }
 };
 
+function escAttr(s){
+  return String(s == null ? '' : s).replace(/&/g,'&amp;').replace(/"/g,'&quot;').replace(/</g,'&lt;');
+}
+
 function cardMarkup(c){
   const ownedClass = c.owned ? 'owned' : 'missing';
-  const inner = (c.owned && c.image)
-    ? `<img src="${c.image}" alt="${c.name}" loading="lazy">`
+  const canZoom = c.owned && c.image;
+  const inner = canZoom
+    ? `<img src="${c.image}" alt="${escAttr(c.name)}" loading="lazy">`
     : '<div class="silhouette">?</div>';
+  const zoomAttrs = canZoom
+    ? ` data-zoom="1" data-image="${escAttr(c.image)}" data-name="${escAttr(c.name)}" data-rarity-label="${escAttr(c.rarity_label || c.rarity || '')}" data-rcolor="${escAttr(c.rarity_color || '#888')}"`
+    : '';
   return `
-    <div class="card ${ownedClass}" style="--rcolor:${c.rarity_color || '#888'}">
+    <div class="card ${ownedClass}" style="--rcolor:${c.rarity_color || '#888'}"${zoomAttrs}>
       ${inner}
       <div class="card-label">${c.owned ? c.name : '???'}
         <span class="rarity">${c.rarity_label || c.rarity || ''}</span>
@@ -264,6 +297,27 @@ function cardMarkup(c){
       </div>
     </div>`;
 }
+
+function openLightbox(image, name, rarityLabel, rcolor){
+  const lb = document.getElementById('card-lightbox');
+  document.getElementById('lb-img').src = image;
+  document.getElementById('lb-img').alt = name;
+  document.getElementById('lb-img').style.setProperty('--rcolor', rcolor || '#888');
+  document.getElementById('lb-caption').innerHTML = `${name} <span class="rarity" style="color:${rcolor || '#888'}">${rarityLabel || ''}</span>`;
+  lb.classList.add('open');
+}
+function closeLightbox(){
+  document.getElementById('card-lightbox').classList.remove('open');
+}
+document.getElementById('results').addEventListener('click', e => {
+  const card = e.target.closest('.card[data-zoom]');
+  if (card) openLightbox(card.dataset.image, card.dataset.name, card.dataset.rarityLabel, card.dataset.rcolor);
+});
+document.getElementById('lb-close').addEventListener('click', closeLightbox);
+document.getElementById('card-lightbox').addEventListener('click', e => {
+  if (e.target.id === 'card-lightbox') closeLightbox();
+});
+document.addEventListener('keydown', e => { if (e.key === 'Escape') closeLightbox(); });
 
 function render(viewer){
   const results = document.getElementById('results');
@@ -309,8 +363,11 @@ function render(viewer){
 
   const missing = totalCards - totalOwned;
   const headName = viewer ? (viewer.display_name || '') : '';
+  const openings = viewer ? (viewer.openings_count || 0) : 0;
+  const openingsLine = (viewer && openings > 0)
+    ? `<div class="global openings">${openings} booster${openings > 1 ? 's' : ''} ouvert${openings > 1 ? 's' : ''}</div>` : '';
   const headLine = viewer
-    ? `<div class="global">${totalOwned}/${totalCards} cartes (${missing} manquante${missing > 1 ? 's' : ''})</div>`
+    ? `<div class="global">${totalOwned}/${totalCards} cartes (${missing} manquante${missing > 1 ? 's' : ''})</div>${openingsLine}`
     : `<div class="global">Aucune carte pour l'instant — ${missing} carte${missing > 1 ? 's' : ''} à découvrir avec !booster</div>`;
 
   results.innerHTML = `
@@ -336,6 +393,20 @@ function lookup(){
 document.getElementById('go').addEventListener('click', lookup);
 document.getElementById('pseudo').addEventListener('keydown', e => { if (e.key === 'Enter') lookup(); });
 document.getElementById('generated-at').textContent = 'Dernière mise à jour : ' + (DATA.generated_at || '?');
+
+// Pseudo pré-rempli via ?pseudo=... (lien renvoyé par !collection dans le
+// chat) — recherche automatique au chargement, sans que le viewer ait à
+// retaper son propre pseudo.
+(function autoLookupFromUrl(){
+  try {
+    const params = new URLSearchParams(window.location.search);
+    const pseudo = params.get('pseudo');
+    if (pseudo){
+      document.getElementById('pseudo').value = pseudo;
+      lookup();
+    }
+  } catch (e) { /* URLSearchParams indisponible — ignoré, recherche manuelle toujours possible */ }
+})();
 
 // ─── Tentacules background ────────────────────────────────────────────────────
 (function spawnTentacles(){
