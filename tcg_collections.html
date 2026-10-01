@@ -1,0 +1,605 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>🎴 Collections TCG — Dreadthulhu</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Pirata+One&family=Cinzel:wght@500;700;900&family=Manrope:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --abyss-0:#06030d;--abyss-1:#120a26;--abyss-2:#1d1140;--abyss-3:#2e1a5e;--abyss-4:#432685;
+  --purple-glow:#7c4dff;--orange:#ff6a1a;--orange-bright:#ffae42;--orange-dim:#a8420f;
+  --teal:#2de8c4;--gold:#ffd166;--pink:#d98fff;--red:#ff4d4d;--ink:#f3ecff;
+  --muted:#a896d1;--muted-2:#7a6aa3;
+  --font-display:'Pirata One',serif;--font-eng:'Cinzel',serif;
+  --font-body:'Manrope',sans-serif;--font-mono:'JetBrains Mono',monospace;
+}
+*{box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{margin:0;background:radial-gradient(ellipse 1200px 700px at 18% -10%,rgba(124,77,255,.28),transparent 60%),radial-gradient(ellipse 900px 600px at 100% 10%,rgba(255,106,26,.10),transparent 55%),radial-gradient(ellipse 1000px 900px at 50% 110%,rgba(45,232,196,.06),transparent 60%),var(--abyss-0);color:var(--ink);font-family:var(--font-body);line-height:1.55;min-height:100vh;overflow-x:hidden;}
+::selection{background:var(--orange);color:var(--abyss-0);}
+a{color:var(--orange-bright);}
+::-webkit-scrollbar{width:10px;}
+::-webkit-scrollbar-track{background:var(--abyss-0);}
+::-webkit-scrollbar-thumb{background:var(--abyss-4);border-radius:6px;}
+::-webkit-scrollbar-thumb:hover{background:var(--purple-glow);}
+
+.noise{position:fixed;inset:0;pointer-events:none;z-index:1;opacity:.04;mix-blend-mode:overlay;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");}
+
+/* ── Particules ─── */
+#abyss-particles{position:fixed;inset:0;z-index:1;pointer-events:none;overflow:hidden;}
+.particle{position:absolute;bottom:-60px;opacity:0;border-radius:50%;animation:rise linear infinite;}
+.particle.bubble{background:radial-gradient(circle at 35% 30%,rgba(255,255,255,.5),rgba(45,232,196,.05) 70%);box-shadow:0 0 6px rgba(45,232,196,.35);}
+.particle.jelly{background:radial-gradient(circle at 50% 20%,rgba(217,143,255,.5),rgba(124,77,255,.04) 75%);box-shadow:0 0 14px rgba(217,143,255,.3);border-radius:50% 50% 45% 45%;}
+@keyframes rise{0%{transform:translateY(0) translateX(0);opacity:0;}8%{opacity:.55;}92%{opacity:.4;}100%{transform:translateY(-115vh) translateX(var(--drift,30px));opacity:0;}}
+
+/* ── Nageurs ─── */
+.swimmer{position:fixed;z-index:1;pointer-events:none;font-size:32px;opacity:.45;filter:drop-shadow(0 0 10px rgba(124,77,255,.35));}
+.swimmer.octo{font-size:40px;}
+
+/* ── SVG layers ─── */
+#tentacle-layer{position:fixed;inset:0;pointer-events:none;z-index:1;overflow:visible;}
+#coral-reef{position:fixed;left:0;right:0;bottom:0;height:100px;z-index:1;pointer-events:none;overflow:visible;}
+
+.wrap{position:relative;z-index:2;max-width:1220px;margin:0 auto;padding:0 22px 80px;}
+
+header.hero{text-align:center;padding:74px 16px 36px;position:relative;}
+.hero-glyph{font-size:54px;display:inline-block;margin-bottom:6px;filter:drop-shadow(0 0 22px var(--purple-glow));animation:float 5s ease-in-out infinite;}
+@keyframes float{0%,100%{transform:translateY(0) rotate(-2deg);}50%{transform:translateY(-10px) rotate(2deg);}}
+h1.title{font-family:var(--font-display);font-size:clamp(36px,6vw,72px);margin:0;background:linear-gradient(180deg,#fff 0%,var(--orange-bright) 55%,var(--orange) 100%);-webkit-background-clip:text;background-clip:text;color:transparent;line-height:1.05;}
+p.subtitle{font-family:var(--font-eng);letter-spacing:3px;text-transform:uppercase;font-size:13px;color:var(--muted);margin:14px 0 0;font-weight:600;}
+.hero-rule{width:220px;height:2px;margin:26px auto;border:none;background:linear-gradient(90deg,transparent,var(--orange),var(--purple-glow),transparent);}
+
+.search-card{max-width:620px;margin:0 auto 54px;background:rgba(18,10,38,.85);border:1px solid var(--abyss-4);border-radius:18px;padding:22px 24px;box-shadow:0 14px 40px -16px rgba(0,0,0,.6);}
+.search-row{display:flex;gap:10px;flex-wrap:wrap;}
+#pseudo{flex:1 1 220px;background:var(--abyss-0);border:1px solid var(--abyss-4);color:var(--ink);padding:13px 16px;border-radius:12px;font-family:var(--font-body);font-size:15px;outline:none;}
+#pseudo::placeholder{color:var(--muted-2);}
+#pseudo:focus{border-color:var(--orange);box-shadow:0 0 0 3px rgba(255,106,26,.15);}
+#go{font-family:var(--font-eng);font-size:13px;letter-spacing:1.5px;text-transform:uppercase;font-weight:700;padding:13px 22px;border-radius:12px;cursor:pointer;background:linear-gradient(135deg,var(--orange),var(--orange-dim));border:1px solid var(--orange);color:#1a0b00;}
+#go:hover{filter:brightness(1.1);}
+.search-hint{margin-top:12px;font-size:12.5px;color:var(--muted-2);text-align:center;font-family:var(--font-mono);}
+
+#results{min-height:60px;}
+.unknown-box,.empty-box{max-width:620px;margin:0 auto;text-align:center;padding:30px 24px;background:rgba(18,10,38,.6);border:1px dashed var(--abyss-4);border-radius:16px;color:var(--muted);}
+.unknown-box b,.empty-box b{color:var(--orange-bright);}
+
+.viewer-head{text-align:center;margin-bottom:38px;}
+.viewer-head h2{font-family:var(--font-display);font-size:clamp(26px,4vw,38px);margin:0 0 6px;color:var(--ink);}
+.viewer-head .global{font-family:var(--font-mono);font-size:13px;color:var(--teal);}
+
+.theme-block{max-width:1200px;margin:0 auto 54px;}
+.theme-block h3{font-size:17px;border-bottom:1px solid rgba(255,255,255,.12);padding-bottom:10px;display:flex;justify-content:space-between;align-items:baseline;font-family:var(--font-eng);letter-spacing:1px;}
+.theme-block .progress{font-size:12.5px;color:var(--teal);font-weight:normal;font-family:var(--font-mono);}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:14px;margin-top:18px;}
+.card{position:relative;border-radius:10px;overflow:hidden;border:2px solid var(--rcolor,#888);aspect-ratio:2/3;background:#141420;transition:transform .15s;}
+.card:hover{transform:translateY(-4px) scale(1.03);}
+.card.missing{opacity:.35;filter:grayscale(1);}
+.card img{width:100%;height:100%;object-fit:cover;display:block;}
+.silhouette{width:100%;height:100%;display:flex;align-items:center;justify-content:center;font-size:36px;color:#555;}
+.card-label{position:absolute;left:0;right:0;bottom:0;padding:6px 8px;background:linear-gradient(0deg,rgba(0,0,0,.88),transparent);font-size:10.5px;}
+.rarity{display:block;color:var(--rcolor,#888);font-weight:700;font-size:9.5px;margin-top:2px;font-family:var(--font-mono);}
+.count{float:right;color:var(--gold);font-weight:700;}
+
+footer{margin-top:70px;text-align:center;padding-top:30px;border-top:1px solid var(--abyss-3);color:var(--muted-2);font-size:12.5px;font-family:var(--font-mono);position:relative;z-index:2;}
+footer .tentacle-rule{font-size:18px;letter-spacing:14px;margin-bottom:14px;opacity:.5;}
+
+@media(max-width:600px){
+  .search-row{flex-direction:column;}
+  #go{width:100%;}
+}
+</style>
+</head>
+<body>
+<div class="noise"></div>
+<div id="abyss-particles"></div>
+<div id="tentacle-layer"></div>
+<div id="coral-reef"></div>
+<div id="swimmers"></div>
+
+<div class="wrap">
+  <header class="hero">
+    <div class="hero-glyph">🎴</div>
+    <h1 class="title">Collections TCG</h1>
+    <p class="subtitle">Dreadthulhu — Boosters faits maison</p>
+    <hr class="hero-rule">
+  </header>
+
+  <div class="search-card">
+    <div class="search-row">
+      <input id="pseudo" type="text" placeholder="Ton pseudo Twitch…" autocomplete="off" spellcheck="false">
+      <button id="go">Admirer ma collection</button>
+    </div>
+    <div class="search-hint">Entre exactement le pseudo que tu utilises dans le chat.</div>
+  </div>
+
+  <div id="results"></div>
+
+  <footer>
+    <div class="tentacle-rule">⛧⛧⛧⛧⛧⛧⛧⛧⛧⛧</div>
+    <div id="generated-at"></div>
+    <div>Dreadthulhu · page régénérée automatiquement à chaque ouverture de booster</div>
+  </footer>
+</div>
+
+<script>
+const DATA = {
+  "generated_at": "01/10/2026 à 06:58",
+  "rarities": [
+    {
+      "id": "commune",
+      "label": "Commune",
+      "color": "#b8bec8",
+      "weight_default": 60,
+      "holo": false
+    },
+    {
+      "id": "rare",
+      "label": "Rare",
+      "color": "#4da3ff",
+      "weight_default": 25,
+      "holo": false
+    },
+    {
+      "id": "epique",
+      "label": "Épique",
+      "color": "#b266ff",
+      "weight_default": 10,
+      "holo": true
+    },
+    {
+      "id": "legendaire",
+      "label": "Légendaire",
+      "color": "#ffb347",
+      "weight_default": 4.5,
+      "holo": true
+    },
+    {
+      "id": "secrete",
+      "label": "Secrète",
+      "color": "#ff2e88",
+      "weight_default": 0.5,
+      "holo": true
+    }
+  ],
+  "themes": {
+    "demo_dreadthulhu": {
+      "name": "Démo — Dreadthulhu x One Piece",
+      "cards": {
+        "demo_dreadlocktopus": {
+          "name": "Dreadlocktopus",
+          "rarity": "legendaire",
+          "image": "tcg_assets/demo_dreadthulhu__demo_dreadlocktopus.png"
+        },
+        "death_note": {
+          "name": "Death Note 001",
+          "rarity": "legendaire",
+          "image": "tcg_assets/demo_dreadthulhu__death_note.png"
+        }
+      }
+    },
+    "mangas": {
+      "name": "Mangas",
+      "cards": {
+        "deathnote_001": {
+          "name": "DeathNote 001",
+          "rarity": "legendaire",
+          "image": "tcg_assets/mangas__deathnote_001.png"
+        },
+        "demon_hunters_001": {
+          "name": "Demon Hunters 001",
+          "rarity": "legendaire",
+          "image": "tcg_assets/mangas__demon_hunters_001.png"
+        },
+        "dragon_ball_z_001": {
+          "name": "Dragon Ball Z 001",
+          "rarity": "legendaire",
+          "image": "tcg_assets/mangas__dragon_ball_z_001.png"
+        },
+        "initial_d_001": {
+          "name": "Initial D 001",
+          "rarity": "legendaire",
+          "image": "tcg_assets/mangas__initial_d_001.png"
+        },
+        "naruto_001": {
+          "name": "Naruto 001",
+          "rarity": "legendaire",
+          "image": "tcg_assets/mangas__naruto_001.png"
+        },
+        "one_piece_oo1": {
+          "name": "One Piece OO2",
+          "rarity": "legendaire",
+          "image": "tcg_assets/mangas__one_piece_oo1.png"
+        },
+        "carte": {
+          "name": "One Piece 001",
+          "rarity": "legendaire",
+          "image": "tcg_assets/mangas__carte.png"
+        }
+      }
+    }
+  },
+  "viewers": {
+    "test_viewer": {
+      "display_name": "test_viewer",
+      "collection": {
+        "demo_dreadthulhu": {
+          "demo_dreadlocktopus": 1
+        }
+      }
+    },
+    "dreadlocktopus76": {
+      "display_name": "dreadlocktopus76",
+      "collection": {
+        "demo_dreadthulhu": {
+          "demo_dreadlocktopus": 10,
+          "death_note": 9
+        },
+        "mangas": {
+          "carte": 32,
+          "dragon_ball_z_001": 27,
+          "initial_d_001": 26,
+          "demon_hunters_001": 24,
+          "naruto_001": 20,
+          "one_piece_oo1": 22,
+          "deathnote_001": 29
+        }
+      }
+    }
+  }
+};
+
+function cardMarkup(c){
+  const ownedClass = c.owned ? 'owned' : 'missing';
+  const inner = (c.owned && c.image)
+    ? `<img src="${c.image}" alt="${c.name}" loading="lazy">`
+    : '<div class="silhouette">?</div>';
+  return `
+    <div class="card ${ownedClass}" style="--rcolor:${c.rarity_color || '#888'}">
+      ${inner}
+      <div class="card-label">${c.owned ? c.name : '???'}
+        <span class="rarity">${c.rarity_label || c.rarity || ''}</span>
+        ${c.count > 1 ? `<span class="count">x${c.count}</span>` : ''}
+      </div>
+    </div>`;
+}
+
+function render(viewer){
+  const results = document.getElementById('results');
+  const rarities = DATA.rarities || [];
+  const rarityMeta = {};
+  rarities.forEach(r => { rarityMeta[r.id] = r; });
+
+  const themeIds = Object.keys(DATA.themes || {});
+  if (!themeIds.length){
+    results.innerHTML = '<div class="empty-box">Aucun thème configuré pour le moment.</div>';
+    return;
+  }
+
+  const owned = (viewer && viewer.collection) || {};
+  let totalCards = 0, totalOwned = 0;
+  const blocks = [];
+
+  themeIds.forEach(themeId => {
+    const theme = DATA.themes[themeId];
+    const cardIds = Object.keys(theme.cards || {});
+    const ownedHere = owned[themeId] || {};
+    let themeOwned = 0;
+    const cardsHtml = cardIds.map(cid => {
+      const card = theme.cards[cid];
+      const rmeta = rarityMeta[card.rarity] || {};
+      const isOwned = Object.prototype.hasOwnProperty.call(ownedHere, cid);
+      if (isOwned) themeOwned++;
+      return cardMarkup({
+        name: card.name, rarity: card.rarity,
+        rarity_label: rmeta.label || card.rarity, rarity_color: rmeta.color,
+        owned: isOwned, image: card.image, count: ownedHere[cid] || 0,
+      });
+    }).join('');
+    totalCards += cardIds.length;
+    totalOwned += themeOwned;
+    const pct = cardIds.length ? Math.round(1000 * themeOwned / cardIds.length) / 10 : 0;
+    blocks.push(`
+      <section class="theme-block">
+        <h3>${theme.name} <span class="progress">${themeOwned}/${cardIds.length} (${pct}%)</span></h3>
+        <div class="grid">${cardsHtml}</div>
+      </section>`);
+  });
+
+  const missing = totalCards - totalOwned;
+  const headName = viewer ? (viewer.display_name || '') : '';
+  const headLine = viewer
+    ? `<div class="global">${totalOwned}/${totalCards} cartes (${missing} manquante${missing > 1 ? 's' : ''})</div>`
+    : `<div class="global">Aucune carte pour l'instant — ${missing} carte${missing > 1 ? 's' : ''} à découvrir avec !booster</div>`;
+
+  results.innerHTML = `
+    <div class="viewer-head">
+      <h2>${viewer ? ('🐙 Collection de ' + headName) : "Pas encore de collection"}</h2>
+      ${headLine}
+    </div>
+    ${blocks.join('')}`;
+}
+
+function lookup(){
+  const raw = document.getElementById('pseudo').value.trim();
+  if (!raw) return;
+  const key = raw.toLowerCase();
+  const viewer = (DATA.viewers || {})[key];
+  if (!viewer){
+    render(null);
+    return;
+  }
+  render(viewer);
+}
+
+document.getElementById('go').addEventListener('click', lookup);
+document.getElementById('pseudo').addEventListener('keydown', e => { if (e.key === 'Enter') lookup(); });
+document.getElementById('generated-at').textContent = 'Dernière mise à jour : ' + (DATA.generated_at || '?');
+
+// ─── Tentacules background ────────────────────────────────────────────────────
+(function spawnTentacles(){
+  const NS='http://www.w3.org/2000/svg';
+  const NSEG=22,NF=8;
+  const COUNT=window.innerWidth<700?5:12;
+  const W=window.innerWidth,H=window.innerHeight;
+
+  function hsl(h,s,l){return `hsl(${(h+360)%360},${s}%,${l}%)`;}
+  function tentacleColors(){
+    const bodyHue=(200+Math.random()*180)%360;
+    const suckHue=(bodyHue+140+Math.random()*60)%360;
+    return{body:hsl(bodyHue,72+Math.random()*20,28+Math.random()*18),suckRim:hsl(suckHue,88+Math.random()*10,68+Math.random()*20),suckFill:hsl(suckHue,78,54)};
+  }
+  function spine(ox,oy,ang,len,curlDir,curlAmt,waveMag,waveFreq,phase){
+    const pts=[];
+    for(let s=0;s<=NSEG;s++){
+      const t=s/NSEG,dir=ang+curlDir*curlAmt*t*t;
+      const perp=dir+Math.PI*0.5;
+      const wave=Math.sin(t*waveFreq*Math.PI+phase)*waveMag*t;
+      pts.push([ox+Math.cos(dir)*len*t+Math.cos(perp)*wave,oy+Math.sin(dir)*len*t+Math.sin(perp)*wave]);
+    }
+    return pts;
+  }
+  function buildPoly(pts,baseW){
+    const L=[],R=[];
+    for(let i=0;i<=NSEG;i++){
+      const t=i/NSEG,w=baseW*Math.pow(1-t,1.25)+0.25;
+      const a=pts[Math.max(i-1,0)],b=pts[Math.min(i+1,NSEG)];
+      const tx=b[0]-a[0],ty=b[1]-a[1],tl=Math.sqrt(tx*tx+ty*ty)||1;
+      const nx=-ty/tl,ny=tx/tl;
+      L.push([pts[i][0]+nx*w,pts[i][1]+ny*w]);
+      R.push([pts[i][0]-nx*w,pts[i][1]-ny*w]);
+    }
+    return 'M '+[...L,...[...R].reverse()].map(p=>`${p[0].toFixed(1)},${p[1].toFixed(1)}`).join(' L ')+' Z';
+  }
+  function buildHighlight(pts,baseW){
+    const side=[];
+    for(let i=0;i<=NSEG;i++){
+      const t=i/NSEG,w=baseW*Math.pow(1-t,1.25)*0.35;
+      const a=pts[Math.max(i-1,0)],b=pts[Math.min(i+1,NSEG)];
+      const tx=b[0]-a[0],ty=b[1]-a[1],tl=Math.sqrt(tx*tx+ty*ty)||1;
+      const nx=-ty/tl,ny=tx/tl;
+      side.push([pts[i][0]+nx*w,pts[i][1]+ny*w]);
+    }
+    return 'M '+side.map(p=>`${p[0].toFixed(1)},${p[1].toFixed(1)}`).join(' L ');
+  }
+  function animSuckerGroup(grp,frames,idx,dur,del){
+    const p0=frames[0].sp[idx];
+    grp.setAttribute('transform',`translate(${p0[0].toFixed(2)},${p0[1].toFixed(2)})`);
+    const vals=frames.map(f=>`${f.sp[idx][0].toFixed(2)},${f.sp[idx][1].toFixed(2)}`).join(';');
+    const at=document.createElementNS(NS,'animateTransform');
+    at.setAttribute('attributeName','transform');at.setAttribute('type','translate');
+    at.setAttribute('values',vals);at.setAttribute('dur',`${dur}s`);
+    at.setAttribute('begin',`${del}s`);at.setAttribute('repeatCount','indefinite');
+    at.setAttribute('calcMode','linear');at.setAttribute('additive','replace');
+    grp.appendChild(at);
+  }
+
+  const layer=document.getElementById('tentacle-layer');
+  const svg=document.createElementNS(NS,'svg');
+  svg.style.cssText='position:fixed;inset:0;width:100%;height:100%;pointer-events:none;overflow:visible';
+  svg.setAttribute('viewBox',`0 0 ${W} ${H}`);
+  svg.setAttribute('preserveAspectRatio','xMidYMid slice');
+
+  const positions=[
+    {ox:0,oy:H*0.2,ang:0},{ox:0,oy:H*0.6,ang:0.2},
+    {ox:W,oy:H*0.15,ang:Math.PI},{ox:W,oy:H*0.5,ang:Math.PI-0.3},
+    {ox:W,oy:H*0.8,ang:Math.PI+0.2},{ox:W*0.2,oy:H,ang:-Math.PI/2+0.3},
+    {ox:W*0.5,oy:H,ang:-Math.PI/2},{ox:W*0.75,oy:H,ang:-Math.PI/2-0.3},
+    {ox:W*0.1,oy:H*0.9,ang:-0.8},{ox:W*0.9,oy:H*0.1,ang:Math.PI+0.5},
+    {ox:0,oy:H*0.4,ang:0.4},{ox:W*0.6,oy:H,ang:-Math.PI/2+0.5},
+  ];
+
+  for(let i=0;i<COUNT;i++){
+    const pos=positions[i%positions.length];
+    const cols=tentacleColors();
+    const opacity=0.35+Math.random()*0.45;
+    const len=100+Math.random()*200;
+    const baseW=6+Math.random()*9;
+    const curlDir=Math.random()>.5?1:-1;
+    const curlAmt=0.4+Math.random()*1.2;
+    const waveMag=15+Math.random()*30;
+    const waveFreq=0.7+Math.random()*2.2;
+    const nSuckers=Math.floor(6+Math.random()*5);
+    const dur=(3+Math.random()*6).toFixed(2);
+    const del=(Math.random()*-15).toFixed(2);
+    const ang=pos.ang+(Math.random()-.5)*0.6;
+    const frames=Array.from({length:NF+1},(_,f)=>{
+      const phase=(f/NF)*Math.PI*2;
+      const sp=spine(pos.ox,pos.oy,ang,len,curlDir,curlAmt,waveMag,waveFreq,phase);
+      return{sp,poly:buildPoly(sp,baseW),hl:buildHighlight(sp,baseW)};
+    });
+    const g=document.createElementNS(NS,'g');
+    g.setAttribute('opacity',opacity.toFixed(2));
+    const body=document.createElementNS(NS,'path');
+    body.setAttribute('d',frames[0].poly);body.setAttribute('fill',cols.body);body.setAttribute('stroke',cols.body);body.setAttribute('stroke-width','0.5');body.setAttribute('stroke-linejoin','round');
+    const ab=document.createElementNS(NS,'animate');
+    ab.setAttribute('attributeName','d');ab.setAttribute('values',frames.map(f=>f.poly).join(';'));ab.setAttribute('dur',`${dur}s`);ab.setAttribute('begin',`${del}s`);ab.setAttribute('repeatCount','indefinite');ab.setAttribute('calcMode','linear');
+    body.appendChild(ab);g.appendChild(body);
+    const hl=document.createElementNS(NS,'path');
+    hl.setAttribute('d',frames[0].hl);hl.setAttribute('fill','none');hl.setAttribute('stroke','#ffffff');hl.setAttribute('stroke-width','0.65');hl.setAttribute('stroke-linecap','round');hl.setAttribute('opacity','0.22');
+    const ah=document.createElementNS(NS,'animate');
+    ah.setAttribute('attributeName','d');ah.setAttribute('values',frames.map(f=>f.hl).join(';'));ah.setAttribute('dur',`${dur}s`);ah.setAttribute('begin',`${del}s`);ah.setAttribute('repeatCount','indefinite');ah.setAttribute('calcMode','linear');
+    hl.appendChild(ah);g.appendChild(hl);
+    for(let s=0;s<nSuckers;s++){
+      const t=0.08+(s/nSuckers)*0.84;
+      const idx=Math.round(t*NSEG);
+      const w=baseW*Math.pow(1-t,1.25);
+      const sr=Math.max(0.9,w*0.68);
+      const sg=document.createElementNS(NS,'g');
+      animSuckerGroup(sg,frames,idx,dur,del);
+      const rim=document.createElementNS(NS,'circle');
+      rim.setAttribute('cx','0');rim.setAttribute('cy','0');rim.setAttribute('r',sr.toFixed(2));
+      rim.setAttribute('fill','none');rim.setAttribute('stroke',cols.suckRim);rim.setAttribute('stroke-width',Math.max(0.7,sr*0.45).toFixed(2));rim.setAttribute('opacity','0.9');
+      sg.appendChild(rim);
+      const hollow=document.createElementNS(NS,'circle');
+      hollow.setAttribute('cx','0');hollow.setAttribute('cy','0');hollow.setAttribute('r',(sr*0.60).toFixed(2));hollow.setAttribute('fill',cols.suckFill);hollow.setAttribute('opacity','0.45');
+      sg.appendChild(hollow);
+      const glint=document.createElementNS(NS,'circle');
+      glint.setAttribute('cx',(-sr*0.24).toFixed(2));glint.setAttribute('cy',(-sr*0.24).toFixed(2));glint.setAttribute('r',(sr*0.26).toFixed(2));glint.setAttribute('fill','#ffffff');glint.setAttribute('opacity','0.65');
+      sg.appendChild(glint);
+      g.appendChild(sg);
+    }
+    svg.appendChild(g);
+  }
+  layer.appendChild(svg);
+})();
+
+// ─── Coraux de fond ───────────────────────────────────────────────────────────
+(function spawnReef(){
+  const NS='http://www.w3.org/2000/svg';
+  const reef=document.getElementById('coral-reef');
+  const W=window.innerWidth;
+  const svg=document.createElementNS(NS,'svg');
+  svg.style.cssText='width:100%;height:100%;overflow:visible';
+  svg.setAttribute('viewBox',`0 0 ${W} 100`);
+  svg.setAttribute('preserveAspectRatio','none');
+  const colors=['#d98fff','#2de8c4','#ffae42','#ff6a1a','#7c4dff','#ff8080'];
+  const positions=[
+    {x:60,type:'branch'},{x:130,type:'fan'},{x:220,type:'tube'},
+    {x:310,type:'branch'},{x:400,type:'anemone'},{x:W*0.4,type:'fan'},
+    {x:W*0.5,type:'branch'},{x:W*0.6,type:'tube'},{x:W*0.7,type:'anemone'},
+    {x:W-300,type:'branch'},{x:W-200,type:'fan'},{x:W-100,type:'tube'},
+  ];
+  positions.forEach((pos,i)=>{
+    const col=colors[i%colors.length],col2=colors[(i+2)%colors.length];
+    const delay=i*0.7,dur=4+Math.random()*3;
+    const g=document.createElementNS(NS,'g');
+    g.setAttribute('opacity','0.55');
+    const anim=document.createElementNS(NS,'animateTransform');
+    anim.setAttribute('attributeName','transform');anim.setAttribute('type','rotate');
+    anim.setAttribute('values',`-3,${pos.x},100;3,${pos.x},100;-3,${pos.x},100`);
+    anim.setAttribute('dur',`${dur}s`);anim.setAttribute('begin',`${delay}s`);anim.setAttribute('repeatCount','indefinite');
+    if(pos.type==='branch'){
+      const path=document.createElementNS(NS,'path');
+      path.setAttribute('d',`M${pos.x},100 L${pos.x},60 M${pos.x},80 L${pos.x-15},55 M${pos.x},70 L${pos.x+12},48 M${pos.x-15},55 L${pos.x-22},38 M${pos.x+12},48 L${pos.x+20},32`);
+      path.setAttribute('stroke',col);path.setAttribute('stroke-width','3');path.setAttribute('fill','none');path.setAttribute('stroke-linecap','round');
+      g.appendChild(path);g.appendChild(anim);
+    } else if(pos.type==='fan'){
+      for(let f=0;f<7;f++){
+        const angle=(-60+f*20)*(Math.PI/180),len=30+Math.random()*20;
+        const line=document.createElementNS(NS,'line');
+        line.setAttribute('x1',String(pos.x));line.setAttribute('y1','100');
+        line.setAttribute('x2',String(pos.x+Math.sin(angle)*len));line.setAttribute('y2',String(100-Math.cos(angle)*len));
+        line.setAttribute('stroke',f%2===0?col:col2);line.setAttribute('stroke-width','2.5');line.setAttribute('stroke-linecap','round');line.setAttribute('opacity','0.9');
+        g.appendChild(line);
+      }
+      g.appendChild(anim);
+    } else if(pos.type==='tube'){
+      for(let t=0;t<3;t++){
+        const ox=pos.x+(t-1)*10,h=40+t*12;
+        const rect=document.createElementNS(NS,'path');
+        rect.setAttribute('d',`M${ox-4},100 Q${ox-4},${100-h} ${ox},${100-h-6} Q${ox+4},${100-h} ${ox+4},100`);
+        rect.setAttribute('fill',col);rect.setAttribute('opacity','0.7');
+        const circle=document.createElementNS(NS,'ellipse');
+        circle.setAttribute('cx',String(ox));circle.setAttribute('cy',String(100-h-3));circle.setAttribute('rx','4');circle.setAttribute('ry','3');circle.setAttribute('fill',col2);
+        g.appendChild(rect);g.appendChild(circle);
+      }
+      g.appendChild(anim);
+    } else if(pos.type==='anemone'){
+      for(let a=0;a<8;a++){
+        const angle=(a/8)*Math.PI*2,len=25+Math.random()*15;
+        const path=document.createElementNS(NS,'path');
+        const mx=pos.x+Math.cos(angle)*8,my=100-Math.sin(Math.abs(angle))*8;
+        const ex=pos.x+Math.cos(angle)*len,ey=100-len*0.8;
+        path.setAttribute('d',`M${pos.x},100 Q${mx},${my} ${ex},${ey}`);
+        path.setAttribute('stroke',col);path.setAttribute('stroke-width','2');path.setAttribute('fill','none');path.setAttribute('stroke-linecap','round');
+        const tip=document.createElementNS(NS,'circle');
+        tip.setAttribute('cx',String(ex));tip.setAttribute('cy',String(ey));tip.setAttribute('r','3');tip.setAttribute('fill',col2);
+        g.appendChild(path);g.appendChild(tip);
+      }
+      g.appendChild(anim);
+    }
+    svg.appendChild(g);
+  });
+  [W*0.15,W*0.35,W*0.55,W*0.82].forEach(rx=>{
+    const rock=document.createElementNS(NS,'ellipse');
+    rock.setAttribute('cx',String(rx));rock.setAttribute('cy','100');
+    rock.setAttribute('rx',String(20+Math.random()*30));rock.setAttribute('ry',String(8+Math.random()*10));
+    rock.setAttribute('fill','#1a0e2e');rock.setAttribute('opacity','0.8');
+    svg.appendChild(rock);
+  });
+  reef.appendChild(svg);
+})();
+
+// ─── Particules ───────────────────────────────────────────────────────────────
+(function spawnParticles(){
+  const host=document.getElementById('abyss-particles');
+  if(!host)return;
+  const COUNT=window.innerWidth<700?7:16;
+  for(let i=0;i<COUNT;i++){
+    const el=document.createElement('div');
+    const isJelly=Math.random()<0.32;
+    el.className='particle '+(isJelly?'jelly':'bubble');
+    const size=isJelly?(14+Math.random()*16):(4+Math.random()*10);
+    el.style.width=size+'px';el.style.height=(isJelly?size*0.85:size)+'px';
+    el.style.left=(Math.random()*100)+'vw';
+    el.style.setProperty('--drift',(Math.random()*80-40)+'px');
+    const dur=16+Math.random()*22;
+    el.style.animationDuration=dur+'s';el.style.animationDelay=(-Math.random()*dur)+'s';
+    host.appendChild(el);
+  }
+})();
+
+// ─── Nageurs CHAOTIQUES ───────────────────────────────────────────────────────
+(function spawnSwimmers(){
+  const host=document.getElementById('swimmers');
+  if(!host)return;
+  const creatures=['🐙','🐙','🪼','🦑','🪼','🐡','🦀','🐠'];
+  creatures.forEach((emoji,i)=>{
+    const el=document.createElement('div');
+    el.className='swimmer'+(emoji==='🐙'?' octo':'');
+    el.textContent=emoji;
+
+    const startSide=Math.random()>0.5;
+    const startY=(8+Math.random()*75)+'vh';
+    el.style.top=startY;
+    el.style.fontSize=(24+Math.random()*28)+'px';
+
+    const dur=22+Math.random()*30;
+    const del=(-Math.random()*dur).toFixed(1);
+
+    const kfName=`swim_${i}_${Math.floor(Math.random()*9999)}`;
+    const pts=[];
+    const nPts=5;
+    for(let p=0;p<=nPts;p++){
+      const xPct=startSide?(p/nPts*130-10):((1-p/nPts)*130-10);
+      const yOff=(-40+Math.random()*80)+'vh';
+      const rot=(-30+Math.random()*60).toFixed(0);
+      const sc=(0.7+Math.random()*0.6).toFixed(2);
+      pts.push({x:xPct.toFixed(1)+'vw',yo:yOff,rot,sc});
+    }
+    const pct=pts.map((pt,pi)=>`${Math.round((pi/nPts)*100)}%{transform:translate(${pt.x},calc(${pt.yo})) rotate(${pt.rot}deg) scale(${pt.sc});opacity:${pi===0||pi===nPts?0:0.5+Math.random()*0.3};}`).join('');
+    const styleEl=document.createElement('style');
+    styleEl.textContent=`@keyframes ${kfName}{${pct}}`;
+    document.head.appendChild(styleEl);
+
+    el.style.left='0';
+    el.style.opacity='0';
+    el.style.animation=`${kfName} ${dur}s ${del}s linear infinite`;
+    if(!startSide)el.style.transform='scaleX(-1)';
+    host.appendChild(el);
+  });
+})();
+</script>
+</body></html>
