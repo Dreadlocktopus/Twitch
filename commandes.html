@@ -423,10 +423,45 @@ footer .tentacle-rule{font-size:18px;letter-spacing:14px;margin-bottom:14px;opac
     },
     {
       "category": "chat",
+      "name": "booster",
+      "aliases": [],
+      "desc": "Ouvre un booster du pack par défaut (cartes TCG maison, animation en overlay)",
+      "cooldown": "10s",
+      "perm": "viewer",
+      "roles": [
+        "viewer"
+      ]
+    },
+    {
+      "category": "chat",
+      "name": "boosterpack",
+      "aliases": [],
+      "desc": "Ouvre un booster d'un pack précis : !boosterpack <nom du pack>",
+      "cooldown": "10s",
+      "perm": "viewer",
+      "roles": [
+        "viewer"
+      ]
+    },
+    {
+      "category": "chat",
       "name": "boss",
       "aliases": [],
       "desc": "Voir l'état du boss actuel",
       "cooldown": "5s",
+      "perm": "viewer",
+      "roles": [
+        "viewer"
+      ]
+    },
+    {
+      "category": "chat",
+      "name": "bracket",
+      "aliases": [
+        "tableau"
+      ],
+      "desc": "Où en est le tableau du tournoi (tour en cours)",
+      "cooldown": "8s",
       "perm": "viewer",
       "roles": [
         "viewer"
@@ -507,6 +542,17 @@ footer .tentacle-rule{font-size:18px;letter-spacing:14px;margin-bottom:14px;opac
       "perm": "everyone",
       "roles": [
         "everyone"
+      ]
+    },
+    {
+      "category": "chat",
+      "name": "collection",
+      "aliases": [],
+      "desc": "Donne le lien vers sa page de collection de cartes",
+      "cooldown": "15s",
+      "perm": "viewer",
+      "roles": [
+        "viewer"
       ]
     },
     {
@@ -807,6 +853,20 @@ footer .tentacle-rule{font-size:18px;letter-spacing:14px;margin-bottom:14px;opac
       ]
     },
     {
+      "category": "chat",
+      "name": "kaamelottsearch",
+      "aliases": [
+        "ksearch",
+        "kquote"
+      ],
+      "desc": "Cherche une réplique dans les livres Kaamelott ingérés",
+      "cooldown": "15s",
+      "perm": "viewer",
+      "roles": [
+        "viewer"
+      ]
+    },
+    {
       "category": "overlay",
       "name": "knockout",
       "aliases": [],
@@ -869,6 +929,17 @@ footer .tentacle-rule{font-size:18px;letter-spacing:14px;margin-bottom:14px;opac
       ]
     },
     {
+      "category": "chat",
+      "name": "octobrerose",
+      "aliases": [],
+      "desc": "Présente la collecte Octobre Rose en cours et le montant déjà collecté",
+      "cooldown": "20s",
+      "perm": "viewer",
+      "roles": [
+        "viewer"
+      ]
+    },
+    {
       "category": "overlay",
       "name": "onlytentacles",
       "aliases": [],
@@ -877,6 +948,17 @@ footer .tentacle-rule{font-size:18px;letter-spacing:14px;margin-bottom:14px;opac
       "perm": "everyone",
       "roles": [
         "everyone"
+      ]
+    },
+    {
+      "category": "chat",
+      "name": "pacte",
+      "aliases": [],
+      "desc": "Pacte abyssal : !pacte [status|annuler|…] — sous-commandes et titres",
+      "cooldown": "0s",
+      "perm": "viewer",
+      "roles": [
+        "viewer"
       ]
     },
     {
@@ -927,6 +1009,20 @@ footer .tentacle-rule{font-size:18px;letter-spacing:14px;margin-bottom:14px;opac
       ],
       "desc": "Hommage au créateur du bot",
       "cooldown": "60s",
+      "perm": "viewer",
+      "roles": [
+        "viewer"
+      ]
+    },
+    {
+      "category": "chat",
+      "name": "prochainmatch",
+      "aliases": [
+        "prochaincombat",
+        "nextmatch"
+      ],
+      "desc": "Match en cours / prochain match du tournoi Tekken",
+      "cooldown": "8s",
       "perm": "viewer",
       "roles": [
         "viewer"
@@ -1467,6 +1563,20 @@ footer .tentacle-rule{font-size:18px;letter-spacing:14px;margin-bottom:14px;opac
     },
     {
       "category": "chat",
+      "name": "followcheck",
+      "aliases": [
+        "checkfollow",
+        "followback"
+      ],
+      "desc": "Vérifie la réciprocité de follow avec une chaîne Twitch",
+      "cooldown": "15s",
+      "perm": "mod",
+      "roles": [
+        "mod"
+      ]
+    },
+    {
+      "category": "chat",
       "name": "idees_clear",
       "aliases": [
         "ideesclear",
@@ -1690,6 +1800,19 @@ footer .tentacle-rule{font-size:18px;letter-spacing:14px;margin-bottom:14px;opac
       ],
       "desc": "Chercher un trésor caché",
       "cooldown": "300s",
+      "perm": "mod",
+      "roles": [
+        "mod"
+      ]
+    },
+    {
+      "category": "chat",
+      "name": "tts",
+      "aliases": [
+        "dis"
+      ],
+      "desc": "Fait parler Dreadthulhu à voix haute sur l'overlay TTS (rôle minimum réglable dans Paramètres TTS)",
+      "cooldown": "0s",
       "perm": "mod",
       "roles": [
         "mod"
@@ -2229,12 +2352,12 @@ footer .tentacle-rule{font-size:18px;letter-spacing:14px;margin-bottom:14px;opac
     }
   ],
   "counts": {
-    "total": 147,
-    "chat": 123,
+    "total": 161,
+    "chat": 137,
     "overlay": 20,
     "custom": 4
   },
-  "generated_at": "04/10/2026 à 20:11",
+  "generated_at": "05/10/2026 à 16:54",
   "perm_labels": {
     "viewer": "Viewer",
     "everyone": "Viewer",
