@@ -378,6 +378,22 @@ footer .tentacle-rule{font-size:18px;letter-spacing:14px;margin-bottom:14px;opac
     },
     {
       "category": "chat",
+      "name": "augure",
+      "aliases": [
+        "presage",
+        "présage",
+        "prophetie",
+        "prophétie"
+      ],
+      "desc": "Affiche le présage tiré au hasard pour ce live (un seul par live, jamais le même deux fois)",
+      "cooldown": "20s",
+      "perm": "viewer",
+      "roles": [
+        "viewer"
+      ]
+    },
+    {
+      "category": "chat",
       "name": "balance",
       "aliases": [
         "monnaie",
@@ -546,6 +562,21 @@ footer .tentacle-rule{font-size:18px;letter-spacing:14px;margin-bottom:14px;opac
     },
     {
       "category": "chat",
+      "name": "codex",
+      "aliases": [
+        "fiche",
+        "lieu",
+        "entite"
+      ],
+      "desc": "Affiche une fiche du Codex du Mythe (Grand Ancien, lieu, personnage, ouvrage...), au hasard ou ciblée : !codex [terme]",
+      "cooldown": "30s",
+      "perm": "viewer",
+      "roles": [
+        "viewer"
+      ]
+    },
+    {
+      "category": "chat",
       "name": "collection",
       "aliases": [],
       "desc": "Donne le lien vers sa page de collection de cartes",
@@ -592,6 +623,33 @@ footer .tentacle-rule{font-size:18px;letter-spacing:14px;margin-bottom:14px;opac
       ],
       "desc": "Voir le niveau de corruption/chaos",
       "cooldown": "5s",
+      "perm": "viewer",
+      "roles": [
+        "viewer"
+      ]
+    },
+    {
+      "category": "chat",
+      "name": "culte",
+      "aliases": [
+        "rang",
+        "cultiste"
+      ],
+      "desc": "Affiche ton rang dans le Journal de l'Invocateur du Culte de Cthulhu",
+      "cooldown": "10s",
+      "perm": "viewer",
+      "roles": [
+        "viewer"
+      ]
+    },
+    {
+      "category": "chat",
+      "name": "cultistes",
+      "aliases": [
+        "topculte"
+      ],
+      "desc": "Classement des 5 cultistes les plus fervents du Culte de Cthulhu",
+      "cooldown": "30s",
       "perm": "viewer",
       "roles": [
         "viewer"
@@ -707,6 +765,20 @@ footer .tentacle-rule{font-size:18px;letter-spacing:14px;margin-bottom:14px;opac
       "aliases": [],
       "desc": "Rejoindre/voir une faction",
       "cooldown": "5s",
+      "perm": "viewer",
+      "roles": [
+        "viewer"
+      ]
+    },
+    {
+      "category": "chat",
+      "name": "folie",
+      "aliases": [
+        "chaos",
+        "jauge"
+      ],
+      "desc": "Affiche les niveaux actuels de Folie et de Chaos du Culte de Cthulhu",
+      "cooldown": "20s",
       "perm": "viewer",
       "roles": [
         "viewer"
@@ -879,6 +951,20 @@ footer .tentacle-rule{font-size:18px;letter-spacing:14px;margin-bottom:14px;opac
     },
     {
       "category": "chat",
+      "name": "lovecraft",
+      "aliases": [
+        "hpl",
+        "nouvelle"
+      ],
+      "desc": "Affiche une page de l'œuvre de Lovecraft sur l'overlay, au hasard ou d'une nouvelle précise : !lovecraft [titre]",
+      "cooldown": "45s",
+      "perm": "viewer",
+      "roles": [
+        "viewer"
+      ]
+    },
+    {
+      "category": "chat",
       "name": "lurk",
       "aliases": [
         "afk"
@@ -912,6 +998,20 @@ footer .tentacle-rule{font-size:18px;letter-spacing:14px;margin-bottom:14px;opac
       "perm": "everyone",
       "roles": [
         "everyone"
+      ]
+    },
+    {
+      "category": "chat",
+      "name": "necronomicon",
+      "aliases": [
+        "grimoire",
+        "page"
+      ],
+      "desc": "Affiche une page au hasard du Necronomicon sur l'overlay",
+      "cooldown": "45s",
+      "perm": "viewer",
+      "roles": [
+        "viewer"
       ]
     },
     {
@@ -1148,6 +1248,21 @@ footer .tentacle-rule{font-size:18px;letter-spacing:14px;margin-bottom:14px;opac
       ]
     },
     {
+      "category": "chat",
+      "name": "sanite",
+      "aliases": [
+        "san",
+        "jetsan",
+        "sanité"
+      ],
+      "desc": "Jet de Santé mentale (D100) contre la folie du chat",
+      "cooldown": "0s",
+      "perm": "viewer",
+      "roles": [
+        "viewer"
+      ]
+    },
+    {
       "category": "custom",
       "name": "schedule",
       "aliases": [],
@@ -1166,6 +1281,20 @@ footer .tentacle-rule{font-size:18px;letter-spacing:14px;margin-bottom:14px;opac
         "magasin"
       ],
       "desc": "Affiche les articles disponibles",
+      "cooldown": "30s",
+      "perm": "viewer",
+      "roles": [
+        "viewer"
+      ]
+    },
+    {
+      "category": "chat",
+      "name": "skins",
+      "aliases": [
+        "cadres",
+        "skin"
+      ],
+      "desc": "Liste les cadres/skins caméra disponibles pour la récompense de points de chaîne « Changer le cadre caméra »",
       "cooldown": "30s",
       "perm": "viewer",
       "roles": [
@@ -1443,6 +1572,17 @@ footer .tentacle-rule{font-size:18px;letter-spacing:14px;margin-bottom:14px;opac
         "annonce"
       ],
       "desc": "Envoyer une annonce formatée immédiate",
+      "cooldown": "0s",
+      "perm": "mod",
+      "roles": [
+        "mod"
+      ]
+    },
+    {
+      "category": "chat",
+      "name": "apparition",
+      "aliases": [],
+      "desc": "Déclenche une apparition d'un Grand Ancien sur l'overlay : !apparition <dagon|yog|shub|azathoth|nyarlathotep|hastur> (modérateurs uniquement)",
       "cooldown": "0s",
       "perm": "mod",
       "roles": [
@@ -2393,12 +2533,12 @@ footer .tentacle-rule{font-size:18px;letter-spacing:14px;margin-bottom:14px;opac
     }
   ],
   "counts": {
-    "total": 165,
-    "chat": 137,
+    "total": 175,
+    "chat": 147,
     "overlay": 24,
     "custom": 4
   },
-  "generated_at": "16/10/2026 à 00:08",
+  "generated_at": "17/10/2026 à 15:23",
   "perm_labels": {
     "viewer": "Viewer",
     "everyone": "Viewer",
