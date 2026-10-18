@@ -439,28 +439,6 @@ footer .tentacle-rule{font-size:18px;letter-spacing:14px;margin-bottom:14px;opac
     },
     {
       "category": "chat",
-      "name": "booster",
-      "aliases": [],
-      "desc": "Ouvre un booster du pack par défaut (cartes TCG maison, animation en overlay)",
-      "cooldown": "10s",
-      "perm": "viewer",
-      "roles": [
-        "viewer"
-      ]
-    },
-    {
-      "category": "chat",
-      "name": "boosterpack",
-      "aliases": [],
-      "desc": "Ouvre un booster d'un pack précis : !boosterpack <nom du pack>",
-      "cooldown": "10s",
-      "perm": "viewer",
-      "roles": [
-        "viewer"
-      ]
-    },
-    {
-      "category": "chat",
       "name": "boss",
       "aliases": [],
       "desc": "Voir l'état du boss actuel",
@@ -570,17 +548,6 @@ footer .tentacle-rule{font-size:18px;letter-spacing:14px;margin-bottom:14px;opac
       ],
       "desc": "Affiche une fiche du Codex du Mythe (Grand Ancien, lieu, personnage, ouvrage...), au hasard ou ciblée : !codex [terme]",
       "cooldown": "30s",
-      "perm": "viewer",
-      "roles": [
-        "viewer"
-      ]
-    },
-    {
-      "category": "chat",
-      "name": "collection",
-      "aliases": [],
-      "desc": "Donne le lien vers sa page de collection de cartes",
-      "cooldown": "15s",
       "perm": "viewer",
       "roles": [
         "viewer"
@@ -1618,6 +1585,28 @@ footer .tentacle-rule{font-size:18px;letter-spacing:14px;margin-bottom:14px;opac
     },
     {
       "category": "chat",
+      "name": "booster",
+      "aliases": [],
+      "desc": "Ouvre un booster du pack par défaut (cartes TCG maison, animation en overlay)",
+      "cooldown": "10s",
+      "perm": "mod",
+      "roles": [
+        "mod"
+      ]
+    },
+    {
+      "category": "chat",
+      "name": "boosterpack",
+      "aliases": [],
+      "desc": "Ouvre un booster d'un pack précis : !boosterpack <nom du pack>",
+      "cooldown": "10s",
+      "perm": "mod",
+      "roles": [
+        "mod"
+      ]
+    },
+    {
+      "category": "chat",
       "name": "chantsuivante",
       "aliases": [
         "chantnext",
@@ -1666,6 +1655,17 @@ footer .tentacle-rule{font-size:18px;letter-spacing:14px;margin-bottom:14px;opac
       ],
       "desc": "Effacer les avertissements d'un viewer",
       "cooldown": "0s",
+      "perm": "mod",
+      "roles": [
+        "mod"
+      ]
+    },
+    {
+      "category": "chat",
+      "name": "collection",
+      "aliases": [],
+      "desc": "Donne le lien vers sa page de collection de cartes",
+      "cooldown": "15s",
       "perm": "mod",
       "roles": [
         "mod"
@@ -2538,7 +2538,7 @@ footer .tentacle-rule{font-size:18px;letter-spacing:14px;margin-bottom:14px;opac
     "overlay": 24,
     "custom": 4
   },
-  "generated_at": "18/10/2026 à 02:26",
+  "generated_at": "18/10/2026 à 23:24",
   "perm_labels": {
     "viewer": "Viewer",
     "everyone": "Viewer",
